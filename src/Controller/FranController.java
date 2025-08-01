@@ -26,7 +26,7 @@ public class FranController {
 
     } // func end
 
-    // fran02 가맹점 전체조회기능 구현
+    // fran02 가맹점 전체조회기능 구현 // TODO
     public ArrayList<FranDto> franPrint(){
         // DAO 에게 전달후 결과를 받는다.
         ArrayList<FranDto> result = franDao.franPrint();

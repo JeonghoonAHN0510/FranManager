@@ -45,7 +45,7 @@ public class FranDao {
         return false; // 예외 발생 시 저장 실패
     } // func end
 
-    // fran02 가맹점 전체조회기능 구현
+    // fran02 가맹점 전체조회기능 구현 // TODO
     public ArrayList<FranDto> franPrint(){
         ArrayList<FranDto> list = new ArrayList<>();
         try{// SQL 작성
