@@ -1,4 +1,94 @@
 package Model.DTO;
 
 public class FranDto {
+    //1. 멤버변수
+    //1) private
+        private int franNo;
+        private String franName;
+        private String franAddress;
+        private String franCall;
+        private String franOwner;
+        private boolean franStatus;
+
+    //2. 생성자
+   //1) 기본생성자
+
+    public FranDto() {
+    }
+    //2) 전체생성자
+
+    public FranDto(int franNo, String franName, String franAddress, String franCall, String franOwner, boolean franStatus) {
+        this.franNo = franNo;
+        this.franName = franName;
+        this.franAddress = franAddress;
+        this.franCall = franCall;
+        this.franOwner = franOwner;
+        this.franStatus = franStatus;
+    }
+
+    //3. 메소드
+        //1)setter, getter
+
+    public int getFranNo() {
+        return franNo;
+    }
+
+    public void setFranNo(int franNo) {
+        this.franNo = franNo;
+    }
+
+    public String getFranName() {
+        return franName;
+    }
+
+    public void setFranName(String franName) {
+        this.franName = franName;
+    }
+
+    public String getFranAddress() {
+        return franAddress;
+    }
+
+    public void setFranAddress(String franAddress) {
+        this.franAddress = franAddress;
+    }
+
+    public String getFranCall() {
+        return franCall;
+    }
+
+    public void setFranCall(String franCall) {
+        this.franCall = franCall;
+    }
+
+    public String getFranOwner() {
+        return franOwner;
+    }
+
+    public void setFranOwner(String franOwner) {
+        this.franOwner = franOwner;
+    }
+
+    public boolean isFranStatus() {
+        return franStatus;
+    }
+
+    public void setFranStatus(boolean franStatus) {
+        this.franStatus = franStatus;
+    }
+
+    //2) toString
+
+
+    @Override
+    public String toString() {
+        return "FranDto{" +
+                "franNo=" + franNo +
+                ", franName='" + franName + '\'' +
+                ", franAddress='" + franAddress + '\'' +
+                ", franCall='" + franCall + '\'' +
+                ", franOwner='" + franOwner + '\'' +
+                ", franStatus=" + franStatus +
+                '}';
+    }
 }
