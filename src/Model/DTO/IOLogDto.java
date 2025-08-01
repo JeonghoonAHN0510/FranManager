@@ -1,15 +1,14 @@
 package Model.DTO;
 
 public class IOLogDto {
-    //1. 멤버변수
-    //1) private
-
-        private int ioNo;
-        private int proNo;
-        private int IO;
-        private int ioQty;
-        private String ioDate;
-        private String ioMemo;
+    // 1. 멤버변수
+    // 1) private
+        private int ioNo;       // 입출고번호 PK
+        private int proNo;      // 제품번호 FK
+        private int IO;         // 입고·출고
+        private int ioQty;      // 입출고수량
+        private String ioDate;  // 입출고일자
+        private String ioMemo;  // 메모
     //2. 생성자
     //1) 기본생성자
 

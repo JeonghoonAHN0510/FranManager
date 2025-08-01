@@ -3,13 +3,13 @@ package Model.DTO;
 public class SupplyLogDto {
     // 1. 멤버변수
     // 1) private
-    private int supNo;
-    private int franNo;
-    private int proNo;
-    private int supQty;
-    private String supReqDate;
-    private int supStatus;
-    private String supMemo;
+    private int supNo;          // 발주번호 PK
+    private int franNo;         // 가맹점번호 FK
+    private int proNo;          // 제품번호 FK
+    private int supQty;         // 주문수량
+    private String supReqDate;  // 발주요청날짜
+    private int supStatus;      // 발주상태
+    private String supMemo;     // 메모
 
     // 2. 생성자
     // 1) 기본생성자

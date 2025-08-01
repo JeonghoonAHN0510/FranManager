@@ -1,13 +1,13 @@
 package Model.DTO;
 
 public class ProductDto {
-    //1. 멤버변수
-    //1) private
-    private int proNo;
-    private String proName;
-    private int proSupPrice;
-    private int proPrice;
-    private boolean proStatus;
+    // 1. 멤버변수
+    // 1) private
+    private int proNo;          // 제품번호 PK
+    private String proName;     // 제품명
+    private int proSupPrice;    // 공급가액
+    private int proPrice;       // 판매가격
+    private boolean proStatus;  // 판매여부
 
     //2. 생성자
     //1) 기본생성자

@@ -3,9 +3,9 @@ package Model.DTO;
 public class ReviewDto {
     // 1. 멤버변수
     // 1) private
-    private int reviewNo;
-    private String review;
-    private int orderNo;
+    private int reviewNo;       // 리뷰번호 PK
+    private String review;      // 리뷰
+    private int orderNo;        // 판매번호 FK
 
     // 2. 생성자
     // 1) 기본생성자

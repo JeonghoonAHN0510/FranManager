@@ -1,14 +1,14 @@
 package Model.DTO;
 
 public class OrderLogDto {
-    //1. 멤버변수
-    //1) private
-    private int orderNo;
-    private int franNo;
-    private int proNo;
-    private int orderQty;
-    private int orderPrice;
-    private String orderDate;
+    // 1. 멤버변수
+    // 1) private
+    private int orderNo;        // 판매번호 PK
+    private int franNo;         // 가맹점번호 FK
+    private int proNo;          // 제품번호 FK
+    private int orderQty;       // 판매수량
+    private int orderPrice;     // 당시판매가겨
+    private String orderDate;   // 판매날짜
 
     //2. 생성자
     //1) 기본생성자
