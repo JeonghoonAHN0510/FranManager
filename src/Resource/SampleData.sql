@@ -17,21 +17,20 @@ create table Product(
 	proSupPrice int not null,
 	proPrice int not null,
 constraint primary key( proNo ));
-/*
+
 create table SupplyLog (
 	supNo int auto_increment,
     franNo int not null,
     proNo int not null,
     supQty int not null,
     supReqDate datetime default now(),
-    supAppDate datetime default null,
     supStatus int default 0,
     supMemo varchar(200),
     constraint primary key(supNo),
     constraint foreign key(franNo) references Fran(franNo),
     constraint foreign key(proNo) references Product(proNo)
 );
-*/
+
 
 create table OrderLog(
 	orderNo int auto_increment,
@@ -44,7 +43,7 @@ create table OrderLog(
     constraint foreign key(franNo) references Fran(franNo),
     constraint foreign key(proNo) references Product(proNo)
 );
-/*
+
 create table InventoryLog(
     invenNo int auto_increment,
     constraint primary key(invenNo),
@@ -55,7 +54,7 @@ create table InventoryLog(
     invenMemo varchar(200),
     constraint foreign key(proNo) references Product(proNo)
 );
-*/
+
 
 create table Review(
     reviewNo int auto_increment,
