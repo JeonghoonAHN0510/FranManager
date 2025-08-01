@@ -3,6 +3,8 @@ package Controller;
 import Model.DAO.FranDao;
 import Model.DTO.FranDto;
 
+import java.util.ArrayList;
+
 public class FranController {
     // 싱글톤
     private FranController(){}
@@ -24,6 +26,12 @@ public class FranController {
 
     } // func end
 
+    // fran02 가맹점 전체조회기능 구현
+    public ArrayList<FranDto> franPrint(){
+        // DAO 에게 전달후 결과를 받는다.
+        ArrayList<FranDto> result = franDao.franPrint();
+        // 결과를 view에게 리턴
+        return result;
+    } // func end
 
-
-}
+} // class end
