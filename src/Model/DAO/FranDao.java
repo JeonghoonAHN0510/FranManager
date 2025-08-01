@@ -21,5 +21,6 @@ public class FranDao {
             conn = DriverManager.getConnection( db_url , db_user , db_password );
         }catch (Exception e ){ System.out.println(e);   }
     }
+    // fran01 가맹점 추가
 }
 
