@@ -1,7 +1,10 @@
 package Model.DAO;
 
+import Model.DTO.IOLogDto;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
 public class IOLogDao {
     // 싱글톤
@@ -12,9 +15,9 @@ public class IOLogDao {
     }
     
     // (*) DB 연동
-    private String db_url = "jdbc:mysql://sql.freedb.tech:3306/freedb_FreeDB_OngTK";
-    private String db_user ="freedb_OngTK";
-    private String db_password = "Wj!r2ParMG3K@5R";
+    private String db_url = "jdbc:mysql://localList:3306/FranManager";
+    private String db_user ="root";
+    private String db_password = "1234";
     private Connection conn;
     
     // DB 연동 메소드
@@ -24,4 +27,48 @@ public class IOLogDao {
             conn = DriverManager.getConnection( db_url , db_user , db_password );
         }catch (Exception e ){ System.out.println(e);   }
     }
-}
+
+    // ArrayList 선언
+    ArrayList<IOLogDto> ioLogDtoList = new ArrayList<>();
+
+
+    // 메소드 =====================================================================================
+
+    // [IO-00]
+    // 매개변수 :
+    // 반환타입 :
+    // 반환 :
+
+    // [IO-01] 재고로그등록·재고등록 /  ioLogAdd()
+    // 매개변수 : String proName, int ioQty
+    // 반환타입 : boolean
+    // 반환 : true 성공 / false 실패
+    // [1.1]
+    // [1.2]
+
+    // [IO-02] 재고로그조회 / IOLogPrint()
+    // 매개변수 : -
+    // 반환타입 : ArrayList<IOLogDto>
+    // 반환 : ArrayList<IOLogDto> 출력
+    // [2.1]
+
+    // [IO-03] 단일재고로그조회 / oneIOLogPrint()
+    // 매개변수 : int ioNo
+    // 반환타입 : IOLogDto
+    // 반환 : IOLogDto 출력
+    // [3.1]
+
+    // [IO-04] 재고조회 / IOPrint()
+    // 매개변수 : -
+    // 반환타입 : ArrayList<IOLogDto>
+    // 반환 : ArrayList<IOLogDto> 출력, 단, 상품번호별 합산 후 출력
+    // [4.1]
+
+    // [IO-05] 재고로그수정 / ioUpdate()
+    // 매개변수 : int ioNo, int proNo, String IO, int ioQty, String ioMemo
+    // 반환타입 : boolean
+    // 반환 : true 성공 / false 실패
+    // [5.1]
+
+
+} // class end
