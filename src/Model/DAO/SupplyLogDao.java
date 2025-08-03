@@ -99,22 +99,22 @@ public class SupplyLogDao {
     // 메소드명 : supplyApp()
     // 매개변수 : int supNo, String franName
     // 반환타입 : boolean -> true(성공) / false(실패)
-    public boolean supplyApp( int supNo, String franName ){
-        try {
-            // 1. SQL 작성
-            // todo 가맹점번호 -> 가맹점번호 변환 함수 생성하여 연결
-            String SQL1 = "update SupplyLog set supStatus = 1 where supNo = ? and franNo = ? and supStatus = 0;";       // 발주상태 변경 SQL
-            String SQL2 = "";       // 재고로그 추가 SQL
-            // 2. SQL 기재
-
-            // 3. SQL 매개변수 대입
-
-            // 4. SQL 실행
-
-            // 5. SQL 결과 반환
-
-        }
-    } // func end
+//    public boolean supplyApp( int supNo, String franName ){
+//        try {
+//            // 1. SQL 작성
+//            // todo 가맹점번호 -> 가맹점번호 변환 함수 생성하여 연결
+//            String SQL1 = "update SupplyLog set supStatus = 1 where supNo = ? and franNo = ? and supStatus = 0;";       // 발주상태 변경 SQL
+//            String SQL2 = "";       // 재고로그 추가 SQL
+//            // 2. SQL 기재
+//
+//            // 3. SQL 매개변수 대입
+//
+//            // 4. SQL 실행
+//
+//            // 5. SQL 결과 반환
+//
+//        }
+//    } // func end
 
     // supply04. 발주요청 취소
     // 기능설명 : [발주번호와 가맹점명]을 입력받아, 해당하는 발주요청의 발주상태를 2로 변경한다.

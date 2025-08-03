@@ -14,7 +14,7 @@ public class SupplyLogController {
     } // func end
 
     // * SupplyLogDao 싱글톤 가져오기
-    SupplyLogDao supplyLogDao = SupplyLogDao.getInstance();
+    private SupplyLogDao supplyLogDao = SupplyLogDao.getInstance();
 
     // supply01. 발주요청 전체조회
     // 기능설명 : DB에 저장된 요청대기 중인 발주기록울 조회한다. { 발주번호, 가맹점명, 상품명, 주문수량, 메모 }
