@@ -73,5 +73,57 @@ public class FranDao {
     } // func end
 
 
+    // fran0X. 가맹점명 반환(번호 > 이름)
+    // 기능설명 : [가맹점번호]를 매개변수로 받아, 해당하는 가맹점명을 반환한다.
+    // 메소드명 : toFranNameChange()
+    // 매개변수 : int franNo
+    // 반환타입 : String
+    public String toFranNameChange( int franNo ){
+        String franName = "";       // 반환할 빈 String 생성
+        try {
+            // 1. SQL 작성 : 매개변수로 받은 franNo가 가맹점번호인 가맹점명을 select
+            String SQL = "select franName from Fran where franNo = ?;";
+            // 2. SQL 기재
+            PreparedStatement ps = conn.prepareStatement( SQL );
+            // 3. SQL 매개변수 대입
+            ps.setInt( 1, franNo );
+            // 4. SQL 실행 -> Select : executeQuery() -> ResultSet으로 반환
+            ResultSet rs = ps.executeQuery();
+            // 5. SQL 결과 반환
+            while( rs.next() ){
+                franName = rs.getString("franName");
+            } // while end
+        } catch ( SQLException e ){
+            System.out.println("[product02] SQL 기재 실패");
+        } // try-catch end
+        // 최종적으로 반환
+        return franName;
+    } // func end
+
+    // fran0X. 가맹점번호 반환(번호 > 이름)
+    // 기능설명 : [가맹점명]를 매개변수로 받아, 해당하는 가맹점번호를 반환한다.
+    // 메소드명 : toIntNameFranChange()
+    // 매개변수 : String franName
+    // 반환타입 : int
+    public int toIntNameFranChange( String franName ){
+        int franNo = 0;         // 반환할 빈 int 생성
+        try {
+            // 1. SQL 작성
+            String SQL = "select franNo from Fran where franName = ?";
+            // 2. SQL 기재
+            PreparedStatement ps = conn.prepareStatement( SQL );
+            // 3. SQL 매개변수 대입
+            ps.setString( 1, franName );
+            // 4. SQL 실행 -> Select : executeQuery() -> ResultSet 반환
+            ResultSet rs = ps.executeQuery();
+            // 5. SQL 결과 반환
+            while( rs.next() ){
+                franNo = rs.getInt("franNo");
+            } // while end
+        } catch ( SQLException e ){
+            System.out.println("[fran0X] SQL 기재 실패");
+        } // try-catch end
+        return franNo;
+    } // func end
 } // class
 

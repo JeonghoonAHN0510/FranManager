@@ -1,6 +1,6 @@
 package View;
 
-import Controller.SupplyLogController;
+import Controller.*;
 import Model.DTO.SupplyLogDto;
 
 import java.util.ArrayList;
@@ -10,6 +10,12 @@ import java.util.Scanner;
 public class View {
     // Scanner·Controller 등 외부 참조
     private Scanner scan = new Scanner(System.in);
+    private FranController franController = FranController.getInstance();
+    private IOLogController ioLogController = IOLogController.getInstance();
+    private OrderLogController orderLogController = OrderLogController.getInstance();
+    private ProductController productController = ProductController.getInstance();
+    private ReviewController reviewController = ReviewController.getInstance();
+    private StatsController statsController = StatsController.getInstance();
     private SupplyLogController supplyLogController = SupplyLogController.getInstance();
 
     // 싱글톤
@@ -240,13 +246,12 @@ public class View {
                         int supQty = supplyLogDto.getSupQty();
                         String supMemo = supplyLogDto.getSupMemo();
                         // 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
-                        String franName = SupplyLogController.getInstance().toFranNameChange( franNo );
-                        String proName = SupplyLogController.getInstance().toProNameChange( proNo );
+                        String franName = franController.toFranNameChange( franNo );
+                        String proName = productController.toProNameChange( proNo );
                         // 값 출력하기
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo );
                     } // for end
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    // todo 가맹점명, 제품명 등의 간격 맞추는 방법 생각
                 } else if (choice == 2) {
                     System.out.print("발주번호 : "); int supNo = scan.nextInt();
                     SupplyLogDto supplyLogDto = SupplyLogController.getInstance().supplyPrint( supNo );
@@ -259,15 +264,24 @@ public class View {
                         int supQty = supplyLogDto.getSupQty();
                         String supMemo = supplyLogDto.getSupMemo();
                         // 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
-                        String franName = SupplyLogController.getInstance().toFranNameChange( franNo );
-                        String proName = SupplyLogController.getInstance().toProNameChange( proNo );
+                        String franName = franController.toFranNameChange( franNo );
+                        String proName = productController.toProNameChange( proNo );
                         // 값 출력하기
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo );
                         System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        // 사용자로부터 '가맹점명' 입력받기
+                        System.out.print("가맹점명 : ");    String franNameInput = scan.next();
+                        int franNoInput = franController.toIntNameFranChange( franNameInput );
+                        // 입력값 controller에게 전달 후 결과 받기
+                        boolean result = supplyLogController.supplyApp( supNo, franNoInput );
+                        if ( result ){      // 출고처리에 성공했다면
+                            System.out.println("[안내] 정상적으로 출고처리 되었습니다.");
+                        }else {             // 출고처리에 실패했다면
+                            System.out.println("[경고] 가맹점명이 일치하지 않습니다.");
+                        } // if end
                     }else { // 발주번호에 해당하는 발주가 존재하지 않는다면
                         System.out.println("[경고] 존재하지않는 발주번호입니다.");
                     } // if end
-                    // TODO 3.2. 출고 처리 func 연결
                 } else if (choice == 3) {
                     System.out.print("발주번호 : "); int supNo = scan.nextInt();
                     SupplyLogDto supplyLogDto = SupplyLogController.getInstance().supplyPrint( supNo );
@@ -280,26 +294,35 @@ public class View {
                         int supQty = supplyLogDto.getSupQty();
                         String supMemo = supplyLogDto.getSupMemo();
                         // 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
-                        String franName = SupplyLogController.getInstance().toFranNameChange( franNo );
-                        String proName = SupplyLogController.getInstance().toProNameChange( proNo );
+                        String franName = franController.toFranNameChange( franNo );
+                        String proName = productController.toProNameChange( proNo );
                         // 값 출력하기
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo );
                         System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        // 사용자로부터 '가맹점명' 입력받기
+                        System.out.print("가맹점명 : ");    String franNameInput = scan.next();
+                        int franNoInput = franController.toIntNameFranChange( franNameInput );
+                        // 입력값 controller에게 전달 후 결과 받기
+                        boolean result = supplyLogController.supplyCancel( supNo, franNoInput );
+                        // 결과에 따른 출력하기
+                        if ( result ){  // 취소처리에 성공했다면
+                            System.out.println("[안내] 정상적으로 발주취소 처리되었습니다.");
+                        } else {        // 취소처리에 실패했다면
+                            System.out.println("[경고] 가맹점명이 일치하지 않습니다.");
+                        } // if end
                     }else { // 발주번호에 해당하는 발주가 존재하지 않는다면
                         System.out.println("[경고] 존재하지않는 발주번호입니다.");
                     } // if end
-                    // TODO 3.3. 발주 요청 취소 처리 func 연결
-
                 } else if (choice == 4) {
                     break;
                 } else {
                     System.out.println("[경고] 올바르지 못한 메뉴입니다.");
-                }
+                } // if end
             } catch (InputMismatchException e) {
                 System.out.println("[경고] 입력 타입이 올바르지 못합니다.");
             } catch (Exception e) {
                 System.out.println("[경고] 관리자에게 문의하세요.");
-            }
+            } // try-catch end
         } // 무한루프 종료
     } // ioManage end
 

@@ -34,4 +34,30 @@ public class FranController {
         return result;
     } // func end
 
+
+    // fran0X. 가맹점명 반환(번호 > 이름)
+    // 기능설명 : [가맹점번호]를 매개변수로 받아, 해당하는 가맹점명을 반환한다.
+    // 메소드명 : toFranNameChange()
+    // 매개변수 : int franNo
+    // 반환타입 : String
+    public String toFranNameChange( int franNo ){
+        // 1. (필요 시) 유효성 검사
+        // 2. dao에게 전달 후 결과 받기
+        String franName = franDao.toFranNameChange( franNo );
+        // 3. view에게 결과 전달하기
+        return franName;
+    } // func end
+
+    // supply07. 가맹점번호 반환(번호 > 이름)
+    // 기능설명 : [가맹점명]를 매개변수로 받아, 해당하는 가맹점번호를 반환한다.
+    // 메소드명 : toIntNameFranChange()
+    // 매개변수 : String franName
+    // 반환타입 : int
+    public int toIntNameFranChange( String franName ){
+        // 1. (필요 시) 유효성 검사
+        // 2. dao에게 전달 후 결과 받기
+        int franNo = franDao.toIntNameFranChange( franName );
+        // 3. view에게 결과 전달하기
+        return franNo;
+    } // func end
 } // class end

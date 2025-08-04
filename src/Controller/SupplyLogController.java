@@ -45,42 +45,28 @@ public class SupplyLogController {
     // todo view 연결 필요
 
     // supply03. 발주요청 승인
-    // 기능설명 : [발주번호와 가맹점명]을 입력받아, 해당하는 발주요청의 발주상태를 1로 변경하고, 발주처리날짜를 입력한다. 재고로그에 해당 { 제품번호, 발주번호, 수량, 입출고일자 }를 추가한다.
+    // 기능설명 : [발주번호와 가맹점명]을 입력받아, view에서 [가맹점명 -> 가맹점번호] 변환 후,  해당하는 발주요청의 발주상태를 1로 변경한다. 재고로그에 해당 { 제품번호, 발주번호, 수량, 입출고일자 }를 추가한다.
     // 메소드명 : supplyApp()
-    // 매개변수 : int supNo, String franName
+    // 매개변수 : int supNo, int franNo
     // 반환타입 : boolean -> true(성공) / false(실패)
-
-
-    // supply04. 발주요청 취소
-    // 기능설명 : [발주번호와 가맹점명]을 입력받아, 해당하는 발주요청의 발주상태를 2로 변경한다.
-    // 메소드명 : supplyCancel()
-    // 매개변수 : int supNo, String franName
-    // 반환타입 : boolean -> true(성공) / false(실패)
-
-
-    // supply05. 가맹점명 반환(번호 > 이름)
-    // 기능설명 : [가맹점번호]를 매개변수로 받아, 해당하는 가맹점명을 반환한다.
-    // 메소드명 : toFranNameChange()
-    // 매개변수 : int franNo
-    // 반환타입 : String
-    public String toFranNameChange( int franNo ){
+    public boolean supplyApp( int supNo, int franNo ){
         // 1. (필요 시) 유효성 검사
         // 2. dao에게 전달 후 결과 받기
-        String franName = SupplyLogDao.getInstance().toFranNameChange( franNo );
+        boolean result = supplyLogDao.supplyApp( supNo, franNo );
         // 3. view에게 결과 전달하기
-        return franName;
+        return result;
     } // func end
 
-    // supply06. 제품명 반환(번호 > 이름)
-    // 기능설명 : [제품번호]를 매개변수로 받아, 해당하는 제품명을 반환한다.
-    // 메소드명 : toProNameChange()
-    // 매개변수 : int proNo
-    // 반환타입 : String
-    public String toProNameChange( int proNo ){
+    // supply04. 발주요청 취소
+    // 기능설명 : [발주번호와 가맹점명]을 입력받아, view에서 [가맹점명 -> 가맹점번호] 변환 후, 해당하는 발주요청의 발주상태를 2로 변경한다.
+    // 메소드명 : supplyCancel()
+    // 매개변수 : int supNo, int franNo
+    // 반환타입 : boolean -> true(성공) / false(실패)
+    public boolean supplyCancel( int supNo, int franNo ){
         // 1. (필요 시) 유효성 검사
         // 2. dao에게 전달 후 결과 받기
-        String proName = SupplyLogDao.getInstance().toProNameChange( proNo );
+        boolean result = supplyLogDao.supplyCancel( supNo, franNo );
         // 3. view에게 결과 전달하기
-        return proName;
+        return result;
     } // func end
 } // class end

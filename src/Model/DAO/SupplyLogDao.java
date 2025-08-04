@@ -95,85 +95,80 @@ public class SupplyLogDao {
     } // func end
 
     // supply03. 발주요청 승인
-    // 기능설명 : [발주번호와 가맹점명]을 입력받아, 해당하는 발주요청의 발주상태를 1로 변경하고, 발주처리날짜를 입력한다. 재고로그에 해당 { 제품번호, 발주번호, 수량, 입출고일자 }를 추가한다.
+    // 기능설명 : [발주번호와 가맹점명]을 입력받아, view에서 [가맹점명 -> 가맹점번호] 변환 후, 해당하는 발주요청의 발주상태를 1로 변경한다. 재고로그에 해당 { 제품번호, 발주번호, 수량, 입출고일자 }를 추가한다.
     // 메소드명 : supplyApp()
-    // 매개변수 : int supNo, String franName
+    // 매개변수 : int supNo, int franNo
     // 반환타입 : boolean -> true(성공) / false(실패)
-//    public boolean supplyApp( int supNo, String franName ){
-//        try {
-//            // 1. SQL 작성
-//            // todo 가맹점번호 -> 가맹점번호 변환 함수 생성하여 연결
-//            String SQL1 = "update SupplyLog set supStatus = 1 where supNo = ? and franNo = ? and supStatus = 0;";       // 발주상태 변경 SQL
-//            String SQL2 = "";       // 재고로그 추가 SQL
-//            // 2. SQL 기재
-//
-//            // 3. SQL 매개변수 대입
-//
-//            // 4. SQL 실행
-//
-//            // 5. SQL 결과 반환
-//
-//        }
-//    } // func end
-
-    // supply04. 발주요청 취소
-    // 기능설명 : [발주번호와 가맹점명]을 입력받아, 해당하는 발주요청의 발주상태를 2로 변경한다.
-    // 메소드명 : supplyCancel()
-    // 매개변수 : int supNo, String franName
-    // 반환타입 : boolean -> true(성공) / false(실패)
-
-
-    // supply05. 가맹점명 반환(번호 > 이름)
-    // 기능설명 : [가맹점번호]를 매개변수로 받아, 해당하는 가맹점명을 반환한다.
-    // 메소드명 : toFranNameChange()
-    // 매개변수 : int franNo
-    // 반환타입 : String
-    public String toFranNameChange( int franNo ){
-        String franName = "";       // 반환할 빈 String 생성
+    public boolean supplyApp( int supNo, int franNo ){
+        boolean result = false;     // 반환할 기본 boolean 생성
         try {
-            // 1. SQL 작성 : 매개변수로 받은 franNo가 가맹점번호인 가맹점명을 select
-            String SQL = "select franName from Fran where franNo = ?;";
+            // 1. SQL 작성
+            // 발주상태 변경 SQL
+            String SQL1 = "update SupplyLog set supStatus = 1 where supNo = ? and franNo = ? and supStatus = 0;";
+            // 발주번호에 따른, 제품번호 수량을 가져오기 위한 SQL
+            String SQL2 = "select proNo, supQty from SupplyLog where supNo = ? and franNo = ?";
             // 2. SQL 기재
-            PreparedStatement ps = conn.prepareStatement( SQL );
+            PreparedStatement ps1 = conn.prepareStatement( SQL1 );
+            PreparedStatement ps2 = conn.prepareStatement( SQL2 );
             // 3. SQL 매개변수 대입
-            ps.setInt( 1, franNo );
-            // 4. SQL 실행 -> Select : executeQuery() -> ResultSet으로 반환
-            ResultSet rs = ps.executeQuery();
+            ps1.setInt( 1, supNo );
+            ps1.setInt( 2, franNo );
+            ps2.setInt( 1, supNo );
+            ps2.setInt( 2, franNo );
+            // 4. SQL 실행
+            int count1 = ps1.executeUpdate();
+            ResultSet rs = ps2.executeQuery();
             // 5. SQL 결과 반환
-            while( rs.next() ){
-                franName = rs.getString("franName");
-            } // while end
+            if ( count1 == 1 ){
+                while( rs.next() ){
+                    int proNo = rs.getInt("proNo");
+                    int supQty = rs.getInt("supQty");
+                    // 1. SQL 작성
+                    String SQL3 = "insert into IOLog ( proNo, IO, ioQty ) values ( ?, ?, ? )";       // 재고로그 추가 SQL
+                    // 2. SQL 기재
+                    PreparedStatement ps3 = conn.prepareStatement( SQL3 );
+                    // 3. SQL 매개변수 대입
+                    ps3.setInt( 1, proNo );
+                    ps3.setInt( 2, supNo );
+                    ps3.setInt( 3, supQty );
+                    // 4. SQL 실행
+                    int count2 = ps3.executeUpdate();
+                    // 5. SQL 결과 반환
+                    if ( count2 == 1 ){
+                        return true;
+                    } // if end
+                } // while end
+            } // if end
         } catch ( SQLException e ){
-            System.out.println("[supply05] SQL 기재 실패");
+            System.out.println("[supply03] SQL 기재 실패");
         } // try-catch end
-        // 최종적으로 반환
-        return franName;
+        return result;
     } // func end
 
-    // supply06. 제품명 반환(번호 > 이름)
-    // 기능설명 : [제품번호]를 매개변수로 받아, 해당하는 제품명을 반환한다.
-    // 메소드명 : toProNameChange()
-    // 매개변수 : int proNo
-    // 반환타입 : String
-    public String toProNameChange( int proNo ){
-        String proName = "";        // 반환할 빈 String 생성
+    // supply04. 발주요청 취소
+    // 기능설명 : [발주번호와 가맹점명]을 입력받아, view에서 [가맹점명 -> 가맹점번호] 변환 후, 해당하는 발주요청의 발주상태를 2로 변경한다.
+    // 메소드명 : supplyCancel()
+    // 매개변수 : int supNo, int franNo
+    // 반환타입 : boolean -> true(성공) / false(실패)
+    public boolean supplyCancel( int supNo, int franNo ){
+        boolean result = false;     // 반환할 기본 boolean 생성
         try {
-            // 1. SQL 작성 : 매개변수로 받은 proNo가 제품번호인 제품명을 select
-            String SQL = "select proName from Product where proNo = ?";
+            // 1. SQL 작성
+            String SQL = "update SupplyLog set supStatus = 2 where supNo = ? and franNo = ? and supStatus = 0";
             // 2. SQL 기재
             PreparedStatement ps = conn.prepareStatement( SQL );
             // 3. SQL 매개변수 대입
-            ps.setInt( 1, proNo );
-            // 4. SQL 실행 -> Select : executeQuery() -> ResultSet으로 반환
-            ResultSet rs = ps.executeQuery();
+            ps.setInt( 1, supNo );
+            ps.setInt( 2, franNo );
+            // 4. SQL 실행
+            int count = ps.executeUpdate();
             // 5. SQL 결과 반환
-            while( rs.next() ){
-                proName = rs.getString("proName");
-            } // while end
+            if ( count == 1 ){  // 실행에 성공하면
+                return true;    // true 반환
+            } // if end
         } catch ( SQLException e ){
-            System.out.println("[supply06] SQL 기재 실패");
+            System.out.println("[supply04] SQL 기재 실패");
         } // try-catch end
-        // 최종적으로 반환
-        return proName;
+        return result;
     } // func end
 } // class end
