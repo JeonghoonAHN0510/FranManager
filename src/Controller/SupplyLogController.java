@@ -28,7 +28,6 @@ public class SupplyLogController {
         // 3. view에게 전달하기
         return supplyLogDtos;
     } // func end
-    // todo view 연결 필요
 
     // supply02. 발주요청 선택조회
     // 기능설명 : [발주번호]를 입력받아, 해당하는 발주요청을 출력한다.
@@ -36,16 +35,22 @@ public class SupplyLogController {
     // 매개변수 : int supNo
     // 반환타입 : SupplyLogDto
     public SupplyLogDto supplyPrint( int supNo ){
+        // 반환할 객체 생성
+        SupplyLogDto supplyLogDto = new SupplyLogDto();
         // 1. (필요 시) 유효성 검사
+        boolean check = supplyLogDao.supNoCheck( supNo );
+        if ( !check ){  // 유효성 검사에 걸린다면
+            supplyLogDto.setSupNo(0);
+            return supplyLogDto;
+        } // if end
         // 2. dao에게 전달 후 결과 받기
-        SupplyLogDto supplyLogDto = supplyLogDao.supplyPrint( supNo );
+        supplyLogDto = supplyLogDao.supplyPrint( supNo );
         // 3. view에게 전달하기
         return supplyLogDto;
     } // func end
-    // todo view 연결 필요
 
     // supply03. 발주요청 승인
-    // 기능설명 : [발주번호와 가맹점명]을 입력받아, view에서 [가맹점명 -> 가맹점번호] 변환 후,  해당하는 발주요청의 발주상태를 1로 변경한다. 재고로그에 해당 { 제품번호, 발주번호, 수량, 입출고일자 }를 추가한다.
+    // 기능설명 : [발주번호와 가맹점명]을 입력받아, view에서 [가맹점명 -> 가맹점번호] 변환 후, 해당하는 발주요청의 발주상태를 1로 변경한다. 재고로그에 해당 { 제품번호, 발주번호, 수량, 입출고일자 }를 추가한다.
     // 메소드명 : supplyApp()
     // 매개변수 : int supNo, int franNo
     // 반환타입 : boolean -> true(성공) / false(실패)

@@ -70,7 +70,7 @@ public class SupplyLogDao {
         SupplyLogDto supplyLogDto = new SupplyLogDto();
         try {
             // 1. SQL 작성 : supNo가 매개변수로 받은 supNo와 같은 발주로그를 조회한다.
-            String SQL = "select supNo, franNo, proNo, supQty, supMemo from SupplyLog where supNo = ?";
+            String SQL = "select supNo, franNo, proNo, supQty, supMemo from SupplyLog where supNo = ? and supStatus = 0";
             // 2. SQL 기재
             PreparedStatement ps = conn.prepareStatement( SQL );
             // 3. SQL 매개변수 대입
@@ -168,6 +168,37 @@ public class SupplyLogDao {
             } // if end
         } catch ( SQLException e ){
             System.out.println("[supply04] SQL 기재 실패");
+        } // try-catch end
+        return result;
+    } // func end
+
+    // supply05. 발주번호 유효성 검사
+    // 기능설명 : [발주번호]를 받아 발주리스트에 해당 발주이력이 있는지를 확인한다.
+    // 메소드명 : supNoCheck()
+    // 매개변수 : int supNo
+    // 반환타입 : boolean -> true : 발주 존재 / false : 발주 없음
+    public boolean supNoCheck( int supNo ){
+        boolean result = false;
+        try {
+            // 1. SQL 작성 -> 발주번호에 해당하는 행의 개수 조회하기
+            String SQL = "select count(*) C from SupplyLog where supNo = ?";
+            // 2. SQL 기재
+            PreparedStatement ps = conn.prepareStatement( SQL );
+            // 3. SQL 매개변수 대입
+            ps.setInt( 1, supNo );
+            // 4. SQL 실행
+            ResultSet rs = ps.executeQuery();
+            // 5. SQL 결과 반환
+            while( rs.next() ){
+                int count = rs.getInt("C");
+                if ( count == 1 ){  // 행의 개수가 1개라면
+                    return true;    // true 반환
+                }else {             // 행의 개수가 1개가 아니라면
+                    return false;   // false 반환
+                } // if end
+            } // while end
+        } catch ( SQLException e ){
+            System.out.println("[supply05] SQL 기재 실패");
         } // try-catch end
         return result;
     } // func end

@@ -1,8 +1,10 @@
 package View;
 
 import Controller.*;
+import Model.DTO.StatsDto;
 import Model.DTO.SupplyLogDto;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -17,6 +19,8 @@ public class View {
     private ReviewController reviewController = ReviewController.getInstance();
     private StatsController statsController = StatsController.getInstance();
     private SupplyLogController supplyLogController = SupplyLogController.getInstance();
+    // 천 단위 콤마를 위한 NumberFormat 클래스
+    private NumberFormat nf = NumberFormat.getInstance();
 
     // 싱글톤
     private View() { }
@@ -232,7 +236,7 @@ public class View {
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
             try {
-                if (choice == 1) {
+                if (choice == 1) {          // 가맹점 발주 요청 보기를 선택하면
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
                     System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
@@ -252,9 +256,9 @@ public class View {
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo );
                     } // for end
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
-                } else if (choice == 2) {
+                } else if (choice == 2) {   // 출고 처리를 선택하면
                     System.out.print("발주번호 : "); int supNo = scan.nextInt();
-                    SupplyLogDto supplyLogDto = SupplyLogController.getInstance().supplyPrint( supNo );
+                    SupplyLogDto supplyLogDto = supplyLogController.supplyPrint( supNo );
                     if ( supplyLogDto.getFranNo() != 0 ){       // 발주번호에 해당하는 발주가 존재한다면
                         System.out.println("──┤ 발주번호 정보 조회 ├─────────────────────────────────────────────────────");
                         System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
@@ -280,11 +284,11 @@ public class View {
                             System.out.println("[경고] 가맹점명이 일치하지 않습니다.");
                         } // if end
                     }else { // 발주번호에 해당하는 발주가 존재하지 않는다면
-                        System.out.println("[경고] 존재하지않는 발주번호입니다.");
+                        System.out.println("[경고] 출고처리할 수 없는 발주번호입니다.");
                     } // if end
-                } else if (choice == 3) {
+                } else if (choice == 3) {   // 발주 요청 취소 처리를 선택하면
                     System.out.print("발주번호 : "); int supNo = scan.nextInt();
-                    SupplyLogDto supplyLogDto = SupplyLogController.getInstance().supplyPrint( supNo );
+                    SupplyLogDto supplyLogDto = supplyLogController.supplyPrint( supNo );
                     if ( supplyLogDto.getFranNo() != 0 ){       // 발주번호에 해당하는 발주가 존재한다면
                         System.out.println("──┤ 발주번호 정보 조회 ├─────────────────────────────────────────────────────");
                         System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
@@ -311,9 +315,9 @@ public class View {
                             System.out.println("[경고] 가맹점명이 일치하지 않습니다.");
                         } // if end
                     }else { // 발주번호에 해당하는 발주가 존재하지 않는다면
-                        System.out.println("[경고] 존재하지않는 발주번호입니다.");
+                        System.out.println("[경고] 취소처리할 수 없는 발주번호입니다.");
                     } // if end
-                } else if (choice == 4) {
+                } else if (choice == 4) {   // 돌아가기를 선택하면
                     break;
                 } else {
                     System.out.println("[경고] 올바르지 못한 메뉴입니다.");
@@ -337,7 +341,7 @@ public class View {
 
     // [5] 통계보기
     public void statusView() {
-        for (; ; ) {
+        for ( ; ; ) {
             System.out.println(
                     "╔════════════════════════════════════╣ 통계 보기 ╠═══════════════════════════════════╗\n" +
                     "║                       1. 제품별 통계      ▌  2. 지역별 통계                          ║\n" +
@@ -352,37 +356,73 @@ public class View {
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
                     System.out.println("통계번호 \t 제품명 \t 판매금액 ");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // TODO 5.1. 제품별 통계 func 연결
+                    // controller로부터 통계자료 받기
+                    ArrayList<StatsDto> statsDtos = statsController.proStatsPrint();
+                    for( int i = 0; i < statsDtos.size(); i++ ){   // 통계자료 하나씩 순회하기
+                        StatsDto statsDto = statsDtos.get(i);
+                        // 통계자료에서 하나씩 값 꺼내기
+                        int proNo = statsDto.getNumber();
+                        int totalPrice = statsDto.getTotalPrice();
+                        // totalPrice 천 단위 콤마 찍기
+                        String price = nf.format( totalPrice );
+                        // 제품번호 -> 제품명으로 변환하기
+                        String proName = productController.toProNameChange( proNo );
+                        // 하나씩 출력하기
+                        System.out.printf("  %d \t %s \t %s원\n", i + 1, proName, price );
+                    } // for end
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 2) {
-
                     System.out.println("※ 통계는 판매 금액 기준 상위 10건만 조회가능합니다. " +
                             "   통계 집계기간은 최근 30일입니다.");
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
                     System.out.println("통계번호 \t 지역 \t 매출액 ");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // TODO 5.2. 지역별 통계 func 연결
+                    // controoler로부터 통계자료 받기
+                    ArrayList<StatsDto> statsDtos = statsController.regionStatsPrint();
+                    for ( int i = 0; i < statsDtos.size(); i++ ){   // 통계자료 하나씩 순회하기
+                        StatsDto statsDto = statsDtos.get(i);
+                        // 통계자료에서 하나씩 값 꺼내기
+                        String region = statsDto.getRegion();
+                        int totalPrice = statsDto.getTotalPrice();
+                        // totalPrice 천 단위 콤마찍기
+                        String price = nf.format( totalPrice );
+                        // 하나씩 출력하기
+                        System.out.printf("  %d \t %s \t %s원\n", i + 1, region, price );
+                    } // for end
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-
                 } else if (choice == 3) {
-
                     System.out.println("※ 통계 집계기간은 최근 30일입니다.");
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    System.out.println("시간대 \t 매출액 ");
+                    System.out.println("\t   시간대 \t\t  매출액 ");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // TODO 5.3. 시간대별 통계 func 연결
+                    // controller로부터 통계자료 받기
+                    ArrayList<StatsDto> statsDtos = statsController.hourStatsPrint();
+                    for ( int i = 0; i < statsDtos.size(); i++ ){   // 통계자료 하나씩 순회하기
+                        StatsDto statsDto = statsDtos.get(i);
+                        // 통계자료에서 값 꺼내기
+                        int totalPrice = statsDto.getTotalPrice();
+                        // totalPrice 천 단위 콤마찍기
+                        String price = nf.format( totalPrice );
+                        // 하나씩 출력하기 : 출력 형식을 맞추기 위한 if문
+                        if ( i < 9 ){
+                            System.out.printf("0%d : 00 ~ 0%d : 00 \t %s원\n", i, i + 1, price);
+                        } else if ( i == 9) {
+                            System.out.printf("0%d : 00 ~ %d : 00 \t %s원\n", i, i + 1, price);
+                        } else {
+                            System.out.printf("%d : 00 ~ %d : 00 \t %s원\n", i, i + 1, price);
+                        } // if end
+                    } // for end
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    
                 } else if (choice == 4) {
                     break;
                 } else {
                     System.out.println("[경고] 올바르지 못한 메뉴입니다.");
-                }
+                } // if end
             } catch (InputMismatchException e) {
                 System.out.println("[경고] 입력 타입이 올바르지 못합니다.");
             } catch (Exception e) {
                 System.out.println("[경고] 관리자에게 문의하세요.");
-            }
+            } // try-catch end
         } // 무한루프 종료
     } // statusView end
 
