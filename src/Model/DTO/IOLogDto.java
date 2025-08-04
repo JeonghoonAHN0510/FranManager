@@ -9,13 +9,12 @@ public class IOLogDto {
         private int ioQty;      // 입출고수량
         private String ioDate;  // 입출고일자
         private String ioMemo;  // 메모
+
     //2. 생성자
     //1) 기본생성자
-
     public IOLogDto() {
     }
     //2) 전체생성자
-
     public IOLogDto(int ioNo, int proNo, int IO, int ioQty, String ioDate, String ioMemo) {
         this.ioNo = ioNo;
         this.proNo = proNo;
@@ -25,10 +24,8 @@ public class IOLogDto {
         this.ioMemo = ioMemo;
     }
 
-
     //3. 메소드
     //1)setter, getter
-
     public int getIoNo() {
         return ioNo;
     }
@@ -78,8 +75,6 @@ public class IOLogDto {
     }
 
     //2) toString
-
-
     @Override
     public String toString() {
         return "IOLogDto{" +
@@ -91,4 +86,4 @@ public class IOLogDto {
                 ", ioMemo='" + ioMemo + '\'' +
                 '}';
     }
-}
+} // class end
