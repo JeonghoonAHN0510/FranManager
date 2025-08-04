@@ -22,7 +22,7 @@ public class SupplyLogController {
     // 매개변수 : X
     // 반환타입 : ArrayList<SupplyLogDto>
     public ArrayList<SupplyLogDto> supplyPrintAll(){
-        // 1. 유효성 검사(필요 시)
+        // 1. (필요 시) 유효성 검사
         // 2. dao로부터 반환받기
         ArrayList<SupplyLogDto> supplyLogDtos = supplyLogDao.supplyPrintAll();
         // 3. view에게 전달하기
@@ -36,9 +36,9 @@ public class SupplyLogController {
     // 매개변수 : int supNo
     // 반환타입 : SupplyLogDto
     public SupplyLogDto supplyPrint( int supNo ){
-        // 1. dao에게 전달 후 결과 받기
+        // 1. (필요 시) 유효성 검사
+        // 2. dao에게 전달 후 결과 받기
         SupplyLogDto supplyLogDto = supplyLogDao.supplyPrint( supNo );
-
         // 3. view에게 전달하기
         return supplyLogDto;
     } // func end
@@ -57,4 +57,30 @@ public class SupplyLogController {
     // 매개변수 : int supNo, String franName
     // 반환타입 : boolean -> true(성공) / false(실패)
 
+
+    // supply05. 가맹점명 반환(번호 > 이름)
+    // 기능설명 : [가맹점번호]를 매개변수로 받아, 해당하는 가맹점명을 반환한다.
+    // 메소드명 : toFranNameChange()
+    // 매개변수 : int franNo
+    // 반환타입 : String
+    public String toFranNameChange( int franNo ){
+        // 1. (필요 시) 유효성 검사
+        // 2. dao에게 전달 후 결과 받기
+        String franName = SupplyLogDao.getInstance().toFranNameChange( franNo );
+        // 3. view에게 결과 전달하기
+        return franName;
+    } // func end
+
+    // supply06. 제품명 반환(번호 > 이름)
+    // 기능설명 : [제품번호]를 매개변수로 받아, 해당하는 제품명을 반환한다.
+    // 메소드명 : toProNameChange()
+    // 매개변수 : int proNo
+    // 반환타입 : String
+    public String toProNameChange( int proNo ){
+        // 1. (필요 시) 유효성 검사
+        // 2. dao에게 전달 후 결과 받기
+        String proName = SupplyLogDao.getInstance().toProNameChange( proNo );
+        // 3. view에게 결과 전달하기
+        return proName;
+    } // func end
 } // class end

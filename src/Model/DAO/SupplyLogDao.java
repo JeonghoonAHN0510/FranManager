@@ -125,10 +125,10 @@ public class SupplyLogDao {
 
     // supply05. 가맹점명 반환(번호 > 이름)
     // 기능설명 : [가맹점번호]를 매개변수로 받아, 해당하는 가맹점명을 반환한다.
-    // 메소드명 : toStoreNameChange()
+    // 메소드명 : toFranNameChange()
     // 매개변수 : int franNo
     // 반환타입 : String
-    public String toStoreNameChange( int franNo ){
+    public String toFranNameChange( int franNo ){
         String franName = "";       // 반환할 빈 String 생성
         try {
             // 1. SQL 작성 : 매개변수로 받은 franNo가 가맹점번호인 가맹점명을 select

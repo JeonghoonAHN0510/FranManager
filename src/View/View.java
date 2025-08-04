@@ -227,11 +227,9 @@ public class View {
             int choice = scan.nextInt();
             try {
                 if (choice == 1) {
-
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
                     System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // TODO 3.1. 가맹점 발주 요청 보기 func 연결
                     // controller에게 결과값 받기
                     ArrayList<SupplyLogDto> supplyLogDtos = supplyLogController.supplyPrintAll();
                     for ( SupplyLogDto supplyLogDto : supplyLogDtos ){      // 리스트를 하나씩 순회하면서
@@ -241,32 +239,55 @@ public class View {
                         int proNo = supplyLogDto.getProNo();
                         int supQty = supplyLogDto.getSupQty();
                         String supMemo = supplyLogDto.getSupMemo();
-                        // todo 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
-
-
-
+                        // 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
+                        String franName = SupplyLogController.getInstance().toFranNameChange( franNo );
+                        String proName = SupplyLogController.getInstance().toProNameChange( proNo );
+                        // 값 출력하기
+                        System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo );
                     } // for end
-
+                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    // todo 가맹점명, 제품명 등의 간격 맞추는 방법 생각
                 } else if (choice == 2) {
-                    System.out.print("발주번호 : ");
-                    int supNo = scan.nextInt();
-
-                    System.out.println("──┤ 발주번호 정보 조회 ├─────────────────────────────────────────────────────");
-                    System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // TODO 단일 발주정보 출력 func 연결
-
+                    System.out.print("발주번호 : "); int supNo = scan.nextInt();
+                    SupplyLogDto supplyLogDto = SupplyLogController.getInstance().supplyPrint( supNo );
+                    if ( supplyLogDto.getFranNo() != 0 ){       // 발주번호에 해당하는 발주가 존재한다면
+                        System.out.println("──┤ 발주번호 정보 조회 ├─────────────────────────────────────────────────────");
+                        System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
+                        // 원하는 값 꺼내오기
+                        int franNo = supplyLogDto.getFranNo();
+                        int proNo = supplyLogDto.getProNo();
+                        int supQty = supplyLogDto.getSupQty();
+                        String supMemo = supplyLogDto.getSupMemo();
+                        // 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
+                        String franName = SupplyLogController.getInstance().toFranNameChange( franNo );
+                        String proName = SupplyLogController.getInstance().toProNameChange( proNo );
+                        // 값 출력하기
+                        System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo );
+                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    }else { // 발주번호에 해당하는 발주가 존재하지 않는다면
+                        System.out.println("[경고] 존재하지않는 발주번호입니다.");
+                    } // if end
                     // TODO 3.2. 출고 처리 func 연결
                 } else if (choice == 3) {
-                    System.out.print("발주번호 : ");
-                    int supNo = scan.nextInt();
-
-                    System.out.println("──┤ 발주 요청 취소 ├────────────────────────────────────────────────────────");
-                    System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // TODO 단일 발주정보 출력 func 연결
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
-
+                    System.out.print("발주번호 : "); int supNo = scan.nextInt();
+                    SupplyLogDto supplyLogDto = SupplyLogController.getInstance().supplyPrint( supNo );
+                    if ( supplyLogDto.getFranNo() != 0 ){       // 발주번호에 해당하는 발주가 존재한다면
+                        System.out.println("──┤ 발주번호 정보 조회 ├─────────────────────────────────────────────────────");
+                        System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
+                        // 원하는 값 꺼내오기
+                        int franNo = supplyLogDto.getFranNo();
+                        int proNo = supplyLogDto.getProNo();
+                        int supQty = supplyLogDto.getSupQty();
+                        String supMemo = supplyLogDto.getSupMemo();
+                        // 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
+                        String franName = SupplyLogController.getInstance().toFranNameChange( franNo );
+                        String proName = SupplyLogController.getInstance().toProNameChange( proNo );
+                        // 값 출력하기
+                        System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo );
+                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    }else { // 발주번호에 해당하는 발주가 존재하지 않는다면
+                        System.out.println("[경고] 존재하지않는 발주번호입니다.");
+                    } // if end
                     // TODO 3.3. 발주 요청 취소 처리 func 연결
 
                 } else if (choice == 4) {
