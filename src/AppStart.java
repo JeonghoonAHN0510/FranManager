@@ -14,8 +14,8 @@ public class AppStart {
             // System.out.println(result);
 
         // 0801 가맹점 전체조회 테스트 X 다시해야함  // TODO
-        // ArrayList<FranDto> result2 = FranController.getInstance().franPrint();
-        // System.out.println(result2);
+        ArrayList<FranDto> result2 = FranController.getInstance().franPrint();
+        System.out.println(result2);
 
     }
 }
