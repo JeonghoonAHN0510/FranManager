@@ -1,6 +1,9 @@
 package View;
 
+import Controller.IOLogController;
+import Controller.ProductController;
 import Controller.SupplyLogController;
+import Model.DTO.IOLogDto;
 import Model.DTO.SupplyLogDto;
 
 import java.util.ArrayList;
@@ -11,6 +14,8 @@ public class View {
     // Scanner·Controller 등 외부 참조
     private Scanner scan = new Scanner(System.in);
     private SupplyLogController supplyLogController = SupplyLogController.getInstance();
+    private ProductController productController = ProductController.getInstance();
+    private IOLogController ioLogController = IOLogController.getInstance();
 
     // 싱글톤
     private View() { }
@@ -156,52 +161,119 @@ public class View {
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
             try {
-                if (choice == 1) {
+                if (choice == 1) { // 2.1. 재고 현황 보기 func 연결
                     System.out.println("═══════════════════════════════════════════════════════════════════════");
                     System.out.println("제품번호 \t 제품명 \t 재고수량 \t 비고");
                     System.out.println("───────────────────────────────────────────────────────────────────────");
-                    // TODO 2.1. 재고 현황 보기 func 연결
+
                     System.out.println("───────────────────────────────────────────────────────────────────────");
                     
-                } else if (choice == 2) {
+                } else if (choice == 2) { // 2.2. 재고 로그 등록 func 연결
+                    // [2.2.1] console에서 정보 받기
                     scan.nextLine();
                     System.out.print("제품명 : ");
-                    String franName = scan.nextLine();
+                    String proName = scan.nextLine();
                     System.out.print("입고 수량 : ");
                     int ioQty = scan.nextInt();
-                    
-                    // TODO 2.2. 재고 등록 func 연결
+                    scan.nextLine();
+                    System.out.print("메모 : ");
+                    String ioMemo = scan.nextLine();
 
-                } else if (choice == 3) {
+                    // [2.2.2] proName > proNo 변환 메소드
+                    int proNo = productController.toIntproNoChange(proName);
+                    if(proNo == 0 ) {
+                        System.out.println("[경고] 올바르지 못한 상품명 입니다.");
+                        return;
+                    }
+                    // [2.2.3] 재고 등록 메소드 실행
+                    boolean result = ioLogController.ioLogAdd(proNo, ioQty, ioMemo);
+
+                    // [2.2.4] 결과에 따른 출력
+                    if(result == true){
+                        System.out.println("[안내] 제품 재고를 정상적으로 등록되었습니다. \n");
+                    } else {
+                        System.out.println("[경고] 제품 재고 등록을 실패하였습니다.");
+                    }
+
+                } else if (choice == 3) { // 2.3. 재고 로그 func 연결
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
                     System.out.println("재고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입고일자 \t 메모");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // TODO 2.3. 재고 로그 func 연결
+
+                    // [2.3.1] IOLogController, IOLogPrint() 실행
+                    ArrayList<IOLogDto> ioLogDtoList = ioLogController.IOLogPrint();
+
+                    // [2.3.2] 반복문
+                    for(IOLogDto ioLogDto : ioLogDtoList){
+                        // [2.3.3] 입고·출고 text로 변환
+                        String io = "";
+                        if(ioLogDto.getIO() == 0){
+                            io = "입고";
+                        } else {
+                            io = "출고";
+                        }
+                        // [2.3.4] 출력 // TODO 제품명 변환 함수 연결-옹태경
+                        System.out.printf("%d \t %d \t %s \t %s \t %d \t %s \t %s \n",
+                                ioLogDto.getIoNo(), ioLogDto.getProNo(), "변환함수", io, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
+                    }
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
 
-                } else if (choice == 4) {
+                } else if (choice == 4) { //2.4. 재고 수정 func 연결
                     System.out.print("재고번호 : ");
                     int ioNo = scan.nextInt();
+
+                    // [4.1] 단일 재고 이력 조회 func / IoController - oneIOLogPrint()
+                    IOLogDto ioLogDto = ioLogController.oneIOLogPrint(ioNo);
+                    if(ioLogDto == null){
+                        System.out.println("[경고] 올바르지 못한 재고번호 입니다.");
+                        return;
+                    }
 
                     System.out.println("──┤ 선택 가맹점 정보 ├───────────────────────────────────────────────────────");
                     System.out.println("재고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입고일자 \t 메모");
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // TODO 단일 재고 이력 조회 func 연결
 
+                    // [4.2] 반복문 출력
+                    // [4.2.1] 입고·출고 text로 변환
+                    String ioString = "";
+                    if(ioLogDto.getIO() == 0){
+                        ioString = "입고";
+                    } else {
+                        ioString = "출고";
+                    }
 
+                    // TODO 제품명 변환 함수 연결-옹태경
+                    System.out.printf("%d \t %d \t %s \t %s \t %d \t %s \t %s \n",
+                            ioLogDto.getIoNo(), ioLogDto.getProNo(), "변환함수", ioString, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
+
+                    // [4.3] 수정 정보 받기
                     System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────");
                     System.out.print("제품번호 : ");
                     int proNo = scan.nextInt();
                     System.out.print("입·출고 : ");
                     String IO = scan.next();
+                    int io = 0 ;
+                    if(IO.equals("출고")){
+                        System.out.print("발주번호 : ");
+                        io = scan.nextInt();
+                    } else if ( IO.equals("입고") ){
+                        io = 0 ;
+                    }
                     System.out.print("수량 : ");
                     int ioQty = scan.nextInt();
                     scan.nextLine();
                     System.out.print("메모 : ");
                     String ioMemo = scan.nextLine();
 
-                    // TODO 2.4. 재고 수정 func 연결
+                    // [4.4] 수정 정보 IoLogControll에 전달
+                    boolean result = ioLogController.ioUpdate(ioNo, proNo ,io, ioQty, ioMemo);
 
+                    // [4.5] 결과 출력
+                    if(result) {
+                        System.out.println( "[안내] 재고를 성공적으로 수정하였습니다.");
+                    } else {
+                        System.out.println("[경고] 재고 수정을 실패하였습니다.");
+                    }
                 } else if (choice == 5) {
                     break;
                 } else {
