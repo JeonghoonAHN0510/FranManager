@@ -9,22 +9,18 @@ public class ReviewDto {
 
     // 2. 생성자
     // 1) 기본생성자
-
     public ReviewDto() {
     }
 
     // 2) 전체생성자
-
     public ReviewDto(int reviewNo, String review, int orderNo) {
         this.reviewNo = reviewNo;
         this.review = review;
         this.orderNo = orderNo;
     }
 
-
     // 3. 메소드
     // 1) setter, getter
-
     public int getReviewNo() {
         return reviewNo;
     }
@@ -50,8 +46,6 @@ public class ReviewDto {
     }
 
     // 2) toString
-
-
     @Override
     public String toString() {
         return "ReviewDto{" +
@@ -60,4 +54,4 @@ public class ReviewDto {
                 ", orderNo=" + orderNo +
                 '}';
     }
-}
+} // class end
