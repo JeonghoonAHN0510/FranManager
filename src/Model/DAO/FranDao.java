@@ -49,7 +49,7 @@ public class FranDao {
     public ArrayList<FranDto> franPrint(){
         ArrayList<FranDto> list = new ArrayList<>();
         try{// SQL 작성
-            String sql = "select *from Fran";
+            String sql = "select f.franNO,f.franName,f.franAddress,f.franCall,f.franOwner,f.franStatus , (orderQty*orderPrice)   from fran f join OrderLog o on f.franNo=o.franNo group by f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner,f.franStatus , (orderQty*orderPrice)";
             // SQL 기재
             PreparedStatement ps = conn.prepareStatement(sql);
             // SQL 실행
