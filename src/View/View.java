@@ -1,19 +1,20 @@
 package View;
 
+import Controller.SupplyLogController;
+import Model.DTO.SupplyLogDto;
+
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class View {
     // Scanner·Controller 등 외부 참조
     private Scanner scan = new Scanner(System.in);
+    private SupplyLogController supplyLogController = SupplyLogController.getInstance();
 
     // 싱글톤
-    private View() {
-    }
-
-    ;
+    private View() { }
     private static final View instance = new View();
-
     public static View getInstance() {
         return instance;
     }
@@ -157,14 +158,14 @@ public class View {
             try {
                 if (choice == 1) {
                     System.out.println("═══════════════════════════════════════════════════════════════════════");
-                    System.out.println("상품번호 \t 상품명 \t 재고수량 \t 비고");
+                    System.out.println("제품번호 \t 제품명 \t 재고수량 \t 비고");
                     System.out.println("───────────────────────────────────────────────────────────────────────");
                     // TODO 2.1. 재고 현황 보기 func 연결
                     System.out.println("───────────────────────────────────────────────────────────────────────");
                     
                 } else if (choice == 2) {
                     scan.nextLine();
-                    System.out.print("상품명 : ");
+                    System.out.print("제품명 : ");
                     String franName = scan.nextLine();
                     System.out.print("입고 수량 : ");
                     int ioQty = scan.nextInt();
@@ -173,7 +174,7 @@ public class View {
 
                 } else if (choice == 3) {
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    System.out.println("재고번호 \t 상품번호 \t 상품명 \t 입고·출고 \t 수량 \t 입고일자 \t 메모");
+                    System.out.println("재고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입고일자 \t 메모");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // TODO 2.3. 재고 로그 func 연결
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
@@ -183,13 +184,13 @@ public class View {
                     int ioNo = scan.nextInt();
 
                     System.out.println("──┤ 선택 가맹점 정보 ├───────────────────────────────────────────────────────");
-                    System.out.println("재고번호 \t 상품번호 \t 상품명 \t 입고·출고 \t 수량 \t 입고일자 \t 메모");
+                    System.out.println("재고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입고일자 \t 메모");
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     // TODO 단일 재고 이력 조회 func 연결
 
 
                     System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────");
-                    System.out.print("상품번호 : ");
+                    System.out.print("제품번호 : ");
                     int proNo = scan.nextInt();
                     System.out.print("입·출고 : ");
                     String IO = scan.next();
@@ -216,7 +217,7 @@ public class View {
 
     // [3] 발주관리
     public void ioManage() {
-        for (; ; ) {
+        for ( ; ; ) {
             System.out.println(
                     "╔════════════════════════════════════╣ 발주 관리 ╠═══════════════════════════════════╗\n" +
                     "║                   1. 가맹점 발주 요청 보기  ▌  2. 출고 처리                          ║\n" +
@@ -228,16 +229,30 @@ public class View {
                 if (choice == 1) {
 
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    System.out.println("발주번호 \t 가맹점명 \t 상품 \t 주문수량 \t 메모");
+                    System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // TODO 3.1. 가맹점 발주 요청 보기 func 연결
+                    // controller에게 결과값 받기
+                    ArrayList<SupplyLogDto> supplyLogDtos = supplyLogController.supplyPrintAll();
+                    for ( SupplyLogDto supplyLogDto : supplyLogDtos ){      // 리스트를 하나씩 순회하면서
+                        // 원하는 값 꺼내오기
+                        int supNo = supplyLogDto.getSupNo();
+                        int franNo = supplyLogDto.getFranNo();
+                        int proNo = supplyLogDto.getProNo();
+                        int supQty = supplyLogDto.getSupQty();
+                        String supMemo = supplyLogDto.getSupMemo();
+                        // todo 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
+
+
+
+                    } // for end
 
                 } else if (choice == 2) {
                     System.out.print("발주번호 : ");
                     int supNo = scan.nextInt();
 
                     System.out.println("──┤ 발주번호 정보 조회 ├─────────────────────────────────────────────────────");
-                    System.out.println("발주번호 \t 가맹점명 \t 상품 \t 주문수량 \t 메모");
+                    System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     // TODO 단일 발주정보 출력 func 연결
 
@@ -247,7 +262,7 @@ public class View {
                     int supNo = scan.nextInt();
 
                     System.out.println("──┤ 발주 요청 취소 ├────────────────────────────────────────────────────────");
-                    System.out.println("발주번호 \t 가맹점명 \t 상품 \t 주문수량 \t 메모");
+                    System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     // TODO 단일 발주정보 출력 func 연결
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
@@ -281,7 +296,7 @@ public class View {
         for (; ; ) {
             System.out.println(
                     "╔════════════════════════════════════╣ 통계 보기 ╠═══════════════════════════════════╗\n" +
-                    "║                       1. 상품별 통계      ▌  2. 지역별 통계                          ║\n" +
+                    "║                       1. 제품별 통계      ▌  2. 지역별 통계                          ║\n" +
                     "║                       3. 시간대별 통계    ▌  4. 메인으로 돌아가기                     ║\n" +
                     "╚═══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
@@ -291,9 +306,9 @@ public class View {
                     System.out.println("※ 통계는 판매 금액 기준 상위 10건만 조회가능합니다. " +
                             "   통계 집계기간은 최근 30일입니다.");
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    System.out.println("통계번호 \t 상품명 \t 판매금액 ");
+                    System.out.println("통계번호 \t 제품명 \t 판매금액 ");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // TODO 5.1. 상품별 통계 func 연결
+                    // TODO 5.1. 제품별 통계 func 연결
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 2) {
 
@@ -333,14 +348,14 @@ public class View {
             System.out.println(
                     "╔════════════════════════════════════╣ 발주 관리 ╠═══════════════════════════════════╗\n" +
                     "║                       1. 리뷰 전체 조회    ▌  2. 가맹점별 리뷰 조회                   ║\n" +
-                    "║                       3. 상품별 리뷰 조회  ▌  4. 메인으로 돌아가기                    ║\n" +
+                    "║                       3. 제품별 리뷰 조회  ▌  4. 메인으로 돌아가기                    ║\n" +
                     "╚═══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
             try {
                 if (choice == 1) {
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    System.out.println("리뷰번호 \t 판매번호 \t 상품명 \t 가맹점명 \t 리뷰");
+                    System.out.println("리뷰번호 \t 판매번호 \t 제품명 \t 가맹점명 \t 리뷰");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // TODO 6.1. 리뷰 전체 조회 func 연결
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
@@ -350,19 +365,19 @@ public class View {
                     String franName = scan.next();
 
                     System.out.println("──┤ 선택 가맹점 리뷰 ├───────────────────────────────────────────────────────");
-                    System.out.println("리뷰번호 \t 판매번호 \t 상품명 \t 가맹점명 \t 리뷰");
+                    System.out.println("리뷰번호 \t 판매번호 \t 제품명 \t 가맹점명 \t 리뷰");
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     // TODO 6.2. 가맹점별 리뷰 조회 func 연결
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
 
                 } else if (choice == 3) {
-                    System.out.print("상품명 : ");
+                    System.out.print("제품명 : ");
                     String proName = scan.next();
 
-                    System.out.println("──┤ 선택 상품 리뷰 ├─────────────────────────────────────────────────────────");
-                    System.out.println("리뷰번호 \t 판매번호 \t 상품명 \t 가맹점명 \t 리뷰");
+                    System.out.println("──┤ 선택 제품 리뷰 ├─────────────────────────────────────────────────────────");
+                    System.out.println("리뷰번호 \t 판매번호 \t 제품명 \t 가맹점명 \t 리뷰");
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // TODO 6.3. 상품별 리뷰 조회 func 연결
+                    // TODO 6.3. 제품별 리뷰 조회 func 연결
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
 
                 } else if (choice == 4) {
