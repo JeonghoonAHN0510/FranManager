@@ -41,17 +41,6 @@ public class IOLogDao {
 
     // 메소드 =====================================================================================
 
-    // [IOLog00]
-    // 매개변수 :
-    // 반환타입 :
-    // 반환 :
-    // [0.1] SQL 작성
-    // [0.2] SQL 기재
-    // [0.3] SQL 매개변수 대입
-    // [0.4] SQL 실행
-    // [0.5] SQL 실행 결과 확인
-
-
     // [IOLog01] 재고로그등록·재고등록 /  ioLogAdd()
     // 매개변수 : String proName, int ioQty
     // 반환타입 : boolean
@@ -163,8 +152,8 @@ public class IOLogDao {
     // 매개변수 : -
     // 반환타입 : Map<int, int>
     // 반환 : Map<int, int> 출력, 단, 상품번호별 합산 후 출력
-    public Map< Integer, Integer> IOPrint(){
-        Map< Integer, Integer> map = new HashMap<>();
+    public Map<Integer, Integer> IOPrint() {
+        Map<Integer, Integer> map = new HashMap<>();
         try {
             // [4.1] SQL 작성
             String sql = "SELECT proNo, SUM(CASE WHEN io = 0 THEN ioQty ELSE -ioQty END) AS totalQty FROM ioLog GROUP BY proNo order by proNo";
@@ -178,13 +167,13 @@ public class IOLogDao {
             ResultSet rs = ps.executeQuery();
 
             // [4.5] SQL 실행 결과 확인
-            while (rs.next()){
+            while (rs.next()) {
                 map.put(rs.getInt("proNo"), rs.getInt("totalQty"));
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("IOLogDao.IOPrint");
-            System.out.println("[예외발생] " + e );
+            System.out.println("[예외발생] " + e);
         }
         return map;
     } // func end
@@ -202,15 +191,15 @@ public class IOLogDao {
             // [5.2] SQL 기재
             PreparedStatement ps = conn.prepareStatement(sql);
             // [5.3] SQL 매개변수 대입
-            ps.setInt(1,ioLogDto.getProNo());
-            ps.setInt(2,ioLogDto.getIO());
-            ps.setInt(3,ioLogDto.getIoQty());
-            ps.setString(4,ioLogDto.getIoMemo());
-            ps.setInt(5,ioLogDto.getIoNo());
+            ps.setInt(1, ioLogDto.getProNo());
+            ps.setInt(2, ioLogDto.getIO());
+            ps.setInt(3, ioLogDto.getIoQty());
+            ps.setString(4, ioLogDto.getIoMemo());
+            ps.setInt(5, ioLogDto.getIoNo());
             // [5.4] SQL 실행
             int count = ps.executeUpdate();
             // [5.5] SQL 실행 결과 확인
-            if(count == 1 ){
+            if (count == 1) {
                 result = true;
             } else {
                 result = false;
@@ -223,4 +212,34 @@ public class IOLogDao {
         return result;
     }
 
+    // [IOLog06] 입출고번호 유효성 검사 / ioNoCheck()
+    // 매개변수 : int ioNo
+    // 반환타입 : boolean
+    // 반환 : boolean
+
+    public boolean ioNoCheck(int invenNo) {
+        boolean result = false;
+        try {
+            // [6.1] SQL 작성
+            String sql = "select * from iolog where ioNO = ?";
+            // [6.2] SQL 기재
+            PreparedStatement ps = conn.prepareStatement(sql);
+            // [6.3] SQL 매개변수 대입
+            ps.setInt(1,invenNo);
+            // [6.4] SQL 실행
+            ResultSet rs = ps.executeQuery();
+            // [6.5] SQL 실행 결과 확인
+            rs.next();
+
+            int ioNo = rs.getInt("ioNo");
+            if( ioNo != 0 ){
+                result = true;
+            }
+
+        } catch (Exception e) {
+            System.out.println("IOLogDao.ioNoCheck");
+            System.out.println("[예외발생] " + e);
+        }
+        return result;
+    } // func end
 } // class end

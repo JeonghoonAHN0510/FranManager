@@ -90,4 +90,16 @@ public class IOLogController {
 
     } //func end
 
+    // [IOLog06] 입출고번호 유효성 검사 / ioNoCheck()
+    // 매개변수 : int invenNo
+    // 반환타입 : boolean
+    // 반환 : boolean
+
+    public boolean ioNoCheck(int invenNo) {
+        // [6.1] dao에 전달
+        boolean result = ioLogDao.ioNoCheck(invenNo);
+        // [6.2] 결과 반환
+        return result;
+    } // func end
+
 } // class end

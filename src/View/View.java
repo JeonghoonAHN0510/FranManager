@@ -182,12 +182,12 @@ public class View {
                     System.out.println("제품번호 \t 제품명 \t 재고수량 \t 비고");
                     System.out.println("───────────────────────────────────────────────────────────────────────");
 
-                    for(int proNo : ioMap.keySet()){ // TODO 제품명 변환 함수 연결-옹태경
+                    for(int proNo : ioMap.keySet()){
                         //memo 출력
                         String memo = "";
                         if( ioMap.get(proNo) <= 10) {memo ="[주의] 제고가 부족합니다."; }
 
-                        System.out.printf("%d \t %s \t %d \t %s \n", proNo, "변환필요", ioMap.get(proNo), memo);
+                        System.out.printf("%d \t %s \t %d \t %s \n", proNo, productController.toProNameChange(proNo), ioMap.get(proNo), memo);
                     }
 
                     System.out.println("───────────────────────────────────────────────────────────────────────");
@@ -236,9 +236,9 @@ public class View {
                         } else {
                             io = "출고";
                         }
-                        // [2.3.4] 출력 // TODO 제품명 변환 함수 연결-옹태경
+                        // [2.3.4] 출력
                         System.out.printf("%d \t %d \t %s \t %s \t %d \t %s \t %s \n",
-                                ioLogDto.getIoNo(), ioLogDto.getProNo(), "변환함수", io, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
+                                ioLogDto.getIoNo(), ioLogDto.getProNo(), productController.toProNameChange(ioLogDto.getProNo()), io, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
                     }
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
 
@@ -266,9 +266,8 @@ public class View {
                         ioString = "출고";
                     }
 
-                    // TODO 제품명 변환 함수 연결-옹태경
                     System.out.printf("%d \t %d \t %s \t %s \t %d \t %s \t %s \n",
-                            ioLogDto.getIoNo(), ioLogDto.getProNo(), "변환함수", ioString, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
+                            ioLogDto.getIoNo(), ioLogDto.getProNo(), productController.toProNameChange(ioLogDto.getProNo()), ioString, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
 
                     // [4.3] 수정 정보 받기
                     System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────");
@@ -309,7 +308,7 @@ public class View {
                 System.out.println("[경고] 관리자에게 문의하세요.");
             }
         } // 무한루프 종료
-    } // invenManage end
+    } // ioManage end
 
     // [3] 발주관리
     public void ioManage() {
