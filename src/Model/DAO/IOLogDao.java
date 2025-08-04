@@ -240,5 +240,4 @@ public class IOLogDao {
         }
         return result;
     } // func end
-
 } // class end

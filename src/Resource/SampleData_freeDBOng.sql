@@ -4,7 +4,7 @@ drop table if exists SupplyLog;
 drop table if exists Store;
 drop table if exists Review;
 drop table if exists OrderLog;
-drop table if exists IOLog;
+drop table if exists ioLog;
 drop table if exists Product;
 drop table if exists Fran;
 
@@ -52,7 +52,7 @@ create table OrderLog(
     constraint foreign key(proNo) references Product(proNo)
 );
 
-create table IOLog(
+create table ioLog(
     ioNo int auto_increment,
     proNo int,
     IO int default 0,

@@ -185,7 +185,7 @@ public class View {
                     for(int proNo : ioMap.keySet()){
                         //memo 출력
                         String memo = "";
-                        if( ioMap.get(proNo) <= 10) {memo ="[주의] 제고가 부족합니다."; }
+                        if( ioMap.get(proNo) <= 10) {memo ="[주의] 재고가 부족합니다."; }
 
                         System.out.printf("%d \t %s \t %d \t %s \n", proNo, productController.toProNameChange(proNo), ioMap.get(proNo), memo);
                     }
