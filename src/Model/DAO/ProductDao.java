@@ -21,6 +21,33 @@ public class ProductDao {
         }catch (Exception e ){ System.out.println(e);   }
     } // func end
 
+    // [product01] 제품번호 반환 / toIntproNoChange()
+    // 매개변수 : String proName
+    // 반환타입 : int
+    // 반환 : proNo
+    public int toIntproNoChange(String proName) {
+        int proNo = 0;
+        try {
+            // [1.1] SQL 작성
+            String sql = "select proNo from product where proName=?";
+            // [1.2] SQL 기재
+            PreparedStatement ps = conn.prepareStatement(sql);
+            // [1.3] SQL 매개변수 대입
+            ps.setString(1,proName);
+            // [1.4] SQL 실행
+            ResultSet rs = ps.executeQuery();
+            // [1.5] SQL 실행 결과 확인
+
+            rs.next();
+            proNo = rs.getInt("proNo");
+
+        } catch (Exception e) {
+            System.out.println("ProductDao.toIntproNoChange");
+            System.out.println("[예외발생] " + e);
+        }
+        return proNo;
+    } // func end
+
     // product02. 제품명 반환(번호 > 이름)
     // 기능설명 : [제품번호]를 매개변수로 받아, 해당하는 제품명을 반환한다.
     // 메소드명 : toProNameChange()

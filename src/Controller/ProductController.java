@@ -14,6 +14,17 @@ public class ProductController {
     // ProductDao 싱글톤 가져오기
     private ProductDao productDao = ProductDao.getInstance();
 
+    // [product01] 제품번호 반환 / toIntproNoChange()
+    // 매개변수 : String proName
+    // 반환타입 : int
+    // 반환 : proNo
+    public int toIntproNoChange(String proName) {
+        // [1.1] dao의 함수 실행
+        int result = productDao.toIntproNoChange(proName);
+        // [1.2] 결과를 view로 반환
+        return result;
+    } // func end
+
     // product02. 제품명 반환(번호 > 이름)
     // 기능설명 : [제품번호]를 매개변수로 받아, 해당하는 제품명을 반환한다.
     // 메소드명 : toProNameChange()
