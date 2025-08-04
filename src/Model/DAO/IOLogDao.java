@@ -1,6 +1,7 @@
 package Model.DAO;
 
 import Model.DTO.IOLogDto;
+import com.sun.source.tree.Tree;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class IOLogDao {
     // 싱글톤
@@ -143,6 +145,8 @@ public class IOLogDao {
         } catch (Exception e) {
             System.out.println("IOLogDao.oneIOLogPrint");
             System.out.println("[예외발생] " + e);
+
+            throw new RuntimeException(e); // ToDo 위랑 아래중 test 후 선택
         }
         // [3.6] dto 반환
         return ioLogDto;
@@ -153,10 +157,10 @@ public class IOLogDao {
     // 반환타입 : Map<int, int>
     // 반환 : Map<int, int> 출력, 단, 상품번호별 합산 후 출력
     public Map<Integer, Integer> IOPrint() {
-        Map<Integer, Integer> map = new HashMap<>();
+        Map<Integer, Integer> map = new TreeMap<>();
         try {
             // [4.1] SQL 작성
-            String sql = "SELECT proNo, SUM(CASE WHEN io = 0 THEN ioQty ELSE -ioQty END) AS totalQty FROM ioLog GROUP BY proNo order by proNo";
+            String sql = "SELECT proNo, SUM(CASE WHEN io = 0 THEN ioQty ELSE -ioQty END) AS totalQty FROM ioLog GROUP BY proNo order by proNo asc";
             // io 구분이 0 (입고) 이면 qty를 sum하고, io가 0이 아니면 qty를 - sum 함
 
             // [4.2] SQL 기재
@@ -169,6 +173,7 @@ public class IOLogDao {
             // [4.5] SQL 실행 결과 확인
             while (rs.next()) {
                 map.put(rs.getInt("proNo"), rs.getInt("totalQty"));
+                System.out.println(map.toString());
             }
 
         } catch (Exception e) {
