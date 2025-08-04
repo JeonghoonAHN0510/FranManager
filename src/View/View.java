@@ -62,9 +62,9 @@ public class View {
                 if (choice == 1) {
                     franManage();
                 } else if (choice == 2) {
-                    invenManage();
-                } else if (choice == 3) {
                     ioManage();
+                } else if (choice == 3) {
+                    supplyManage();
                 } else if (choice == 4) {
                     saleView();
                 } else if (choice == 5) {
@@ -165,7 +165,7 @@ public class View {
     } // franManage end
 
     // [2] 재고관리
-    public void invenManage() {
+    public void ioManage() {
         for (; ; ) {
             System.out.println(
                     "╔════════════════════════════════════╣ 재고 관리 ╠═══════════════════════════════════╗\n" +
@@ -311,7 +311,7 @@ public class View {
     } // ioManage end
 
     // [3] 발주관리
-    public void ioManage() {
+    public void supplyManage() {
         for ( ; ; ) {
             System.out.println(
                     "╔════════════════════════════════════╣ 발주 관리 ╠═══════════════════════════════════╗\n" +
