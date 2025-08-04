@@ -4,6 +4,7 @@ import Model.DAO.IOLogDao;
 import Model.DTO.IOLogDto;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class IOLogController {
     // 싱글톤
@@ -64,9 +65,14 @@ public class IOLogController {
 
     // [IOLog04] 재고조회 / IOPrint()
     // 매개변수 : -
-    // 반환타입 : ArrayList<IOLogDto>
-    // 반환 : ArrayList<IOLogDto> 출력, 단, 상품번호별 합산 후 출력
-    // [4.1]
+    // 반환타입 : Map<Integer, Integer>
+    // 반환 : Map<Integer, Integer> 출력, 단, 상품번호별 합산 후 출력
+    public Map<Integer, Integer> IOPrint() {
+        // [4.1] doo의 메소드 실행
+        Map<Integer, Integer> map = ioLogDao.IOPrint();
+        // [4.2] 결과 반환
+        return map;
+    }
 
     // [IOLog05] 재고로그수정 / ioUpdate()
     // 매개변수 : int ioNo, int proNo, String IO, int ioQty, String ioMemo

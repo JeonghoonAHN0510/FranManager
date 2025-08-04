@@ -8,6 +8,7 @@ import Model.DTO.SupplyLogDto;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class View {
@@ -162,9 +163,19 @@ public class View {
             int choice = scan.nextInt();
             try {
                 if (choice == 1) { // 2.1. 재고 현황 보기 func 연결
+                    Map<Integer, Integer> ioMap = ioLogController.IOPrint();
+
                     System.out.println("═══════════════════════════════════════════════════════════════════════");
                     System.out.println("제품번호 \t 제품명 \t 재고수량 \t 비고");
                     System.out.println("───────────────────────────────────────────────────────────────────────");
+
+                    for(int proNo : ioMap.keySet()){ // TODO 제품명 변환 함수 연결-옹태경
+                        //memo 출력
+                        String memo = "";
+                        if( ioMap.get(proNo) <= 10) {memo ="[주의] 제고가 부족합니다."; }
+
+                        System.out.printf("%d \t %s \t %d \t %s \n", proNo, "변환필요", ioMap.get(proNo), memo);
+                    }
 
                     System.out.println("───────────────────────────────────────────────────────────────────────");
                     

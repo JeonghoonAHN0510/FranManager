@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class IOLogDao {
     // 싱글톤
@@ -159,14 +161,34 @@ public class IOLogDao {
 
     // [IOLog04] 재고조회 / IOPrint()
     // 매개변수 : -
-    // 반환타입 : ArrayList<IOLogDto>
-    // 반환 : ArrayList<IOLogDto> 출력, 단, 상품번호별 합산 후 출력
+    // 반환타입 : Map<int, int>
+    // 반환 : Map<int, int> 출력, 단, 상품번호별 합산 후 출력
+    public Map< Integer, Integer> IOPrint(){
+        Map< Integer, Integer> map = new HashMap<>();
+        try {
+            // [4.1] SQL 작성
+            String sql = "SELECT proNo, SUM(CASE WHEN io = 0 THEN ioQty ELSE -ioQty END) AS totalQty FROM ioLog GROUP BY proNo order by proNo";
+            // io 구분이 0 (입고) 이면 qty를 sum하고, io가 0이 아니면 qty를 - sum 함
 
-    // [4.1] SQL 작성
-    // [4.2] SQL 기재
-    // [4.3] SQL 매개변수 대입
-    // [4.4] SQL 실행
-    // [4.5] SQL 실행 결과 확인
+            // [4.2] SQL 기재
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            // [4.3] SQL 매개변수 대입 / 생략
+            // [4.4] SQL 실행
+            ResultSet rs = ps.executeQuery();
+
+            // [4.5] SQL 실행 결과 확인
+            while (rs.next()){
+                map.put(rs.getInt("proNo"), rs.getInt("totalQty"));
+            }
+
+        }catch (Exception e) {
+            System.out.println("IOLogDao.IOPrint");
+            System.out.println("[예외발생] " + e );
+        }
+        return map;
+    } // func end
+
 
     // [IOLog05] 재고로그수정 / ioUpdate()
     // 매개변수 : IOLogDto
