@@ -71,6 +71,8 @@ public class View {
                     statusView();
                 } else if (choice == 6) {
                     reviewView();
+                } else if (choice == 7) {
+                    productManage();
                 } else {
                     System.out.println("[경고] 올바르지 못한 메뉴입니다.");
                 }
@@ -360,7 +362,7 @@ public class View {
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo );
                         System.out.println("───────────────────────────────────────────────────────────────────────────");
                         // 사용자로부터 '가맹점명' 입력받기
-                        System.out.print("가맹점명 : ");    String franNameInput = scan.next();
+                        System.out.print("정말로 출고처리 하시겠습니까?\n 맞으시다면 가맹점명을 입력해주세요. : ");    String franNameInput = scan.next();
                         int franNoInput = franController.toIntNameFranChange( franNameInput );
                         // 입력값 controller에게 전달 후 결과 받기
                         boolean result = supplyLogController.supplyApp( supNo, franNoInput );
@@ -390,7 +392,7 @@ public class View {
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo );
                         System.out.println("───────────────────────────────────────────────────────────────────────────");
                         // 사용자로부터 '가맹점명' 입력받기
-                        System.out.print("가맹점명 : ");    String franNameInput = scan.next();
+                        System.out.print("정말로 발주취소하시겠습니까?\n 맞으시다면 가맹점명을 입력해주세요. : ");    String franNameInput = scan.next();
                         int franNoInput = franController.toIntNameFranChange( franNameInput );
                         // 입력값 controller에게 전달 후 결과 받기
                         boolean result = supplyLogController.supplyCancel( supNo, franNoInput );
@@ -562,5 +564,62 @@ public class View {
             }
         } // 무한루프 종료
     } // reviewView end
+
+    // [7] 제품관리
+    public void productManage() {
+        for ( ; ; ) {
+            System.out.println(
+                    "╔════════════════════════════════════╣ 재고 관리 ╠═══════════════════════════════════╗\n" +
+                            "║               1. 제품 전체 조회  ▌  2. 제품 등록                                     ║\n" +
+                            "║               3. 제품 수정      ▌  4. 제품 판매종료  ▌  5. 메인으로 돌아가기             ║\n" +
+                            "╚═══════════════════════════════════════════════════════════════════════════════════╝");
+            System.out.print("\uD83D\uDC49 메뉴 선택 : ");
+            int choice = scan.nextInt();
+            try {
+                if (choice == 1) {
+                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
+                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    // TODO 7.1. 제품 전체 조회 func 연결
+                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+
+                } else if (choice == 2) {
+                    // TODO 7.2. 제품 등록 func 연결
+                    System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    System.out.print("제품명 : ");    String proName = scan.next();
+                    System.out.print("공급가액 : ");   int proSupPrice = scan.nextInt();
+                    System.out.print("소비자판매가 : ");   int proPrice = scan.nextInt();
+
+
+                } else if (choice == 3) {
+                    System.out.print("제품번호 : ");    int proNo = scan.nextInt();
+
+                    System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
+                    System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
+                    System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    // TODO 7.3. 제품별 정보 조회 func 연결
+                    System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    // todo 7.3  제품정보 수정 func 연결
+                } else if (choice == 4) {
+                    System.out.print("제품번호 : ");    int proNo = scan.nextInt();
+
+                    System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
+                    System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
+                    System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    // TODO 7.4. 제품별 정보 조회 func 연결
+                    System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    // todo 7.4  제품 판매종료 func 연결
+                } else if (choice == 5) {
+                    break;
+                } else {
+                    System.out.println("[경고] 올바르지 못한 메뉴입니다.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("[경고] 입력 타입이 올바르지 못합니다.");
+            } catch (Exception e) {
+                System.out.println("[경고] 관리자에게 문의하세요.");
+            } // try-catch end
+        } // 무한루프 end
+    } // func end
 
 }  // class end
