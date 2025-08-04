@@ -37,4 +37,15 @@ public class ProductController {
         // 3. view에게 결과 전달하기
         return proName;
     } // func end
-} // func end
+
+    // [product03] 상품번호 유효성 검사 / proNoCheck()
+    // 매개변수 : int proNo
+    // 반환타입 : boolean
+    public boolean proNoCheck(int proNo){
+        // [3.1] dao에 전달
+        boolean result = productDao.proNoCheck(proNo);
+        // [3.2] 결과 반환
+        return result;
+    }// func end
+
+} // class end
