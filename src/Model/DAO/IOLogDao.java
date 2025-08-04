@@ -217,29 +217,28 @@ public class IOLogDao {
     // 반환타입 : boolean
     // 반환 : boolean
 
-    public boolean ioNoCheck(int invenNo) {
+    public boolean ioNoCheck(int ioNo) {
         boolean result = false;
         try {
             // [6.1] SQL 작성
-            String sql = "select * from iolog where ioNO = ?";
+            String sql = "select ioNo from iolog";
             // [6.2] SQL 기재
             PreparedStatement ps = conn.prepareStatement(sql);
-            // [6.3] SQL 매개변수 대입
-            ps.setInt(1,invenNo);
+            // [6.3] SQL 매개변수 대입 / 생량
             // [6.4] SQL 실행
             ResultSet rs = ps.executeQuery();
             // [6.5] SQL 실행 결과 확인
-            rs.next();
-
-            int ioNo = rs.getInt("ioNo");
-            if( ioNo != 0 ){
-                result = true;
+            while (rs.next()){
+                if(rs.getInt("ioNo") == ioNo){
+                    result = true;
+                    return result;
+                }
             }
-
         } catch (Exception e) {
             System.out.println("IOLogDao.ioNoCheck");
             System.out.println("[예외발생] " + e);
         }
         return result;
     } // func end
+
 } // class end
