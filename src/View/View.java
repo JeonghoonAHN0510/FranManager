@@ -1,10 +1,12 @@
 package View;
 
+import Controller.FranController;
 import Controller.*;
 import Model.DTO.StatsDto;
 import Controller.IOLogController;
 import Controller.ProductController;
 import Controller.SupplyLogController;
+import Model.DTO.FranDto;
 import Model.DTO.IOLogDto;
 import Model.DTO.SupplyLogDto;
 
@@ -93,11 +95,11 @@ public class View {
             try {
                 if (choice == 1) {
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 매출액");
+                    System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 매출액");
+                    ArrayList<FranDto> result = franController.franPrint();
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-
-                    // TODO 1.1. 가맹점 리스트 보기 func 연결
-
+                    for (FranDto dto : result ){
+                        System.out.printf(dto.getFranNo()+"\t"+dto.getFranName()+"\t"+dto.getFranCall()+"\t"+dto.getFranOwner()+"\t"+dto.getP()+"\n");}
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
 
                 } else if (choice == 2) {
@@ -111,7 +113,9 @@ public class View {
                     System.out.print("가맹점주 : ");
                     String franOwner = scan.nextLine();
 
-                    // TODO 1.2. 가맹점 추가 func 연결
+                    boolean result = franController.franAdd( franName , franAddress , franCall ,franOwner );
+                    if(result){System.out.println("[안내] 가맹점이 정상적으로 추가되었습니다.");}
+                    else{System.out.println("[경고] 가맹점 추가가 실패했습니다.");}
 
                 } else if (choice == 3) {
                     System.out.print("가맹점 번호 : ");
