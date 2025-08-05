@@ -174,7 +174,7 @@ public class IOLogDao {
             // [4.5] SQL 실행 결과 확인
             while (rs.next()) {
                 map.put(rs.getInt("proNo"), rs.getInt("totalQty"));
-                System.out.println(map.toString());
+//                System.out.println(map.toString());
             }
 
         } catch (Exception e) {
