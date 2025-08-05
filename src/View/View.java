@@ -144,6 +144,7 @@ public class View {
                     System.out.print("전화번호 : ");
                     String franCall = scan.nextLine();
                     System.out.print("가맹점주 : ");
+
                     String franOwner = scan.nextLine();
 
                     // 수정 정보를 controller에 전달
