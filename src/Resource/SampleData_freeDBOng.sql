@@ -52,14 +52,14 @@ create table OrderLog(
     constraint foreign key(proNo) references Product(proNo)
 );
 
-create table ioLog(
+create table IOLog(
     ioNo int auto_increment,
     proNo int,
     IO int default 0,
     # 입고 : 0, 출고 : supNo
     ioQty int default "0",
     ioDate datetime default now(),
-    ioMemo varchar(200),
+    ioMemo varchar(200) default "",
     constraint primary key(ioNo),
     constraint foreign key(proNo) references Product(proNo)
 );

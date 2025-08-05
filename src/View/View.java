@@ -172,7 +172,134 @@ public class View {
     } // franManage end
 
 
-    // TODO [2] 상품관리 > 아래에 있는 상품관리 productManage() 올려주세요~
+    // [2] 제품관리
+    public void productManage() {
+        for (; ; ) {
+            System.out.println(
+                    "╔════════════════════════════════════╣ 제품 관리 ╠═══════════════════════════════════╗\n" +
+                            "║               1. 제품 전체 조회  ▌  2. 제품 등록                                     ║\n" +
+                            "║               3. 제품 수정      ▌  4. 제품 판매종료  ▌  5. 메인으로 돌아가기             ║\n" +
+                            "╚═══════════════════════════════════════════════════════════════════════════════════╝");
+            System.out.print("\uD83D\uDC49 메뉴 선택 : ");
+            int choice = scan.nextInt();
+            try {
+                if (choice == 1) {
+                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
+                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    // Controller로부터 결과 받기
+                    ArrayList<ProductDto> productDtos = productController.productAllPrint();
+                    // 배열 하나씩 순회하면서 출력하기
+                    for( ProductDto productDto : productDtos ){
+                        // 값 하나씩 꺼내기
+                        int proNo = productDto.getProNo();
+                        String proName = productDto.getProName();
+                        int proSupPrice = productDto.getProSupPrice();
+                        int proPrice = productDto.getProPrice();
+                        boolean proStatus = productDto.isProStatus();
+                        // 판매여부 변환하기
+                        String status = productController.toproStatusChange( proStatus );
+                        // Price들 천 단위 콤마찍기
+                        String SupPrice = nf.format(proSupPrice);
+                        String price = nf.format(proPrice);
+                        // 하나씩 출력하기
+                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
+                    } // for end
+                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                } else if (choice == 2) {
+                    System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    // 사용자로부터 등록할 제품정보 받기
+                    System.out.print("제품명 : ");    String proName = scan.next();
+                    System.out.print("공급가액 : ");   int proSupPrice = scan.nextInt();
+                    System.out.print("소비자판매가 : ");   int proPrice = scan.nextInt();
+                    // 입력한 정보 등록하고 결과받기
+                    boolean result = productController.productAdd( proName, proSupPrice, proPrice );
+                    // 결과에 따른 출력하기
+                    if ( result ){
+                        System.out.println("[안내] 제품이 정상적으로 등록되었습니다.");
+                    } else {
+                        System.out.println("[경고] 제품 등록에 실패하였습니다.");
+                    } // if end
+                } else if (choice == 3) {
+                    // 사용자로부터 수정할 제품번호 받기
+                    System.out.print("제품번호 : ");    int proNoInput = scan.nextInt();
+                    // 입력한 제품번호에 해당하는 제품 꺼내오기
+                    ProductDto productDto = productController.productPrint( proNoInput );
+                    if ( productDto.getProNo() != 0 ){          // 제품번호가 올바르다면
+                        // 값 하나씩 꺼내기
+                        int proNo = productDto.getProNo();
+                        String proName = productDto.getProName();
+                        int proSupPrice = productDto.getProSupPrice();
+                        int proPrice = productDto.getProPrice();
+                        boolean proStatus = productDto.isProStatus();
+                        // 판매여부 변환하기
+                        String status = productController.toproStatusChange( proStatus );
+                        // Price들 천 단위 콤마찍기
+                        String SupPrice = nf.format(proSupPrice);
+                        String price = nf.format(proPrice);
+                        System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
+                        System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
+                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
+                        System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────");
+                        // 사용자로부터 수정정보 입력받기
+                        System.out.print("제품명 : ");        String proNameInput = scan.next();
+                        System.out.print("공급가액 : ");       int proSupPriceInput = scan.nextInt();
+                        System.out.print("소비자판매가 : ");    int proPriceInput = scan.nextInt();
+                        // 입력한 값 controller에게 전달 후 결과 받기
+                        boolean result = productController.productUpdate( proNoInput, proNameInput, proSupPriceInput, proPriceInput );
+                        // 결과에 따른 출력하기
+                        if ( result ){
+                            System.out.println("[안내] 제품이 정상적으로 수정되었습니다.");
+                        } else {
+                            System.out.println("[경고] 제품 수정에 실패하였습니다.");
+                        } // if end
+                    } else {
+                        System.out.println("[경고] 올바르지 못한 제품번호입니다.");
+                    } // if end
+                } else if (choice == 4) {
+                    // 사용자로부터 삭제할 제품번호 받기
+                    System.out.print("제품번호 : ");    int proNoInput = scan.nextInt();
+                    // 입력한 제품번호에 해당하는 제품 꺼내오기
+                    ProductDto productDto = productController.productPrint( proNoInput );
+                    // 값 하나씩 꺼내기
+                    int proNo = productDto.getProNo();
+                    String proName = productDto.getProName();
+                    int proSupPrice = productDto.getProSupPrice();
+                    int proPrice = productDto.getProPrice();
+                    boolean proStatus = productDto.isProStatus();
+                    // 판매여부 변환하기
+                    String status = productController.toproStatusChange( proStatus );
+                    // Price들 천 단위 콤마찍기
+                    String SupPrice = nf.format(proSupPrice);
+                    String price = nf.format(proPrice);
+                    System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
+                    System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
+                    System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
+                    System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    // 사용자로부터 삭제할 제품명 받기
+                    System.out.print("정말로 판매종료하시겠습니까? 맞으시다면 '제품명'을 입력해주세요 : ");     String proNameInput = scan.next();
+                    // 입력한 값 controller에게 전달 후 결과받기
+                    boolean result = productController.productDelete( proNoInput, proNameInput );
+                    // 결과에 따른 출력하기
+                    if ( result ){
+                        System.out.println("[안내] 해당 제품이 정상적으로 판매종료되었습니다.");
+                    } else {
+                        System.out.println("[경고] 제품 판매종료에 실패하였습니다.");
+                    } // if end
+                } else if (choice == 5) {
+                    break;
+                } else {
+                    System.out.println("[경고] 올바르지 못한 메뉴입니다.");
+                } // if end
+            } catch (InputMismatchException e) {
+                System.out.println("[경고] 입력 타입이 올바르지 못합니다.");
+            } catch (Exception e) {
+                System.out.println("[경고] 관리자에게 문의하세요.");
+            } // try-catch end
+        } // 무한루프 end
+    } // func end
 
 
     // [3] 재고관리
@@ -640,130 +767,4 @@ public class View {
             }
         } // 무한루프 종료
     } // reviewView end
-
-    // [7] 제품관리
-    public void productManage() {
-        for (; ; ) {
-            System.out.println(
-                    "╔════════════════════════════════════╣ 제품 관리 ╠═══════════════════════════════════╗\n" +
-                            "║               1. 제품 전체 조회  ▌  2. 제품 등록                                     ║\n" +
-                            "║               3. 제품 수정      ▌  4. 제품 판매종료  ▌  5. 메인으로 돌아가기             ║\n" +
-                            "╚═══════════════════════════════════════════════════════════════════════════════════╝");
-            System.out.print("\uD83D\uDC49 메뉴 선택 : ");
-            int choice = scan.nextInt();
-            try {
-                if (choice == 1) {
-                    System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // Controller로부터 결과 받기
-                    ArrayList<ProductDto> productDtos = productController.productAllPrint();
-                    // 배열 하나씩 순회하면서 출력하기
-                    for( ProductDto productDto : productDtos ){
-                        // 값 하나씩 꺼내기
-                        int proNo = productDto.getProNo();
-                        String proName = productDto.getProName();
-                        int proSupPrice = productDto.getProSupPrice();
-                        int proPrice = productDto.getProPrice();
-                        boolean proStatus = productDto.isProStatus();
-                        // 판매여부 변환하기
-                        String status = productController.toproStatusChange( proStatus );
-                        // Price들 천 단위 콤마찍기
-                        String SupPrice = nf.format(proSupPrice);
-                        String price = nf.format(proPrice);
-                        // 하나씩 출력하기
-                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
-                    } // for end
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
-                } else if (choice == 2) {
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // 사용자로부터 등록할 제품정보 받기
-                    System.out.print("제품명 : ");    String proName = scan.next();
-                    System.out.print("공급가액 : ");   int proSupPrice = scan.nextInt();
-                    System.out.print("소비자판매가 : ");   int proPrice = scan.nextInt();
-                    // 입력한 정보 등록하고 결과받기
-                    boolean result = productController.productAdd( proName, proSupPrice, proPrice );
-                    // 결과에 따른 출력하기
-                    if ( result ){
-                        System.out.println("[안내] 제품이 정상적으로 등록되었습니다.");
-                    } else {
-                        System.out.println("[경고] 제품 등록에 실패하였습니다.");
-                    } // if end
-                } else if (choice == 3) {
-                    // 사용자로부터 수정할 제품번호 받기
-                    System.out.print("제품번호 : ");    int proNoInput = scan.nextInt();
-                    // 입력한 제품번호에 해당하는 제품 꺼내오기
-                    ProductDto productDto = productController.productPrint( proNoInput );
-                    // 값 하나씩 꺼내기
-                    int proNo = productDto.getProNo();
-                    String proName = productDto.getProName();
-                    int proSupPrice = productDto.getProSupPrice();
-                    int proPrice = productDto.getProPrice();
-                    boolean proStatus = productDto.isProStatus();
-                    // 판매여부 변환하기
-                    String status = productController.toproStatusChange( proStatus );
-                    // Price들 천 단위 콤마찍기
-                    String SupPrice = nf.format(proSupPrice);
-                    String price = nf.format(proPrice);
-                    System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
-                    System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
-                    System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────");
-                    // 사용자로부터 수정정보 입력받기
-                    System.out.print("제품명 : ");        String proNameInput = scan.next();
-                    System.out.print("공급가액 : ");       int proSupPriceInput = scan.nextInt();
-                    System.out.print("소비자판매가 : ");    int proPriceInput = scan.nextInt();
-                    // 입력한 값 controller에게 전달 후 결과 받기
-                    boolean result = productController.productUpdate( proNoInput, proNameInput, proSupPriceInput, proPriceInput );
-                    // 결과에 따른 출력하기
-                    if ( result ){
-                        System.out.println("[안내] 제품이 정상적으로 수정되었습니다.");
-                    } else {
-                        System.out.println("[경고] 제품 수정에 실패하였습니다.");
-                    } // if end
-                } else if (choice == 4) {
-                    // 사용자로부터 삭제할 제품번호 받기
-                    System.out.print("제품번호 : ");    int proNoInput = scan.nextInt();
-                    // 입력한 제품번호에 해당하는 제품 꺼내오기
-                    ProductDto productDto = productController.productPrint( proNoInput );
-                    // 값 하나씩 꺼내기
-                    int proNo = productDto.getProNo();
-                    String proName = productDto.getProName();
-                    int proSupPrice = productDto.getProSupPrice();
-                    int proPrice = productDto.getProPrice();
-                    boolean proStatus = productDto.isProStatus();
-                    // 판매여부 변환하기
-                    String status = productController.toproStatusChange( proStatus );
-                    // Price들 천 단위 콤마찍기
-                    String SupPrice = nf.format(proSupPrice);
-                    String price = nf.format(proPrice);
-                    System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
-                    System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // 사용자로부터 삭제할 제품명 받기
-                    System.out.print("정말로 판매종료하시겠습니까? 맞으시다면 '제품명'을 입력해주세요 : ");     String proNameInput = scan.next();
-                    // 입력한 값 controller에게 전달 후 결과받기
-                    boolean result = productController.productDelete( proNoInput, proNameInput );
-                    // 결과에 따른 출력하기
-                    if ( result ){
-                        System.out.println("[안내] 해당 제품이 정상적으로 판매종료되었습니다.");
-                    } else {
-                        System.out.println("[경고] 제품 판매종료에 실패하였습니다.");
-                    } // if end
-                } else if (choice == 5) {
-                    break;
-                } else {
-                    System.out.println("[경고] 올바르지 못한 메뉴입니다.");
-                } // if end
-            } catch (InputMismatchException e) {
-                System.out.println("[경고] 입력 타입이 올바르지 못합니다.");
-            } catch (Exception e) {
-                System.out.println("[경고] 관리자에게 문의하세요.");
-            } // try-catch end
-        } // 무한루프 end
-    } // func end
-
 }  // class end
