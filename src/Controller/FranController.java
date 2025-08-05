@@ -21,6 +21,9 @@ public class FranController {
         if (franName.length() <=1){ // 가맹점명이 한글자 이하이면 오류
             System.out.println("[경고] 가맹점 이름이 올바르지 않습니다.");
             return false;}
+        if( franAddress.length() < 6)
+            {System.out.println("[경고] 주소가 올바르지 않습니다.");
+            return false;}
         if( franAddress.length() > 6 && // 주소가 최소 7글자 이상
             franAddress.charAt(2) != '도' &&
             franAddress.charAt(3) != '도' &&
@@ -62,6 +65,12 @@ public class FranController {
     public boolean franUpdate(int franNo, String franName, String franAddress, String franCall, String franOwner){
         if (franName.length() <=1){ // 가맹점명이 한글자 이하이면 오류
             System.out.println("[경고] 가맹점 이름이 올바르지 않습니다.");
+            return false;}
+        if (franName.length() <=1){ // 가맹점명이 한글자 이하이면 오류
+            System.out.println("[경고] 가맹점 이름이 올바르지 않습니다.");
+            return false;}
+        if( franAddress.length() < 6)
+        {System.out.println("[경고] 주소가 올바르지 않습니다.");
             return false;}
         if( franAddress.length() > 6 && // 주소가 최소 7글자 이상
                 franAddress.charAt(2) != '도' &&
