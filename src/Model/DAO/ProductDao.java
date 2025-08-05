@@ -53,8 +53,7 @@ public class ProductDao {
             proNo = rs.getInt("proNo");
 
         } catch (Exception e) {
-            System.out.println("ProductDao.toIntproNoChange");
-            System.out.println("[예외발생] " + e);
+            System.out.println("[경고] 입력하신 제품명으로 조회되는 상품이 없습니다.");
         }
         return proNo;
     } // func end
@@ -86,7 +85,7 @@ public class ProductDao {
         return proName;
     } // func end
 
-    // [product03] 상품번호 유효성 검사 / proNoCheck()
+    // [product03] 제품번호 유효성 검사 / proNoCheck()
     // 매개변수 : int proNo
     // 반환타입 : boolean
     public boolean proNoCheck(int proNo) {
@@ -107,8 +106,7 @@ public class ProductDao {
                 }
             }
         } catch (Exception e) {
-            System.out.println("ProductDao.toProNameChange");
-            System.out.println("[예외발생] " + e);
+            System.out.println("[경고] 확인되지 않는 제품번호입니다. 제품번호를 다시 확인해주세요.");
         }
         return result;
     }//func end

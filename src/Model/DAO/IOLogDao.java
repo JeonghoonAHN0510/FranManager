@@ -68,9 +68,7 @@ public class IOLogDao {
                 result = true;
             }
         } catch (Exception e) {
-//            System.out.println("IOLogDao.ioLogAdd");
-//            System.out.println("[예외발생] " + e);
-            throw new RuntimeException(e);
+            System.out.println("[경고] 재고등록을 실패하였습니다.");
         }
         return result;
     } // func end
@@ -110,9 +108,7 @@ public class IOLogDao {
                 ioLogDtoList.add(ioLogDto);
             }
         } catch (Exception e) {
-//            System.out.println("IOLogDao.IOLogPrint");
-//            System.out.println("[예외발생] " + e);
-            throw new RuntimeException(e);
+            System.out.println("[경고] 재고로그조회를 실패하였습니다.");
         }
         // [2.3] 결과 반환
         return ioLogDtoList;
@@ -145,9 +141,7 @@ public class IOLogDao {
             ioLogDto.setIoDate(rs.getString("ioDate"));
             ioLogDto.setIoMemo(rs.getString("ioMemo"));
         } catch (Exception e) {
-//            System.out.println("IOLogDao.oneIOLogPrint");
-//            System.out.println("[예외발생] " + e);
-            throw new RuntimeException(e);
+            System.out.println("[경고] 올바르지 못한 재고번호입니다. 재고번호를 다시한번 확인하여주세요.");
         }
         // [3.6] dto 반환
         return ioLogDto;
@@ -178,9 +172,7 @@ public class IOLogDao {
             }
 
         } catch (Exception e) {
-//            System.out.println("IOLogDao.IOPrint");
-//            System.out.println("[예외발생] " + e);
-            throw new RuntimeException(e);
+            System.out.println("[경고] 재고조회에 실패하였습니다.");
         }
         return map;
     } // func end
@@ -212,9 +204,7 @@ public class IOLogDao {
                 result = false;
             }
         } catch (Exception e) {
-//            System.out.println("IOLogDao.ioUpdate");
-//            System.out.println("[예외발생] " + e);
-            throw new RuntimeException(e);
+            System.out.println("[경고] 재고로그수정을 실패하였습니다.");
         }
         // [5.6] 결과 반환
         return result;
@@ -243,9 +233,7 @@ public class IOLogDao {
                 }
             }
         } catch (Exception e) {
-//            System.out.println("IOLogDao.ioNoCheck");
-//            System.out.println("[예외발생] " + e);
-            throw new RuntimeException(e);
+            System.out.println("[경고] 확인되지 않는 재고번호입니다. 재고번호를 다시한번 확인해주세요.");
         }
         return result;
     } // func end

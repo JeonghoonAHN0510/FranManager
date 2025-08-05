@@ -67,9 +67,7 @@ public class ReviewDao {
                 reviewPrintList.add(reviewPrintDto);
             }
         } catch (Exception e) {
-//            System.out.println("ReviewDao.reviewPrint");
-//            System.out.println("[예외발생] " + e);
-            throw new RuntimeException(e);
+            System.out.println("[경고] 리뷰 조회가 불가합니다.");
         }
         // [1.6] 결과 반환
         return reviewPrintList;
@@ -106,9 +104,7 @@ public class ReviewDao {
                 reviewPrintList.add(reviewPrintDto);
             }
         } catch (Exception e) {
-//            System.out.println("ReviewDao.reviewPrint");
-//            System.out.println("[예외발생] " + e);
-            throw new RuntimeException(e);
+            System.out.println("[경고] 리뷰 조회가 불가합니다.");
         }
         // [2.6] 결과 반환
         return reviewPrintList;
@@ -145,9 +141,7 @@ public class ReviewDao {
                 reviewPrintList.add(reviewPrintDto);
             }
         } catch (Exception e) {
-//            System.out.println("ReviewDao.reviewPrint");
-//            System.out.println("[예외발생] " + e);
-            throw new RuntimeException(e);
+            System.out.println("[경고] 리뷰 조회가 불가합니다.");
         }
         // [3.6] 결과 반환
         return reviewPrintList;
