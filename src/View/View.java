@@ -381,7 +381,7 @@ public class View {
 
                 } else if (choice == 3) { // 2.3. 재고 로그 func 연결
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    System.out.println("재고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입고일자 \t 메모");
+                    System.out.println("입·출고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입·출고일자 \t 메모");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
 
                     // [3.3.1] IOLogController, IOLogPrint() 실행
@@ -403,8 +403,10 @@ public class View {
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
 
                 } else if (choice == 4) { //3.4. 재고 수정 func 연결
-                    System.out.print("재고번호 : ");
+                    System.out.print("입·출고번호 : ");
                     int ioNo = scan.nextInt();
+
+                    // [3.4.1] TODO 입·출고번호 유효성검사_옹
 
                     // [3.4.1] 단일 재고 이력 조회 func / IoController - oneIOLogPrint()
                     IOLogDto ioLogDto = ioLogController.oneIOLogPrint(ioNo);
@@ -412,7 +414,7 @@ public class View {
                         System.out.println("[경고] 올바르지 못한 재고번호 입니다.");
                     } else {
                         System.out.println("──┤ 선택 가맹점 정보 ├───────────────────────────────────────────────────────");
-                        System.out.println("재고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입고일자 \t 메모");
+                        System.out.println("입·출고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입·출고일자 \t 메모");
                         System.out.println("───────────────────────────────────────────────────────────────────────────");
 
                         // [3.4.2] 반복문 출력
