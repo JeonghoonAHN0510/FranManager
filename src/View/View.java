@@ -612,13 +612,19 @@ public class View {
                     } // for end
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 2) {
-                    // TODO 7.2. 제품 등록 func 연결
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    // 사용자로부터 등록할 제품정보 받기
                     System.out.print("제품명 : ");    String proName = scan.next();
                     System.out.print("공급가액 : ");   int proSupPrice = scan.nextInt();
                     System.out.print("소비자판매가 : ");   int proPrice = scan.nextInt();
-
-
+                    // 입력한 정보 등록하고 결과받기
+                    boolean result = productController.productAdd( proName, proSupPrice, proPrice );
+                    // 결과에 따른 출력하기
+                    if ( result ){
+                        System.out.println("[안내] 제품이 정상적으로 등록되었습니다.");
+                    }else {
+                        System.out.println("[경고] 제품 등록에 실패하였습니다.");
+                    } // if end
                 } else if (choice == 3) {
                     // 사용자로부터 수정할 제품번호 받기
                     System.out.print("제품번호 : ");    int proNoInput = scan.nextInt();
@@ -639,8 +645,19 @@ public class View {
                     System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // todo 7.3  제품정보 수정 func 연결
+                    System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────");
+                    // 사용자로부터 수정정보 입력받기
+                    System.out.print("제품명 : ");        String proNameInput = scan.next();
+                    System.out.print("공급가액 : ");       int proSupPriceInput = scan.nextInt();
+                    System.out.print("소비자판매가 : ");    int proPriceInput = scan.nextInt();
+                    // 입력한 값 controller에게 전달 후 결과 받기
+                    boolean result = productController.productUpdate( proNoInput, proNameInput, proSupPriceInput, proPriceInput );
+                    // 결과에 따른 출력하기
+                    if ( result ){
+                        System.out.println("[안내] 제품이 정상적으로 수정되었습니다.");
+                    }else {
+                        System.out.println("[경고] 제품 수정에 실패하였습니다.");
+                    } // if end
                 } else if (choice == 4) {
                     // 사용자로부터 삭제할 제품번호 받기
                     System.out.print("제품번호 : ");    int proNoInput = scan.nextInt();

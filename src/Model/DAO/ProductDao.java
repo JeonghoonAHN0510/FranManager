@@ -183,22 +183,63 @@ public class ProductDao {
     // product06. 제품 등록
     // 기능설명 : [제품명, 공급가액, 소비자판매가]를 입력받아, 제품을 추가한다.
     // 메소드명 : productAdd()
-    // 매개변수 : String proName, int proSupPrice, int proPrice
+    // 매개변수 : ProductDto -> String proName, int proSupPrice, int proPrice
     // 반환타입 : boolean -> true : 등록 성공 / false : 등록 실패
-
+    public boolean productAdd( ProductDto productDto ){
+        try {
+            // 1. SQL 작성
+            String SQL = "insert into Product ( proName, proSupPrice, proPrice ) values ( ?, ?, ? )";
+            // 2. SQL 기재
+            PreparedStatement ps = conn.prepareStatement( SQL );
+            // 3. SQL 매개변수 대입
+            ps.setString( 1, productDto.getProName() );
+            ps.setInt( 2, productDto.getProSupPrice() );
+            ps.setInt( 3, productDto.getProPrice() );
+            // 4. SQL 실행
+            int count = ps.executeUpdate();
+            // 5. SQL 결과 반환
+            if ( count == 1 ){
+                return true;
+            } // if end
+        } catch ( SQLException e ){
+            System.out.println("[product06] SQL 기재 실패");
+        } // try-catch end
+        return false;
+    } // func end
 
     // product07. 제품 수정
     // 기능설명 : [제품번호, 제품명, 공급가액, 소비자판매가]를 입력받아, 해당하는 제품정보를 수정한다.
     // 메소드명 : productUpdate()
-    // 매개변수 : int proNo,String proName, int proSupPrice, int proPrice
-    // 반환타입 : boolean -> true : 등록 성공 / false : 등록 실패
-
+    // 매개변수 : ProductDto -> int proNo, String proName, int proSupPrice, int proPrice
+    // 반환타입 : boolean -> true : 수정 성공 / false : 수정 실패
+    public boolean productUpdate( ProductDto productDto ){
+        try {
+            // 1. SQL 작성
+            String SQL = "update Product set proName = ?, proSupPrice = ?, proPrice = ? where proNo = ?";
+            // 2. SQL 기재
+            PreparedStatement ps = conn.prepareStatement( SQL );
+            // 3. SQL 매개변수 대입
+            ps.setString( 1, productDto.getProName() );
+            ps.setInt( 2, productDto.getProSupPrice() );
+            ps.setInt( 3, productDto.getProPrice() );
+            ps.setInt( 4, productDto.getProNo() );
+            // 4. SQL 실행
+            int count = ps.executeUpdate();
+            // 5. SQL 결과 반환
+            if ( count == 1 ){
+                return true;
+            } // if end
+        } catch ( SQLException e ){
+            System.out.println("[product07] SQL 기재 실패");
+        } // try-catch end
+        return false;
+    } // func end
 
     // product08. 제품 삭제
     // 기능설명 : [제품번호, 제품명]을 입력받아, 해당하는 제품을 삭제처리한다.
     // 메소드명 : productDelete()
-    // 매개변수 : int proNo, String proName
-    // 반환타입 : boolean -> true : 등록 성공 / false : 등록 실패
+    // 매개변수 : ProductDto -> int proNo, String proName
+    // 반환타입 : boolean -> true : 삭제 성공 / false : 삭제 실패
 
 
     // product09. 판매여부 변환
