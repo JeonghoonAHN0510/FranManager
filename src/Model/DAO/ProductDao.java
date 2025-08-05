@@ -1,6 +1,9 @@
 package Model.DAO;
 
+import Model.DTO.ProductDto;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ProductDao {
     // 싱글톤
@@ -110,4 +113,104 @@ public class ProductDao {
         return result;
     }//func end
 
+    // product04. 제품 전체조회
+    // 기능설명 : DB에 저장된 모든 제품을 조회하여 출력한다.
+    // 메소드명 : productAllPrint()
+    // 매개변수 : X
+    // 반환타입 : ArrayList<ProductDto>
+    public ArrayList<ProductDto> productAllPrint(){
+        ArrayList<ProductDto> productDtos = new ArrayList<>();  // 반환할 빈 배열 생성
+        try {
+            // 1. SQL 작성
+            String SQL = "select * from Product";
+            // 2. SQL 기재
+            PreparedStatement ps = conn.prepareStatement( SQL );
+            // 3. SQL 매개변수 대입
+            // 4. SQL 실행
+            ResultSet rs = ps.executeQuery();
+            // 5. SQL 결과 반환
+            while( rs.next() ){
+                // SQL 결과에서 값 꺼내기
+                int proNo = rs.getInt("proNo");
+                String proName = rs.getString("proName");
+                int proSupPrice = rs.getInt("proSupPrice");
+                int proPrice = rs.getInt("proPrice");
+                boolean proStatus = rs.getBoolean("proStatus");
+                // 객체 생성하고 값 넣기
+                ProductDto productDto = new ProductDto( proNo, proName, proSupPrice, proPrice, proStatus );
+                // 생성한 객체를 배열에 넣기
+                productDtos.add( productDto );
+            } // while end
+        } catch ( SQLException e ){
+            System.out.println("[product04] SQL 기재 실패");
+        } // try-catch end
+        // 최종적으로 반환
+        return productDtos;
+    } // func end
+
+    // product05. 제품 선택조회
+    // 기능설명 : [제품번호]를 입력받아, 해당하는 제품정보를 출력한다.
+    // 메소드명 : productPrint()
+    // 매개변수 : int proNo
+    // 반환타입 : ProductDto
+    public ProductDto productPrint( int proNo ){
+        ProductDto productDto = new ProductDto();   // 반환할 빈 객체 생성
+        try {
+            // 1. SQL 작성
+            String SQL = "select * from Product where proNo = ?";
+            // 2. SQL 기재
+            PreparedStatement ps = conn.prepareStatement( SQL );
+            // 3. SQL 매개변수 대입
+            ps.setInt( 1, proNo );
+            // 4. SQL 실행
+            ResultSet rs = ps.executeQuery();
+            // 5. SQL 결과 반환
+            while( rs.next() ){
+                // SQL 결과에서 값 꺼내기
+                String proName = rs.getString("proName");
+                int proSupPrice = rs.getInt("proSupPrice");
+                int proPrice = rs.getInt("proPrice");
+                boolean proStatus = rs.getBoolean("proStatus");
+                // 객체에 값 넣기
+                productDto = new ProductDto( proNo, proName, proSupPrice, proPrice, proStatus );
+            } // while end
+        } catch ( SQLException e ){
+            System.out.println("[product05] SQL 기재 실패");
+        } // try-catch end
+        return productDto;
+    } // func end
+
+    // product06. 제품 등록
+    // 기능설명 : [제품명, 공급가액, 소비자판매가]를 입력받아, 제품을 추가한다.
+    // 메소드명 : productAdd()
+    // 매개변수 : String proName, int proSupPrice, int proPrice
+    // 반환타입 : boolean -> true : 등록 성공 / false : 등록 실패
+
+
+    // product07. 제품 수정
+    // 기능설명 : [제품번호, 제품명, 공급가액, 소비자판매가]를 입력받아, 해당하는 제품정보를 수정한다.
+    // 메소드명 : productUpdate()
+    // 매개변수 : int proNo,String proName, int proSupPrice, int proPrice
+    // 반환타입 : boolean -> true : 등록 성공 / false : 등록 실패
+
+
+    // product08. 제품 삭제
+    // 기능설명 : [제품번호, 제품명]을 입력받아, 해당하는 제품을 삭제처리한다.
+    // 메소드명 : productDelete()
+    // 매개변수 : int proNo, String proName
+    // 반환타입 : boolean -> true : 등록 성공 / false : 등록 실패
+
+
+    // product09. 판매여부 변환
+    // 기능설명 : [판매여부(boolean)]을 받아, [판매여부(String)]으로 반환한다.
+    // 메소드명 : toproStatusChange()
+    // 매개변수 : boolean proStatus
+    // 반환타입 : String -> "판매중" / "판매 종료"
+    public String toproStatusChange( boolean proStatus ){
+        if ( proStatus ){
+            return "판매중";
+        } else {
+            return "판매종료";
+        } // if end
+    } // func end
 } // class end

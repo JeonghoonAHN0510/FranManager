@@ -2,13 +2,10 @@ package View;
 
 import Controller.FranController;
 import Controller.*;
-import Model.DTO.StatsDto;
+import Model.DTO.*;
 import Controller.IOLogController;
 import Controller.ProductController;
 import Controller.SupplyLogController;
-import Model.DTO.FranDto;
-import Model.DTO.IOLogDto;
-import Model.DTO.SupplyLogDto;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -362,6 +359,7 @@ public class View {
                     if (supplyLogDto.getFranNo() != 0) {       // 발주번호에 해당하는 발주가 존재한다면
                         System.out.println("──┤ 발주번호 정보 조회 ├─────────────────────────────────────────────────────");
                         System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
+                        System.out.println("─────────────────────────────────────────────────────────────────────────");
                         // 원하는 값 꺼내오기
                         int franNo = supplyLogDto.getFranNo();
                         int proNo = supplyLogDto.getProNo();
@@ -393,6 +391,7 @@ public class View {
                     if (supplyLogDto.getFranNo() != 0) {       // 발주번호에 해당하는 발주가 존재한다면
                         System.out.println("──┤ 발주번호 정보 조회 ├─────────────────────────────────────────────────────");
                         System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
+                        System.out.println("─────────────────────────────────────────────────────────────────────────");
                         // 원하는 값 꺼내오기
                         int franNo = supplyLogDto.getFranNo();
                         int proNo = supplyLogDto.getProNo();
@@ -593,9 +592,25 @@ public class View {
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
                     System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // TODO 7.1. 제품 전체 조회 func 연결
+                    // Controller로부터 결과 받기
+                    ArrayList<ProductDto> productDtos = productController.productAllPrint();
+                    // 배열 하나씩 순회하면서 출력하기
+                    for( ProductDto productDto : productDtos ){
+                        // 값 하나씩 꺼내기
+                        int proNo = productDto.getProNo();
+                        String proName = productDto.getProName();
+                        int proSupPrice = productDto.getProSupPrice();
+                        int proPrice = productDto.getProPrice();
+                        boolean proStatus = productDto.isProStatus();
+                        // 판매여부 변환하기
+                        String status = productController.toproStatusChange( proStatus );
+                        // Price들 천 단위 콤마찍기
+                        String SupPrice = nf.format(proSupPrice);
+                        String price = nf.format(proPrice);
+                        // 하나씩 출력하기
+                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
+                    } // for end
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-
                 } else if (choice == 2) {
                     // TODO 7.2. 제품 등록 func 연결
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
@@ -605,23 +620,51 @@ public class View {
 
 
                 } else if (choice == 3) {
-                    System.out.print("제품번호 : ");    int proNo = scan.nextInt();
-
+                    // 사용자로부터 수정할 제품번호 받기
+                    System.out.print("제품번호 : ");    int proNoInput = scan.nextInt();
+                    // 입력한 제품번호에 해당하는 제품 꺼내오기
+                    ProductDto productDto = productController.productPrint( proNoInput );
+                    // 값 하나씩 꺼내기
+                    int proNo = productDto.getProNo();
+                    String proName = productDto.getProName();
+                    int proSupPrice = productDto.getProSupPrice();
+                    int proPrice = productDto.getProPrice();
+                    boolean proStatus = productDto.isProStatus();
+                    // 판매여부 변환하기
+                    String status = productController.toproStatusChange( proStatus );
+                    // Price들 천 단위 콤마찍기
+                    String SupPrice = nf.format(proSupPrice);
+                    String price = nf.format(proPrice);
                     System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
                     System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // TODO 7.3. 제품별 정보 조회 func 연결
+                    System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     // todo 7.3  제품정보 수정 func 연결
                 } else if (choice == 4) {
-                    System.out.print("제품번호 : ");    int proNo = scan.nextInt();
-
+                    // 사용자로부터 삭제할 제품번호 받기
+                    System.out.print("제품번호 : ");    int proNoInput = scan.nextInt();
+                    // 입력한 제품번호에 해당하는 제품 꺼내오기
+                    ProductDto productDto = productController.productPrint( proNoInput );
+                    // 값 하나씩 꺼내기
+                    int proNo = productDto.getProNo();
+                    String proName = productDto.getProName();
+                    int proSupPrice = productDto.getProSupPrice();
+                    int proPrice = productDto.getProPrice();
+                    boolean proStatus = productDto.isProStatus();
+                    // 판매여부 변환하기
+                    String status = productController.toproStatusChange( proStatus );
+                    // Price들 천 단위 콤마찍기
+                    String SupPrice = nf.format(proSupPrice);
+                    String price = nf.format(proPrice);
                     System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
                     System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // TODO 7.4. 제품별 정보 조회 func 연결
+                    System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     // todo 7.4  제품 판매종료 func 연결
+
+
                 } else if (choice == 5) {
                     break;
                 } else {
