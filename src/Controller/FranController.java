@@ -89,5 +89,15 @@ public class FranController {
         return franNo;
     } // func end
 
+    // [fran08] 가맹점번호 유효성검사 / franNoCheck()
+    // 매개변수 : int franNo
+    // 반환 : boolean
+    public boolean franNoCheck(int franNo){
+        // [8.1] dao 메소드 실행
+        boolean result = FranDao.getInstance().franNoCheck(franNo);
+        // [8.2] 결과 반환
+        return result;
+    } // func end
+
 
 } // class end
