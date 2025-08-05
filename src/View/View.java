@@ -581,7 +581,7 @@ public class View {
     public void productManage() {
         for ( ; ; ) {
             System.out.println(
-                    "╔════════════════════════════════════╣ 재고 관리 ╠═══════════════════════════════════╗\n" +
+                    "╔════════════════════════════════════╣ 제품 관리 ╠═══════════════════════════════════╗\n" +
                             "║               1. 제품 전체 조회  ▌  2. 제품 등록                                     ║\n" +
                             "║               3. 제품 수정      ▌  4. 제품 판매종료  ▌  5. 메인으로 돌아가기             ║\n" +
                             "╚═══════════════════════════════════════════════════════════════════════════════════╝");
@@ -622,7 +622,7 @@ public class View {
                     // 결과에 따른 출력하기
                     if ( result ){
                         System.out.println("[안내] 제품이 정상적으로 등록되었습니다.");
-                    }else {
+                    } else {
                         System.out.println("[경고] 제품 등록에 실패하였습니다.");
                     } // if end
                 } else if (choice == 3) {
@@ -655,7 +655,7 @@ public class View {
                     // 결과에 따른 출력하기
                     if ( result ){
                         System.out.println("[안내] 제품이 정상적으로 수정되었습니다.");
-                    }else {
+                    } else {
                         System.out.println("[경고] 제품 수정에 실패하였습니다.");
                     } // if end
                 } else if (choice == 4) {
@@ -679,14 +679,21 @@ public class View {
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // todo 7.4  제품 판매종료 func 연결
-
-
+                    // 사용자로부터 삭제할 제품명 받기
+                    System.out.print("정말로 판매종료하시겠습니까? 맞으시다면 '제품명'을 입력해주세요 : ");     String proNameInput = scan.next();
+                    // 입력한 값 controller에게 전달 후 결과받기
+                    boolean result = productController.productDelete( proNoInput, proNameInput );
+                    // 결과에 따른 출력하기
+                    if ( result ){
+                        System.out.println("[안내] 해당 제품이 정상적으로 판매종료되었습니다.");
+                    } else {
+                        System.out.println("[경고] 제품 판매종료에 실패하였습니다.");
+                    } // if end
                 } else if (choice == 5) {
                     break;
                 } else {
                     System.out.println("[경고] 올바르지 못한 메뉴입니다.");
-                }
+                } // if end
             } catch (InputMismatchException e) {
                 System.out.println("[경고] 입력 타입이 올바르지 못합니다.");
             } catch (Exception e) {

@@ -108,7 +108,14 @@ public class ProductController {
     // 메소드명 : productDelete()
     // 매개변수 : int proNo, String proName
     // 반환타입 : boolean -> true : 삭제 성공 / false : 삭제 실패
-
+    public boolean productDelete( int proNo, String proName ){
+        // 1. dao에게 전달할 객체 생성
+        ProductDto productDto = new ProductDto( proNo, proName, 0, 0, true );
+        // 2. dao에게 객체 전달 후 결과받기
+        boolean result = productDao.productDelete( productDto );
+        // 3. view에게 결과 전달하기
+        return result;
+    } // func end
 
     // product09. 판매여부 변환
     // 기능설명 : [판매여부(boolean)]을 받아, [판매여부(String)]으로 반환한다.

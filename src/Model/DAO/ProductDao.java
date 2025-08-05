@@ -240,7 +240,26 @@ public class ProductDao {
     // 메소드명 : productDelete()
     // 매개변수 : ProductDto -> int proNo, String proName
     // 반환타입 : boolean -> true : 삭제 성공 / false : 삭제 실패
-
+    public boolean productDelete( ProductDto productDto ){
+        try {
+            // 1. SQL 작성
+            String SQL = "update Product set proStatus = false where proNo = ? and proName = ?";
+            // 2. SQL 기재
+            PreparedStatement ps = conn.prepareStatement( SQL );
+            // 3. SQL 매개변수 대입
+            ps.setInt( 1, productDto.getProNo() );
+            ps.setString( 2, productDto.getProName() );
+            // 4. SQL 실행
+            int count = ps.executeUpdate();
+            // 5. SQL 결과 반환
+            if ( count == 1 ){
+                return true;
+            } // if end
+        } catch ( SQLException e ){
+            System.out.println("[product08] SQL 기재 실패");
+        } // try-catch end
+        return false;
+    } // func end
 
     // product09. 판매여부 변환
     // 기능설명 : [판매여부(boolean)]을 받아, [판매여부(String)]으로 반환한다.
