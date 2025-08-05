@@ -131,7 +131,6 @@ public class View {
                     System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
                     System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress());
-                    // TODO
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // 단일 출력
                     System.out.printf(dto.getFranNo()+"\t"+dto.getFranName()+"\t"+dto.getFranCall()+"\t"+dto.getFranOwner()+"\t"+dto.getFranAddress()+"\n");

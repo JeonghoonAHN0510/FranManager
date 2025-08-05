@@ -80,7 +80,7 @@ public class FranController {
                 franAddress.charAt(4) != '시' &&
                 franAddress.charAt(6) != '시')
         // 3,4,6번째 글자에 "도" 안들어가면 false , 3,5,7번째 글자에 "시" 안들어가면 false
-        {System.out.println("[경고] 주소가 올바르지 않습니다."); // TODO 여기 반응이안함
+        {System.out.println("[경고] 주소가 올바르지 않습니다.");
             return false;}
         if(franCall.length() <= 9){
             System.out.println("[경고] 올바른 전화번호가 아닙니다.");
