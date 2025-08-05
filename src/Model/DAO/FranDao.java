@@ -205,8 +205,7 @@ public class FranDao {
                 }
             }
         } catch (Exception e) {
-            System.out.println("ProductDao.toProNameChange");
-            System.out.println("[예외발생] " + e);
+            System.out.println("[경고] 확인되지 않는 가맹점 번호입니다. 가맹점 번호를 다시한번 확인해주세요.");
         }
         return result;
     } // func end
