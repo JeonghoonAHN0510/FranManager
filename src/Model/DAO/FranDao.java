@@ -70,7 +70,7 @@ public class FranDao {
                 // 생성된 DTO를 리스트에 담아주기
                 list.add( franDto );
             } // while 종료
-        }catch (Exception e){ System.out.println(e);}
+        }catch (Exception e){ System.out.println("[경고] 조회 결과가 없습니다.");}
         return list;
     } // func end
 
@@ -94,7 +94,7 @@ public class FranDao {
                 // 꺼낸 값을 객체에 넣기
                 franDto = new FranDto( franNo , franName ,franAddress , franCall ,franOwner ,false, 0);
             } // while end
-        }catch (Exception e){System.out.println(e);}
+        }catch (Exception e){System.out.println("[경고] 조회 결과가 없습니다.");}
         return franDto;
     } // func end
 
@@ -119,7 +119,7 @@ public class FranDao {
         // SQL 결과에 따른 로직 확인
             if( count == 1 ) return true; // 수정 결과가 1개이면 수정성공
             return false; // 수정 결과가 1이 아니면 수정 실패
-        }catch (Exception e){System.out.println(e);}
+        }catch (Exception e){System.out.println("[경고] 올바르지 못한 입력입니다.");}
         return false; // 예외발생시 수정실패
     }
 
@@ -140,7 +140,7 @@ public class FranDao {
             if (count == 1) return true; // 삭제 결과가 1개이면 수정성공
             return false; // 삭제 결과가 1이 아니면 수정 실패
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("[경고] 올바르지 못한 입력입니다.");
             return false; // 예외 발생시 삭제 실패
         } // cat end
     } // func end

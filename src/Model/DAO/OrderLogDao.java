@@ -45,7 +45,7 @@ public class OrderLogDao {
                 // 생선된 DTO를 리스트에 담아주기
                 list.add( orderLogDto);
             } // while 종료
-        }catch (Exception e){System.out.println(e);}
+        }catch (Exception e){System.out.println("[경고] 조회 결과가 없습니다.");}
         return list;
     } // func end
 
