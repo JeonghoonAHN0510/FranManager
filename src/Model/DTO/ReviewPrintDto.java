@@ -6,7 +6,7 @@ public class ReviewPrintDto {
     private int reviewNo;       // 리뷰번호
     private int orderNo;        // 판매번호
     private String proName;     // 상품명
-    private String franName;    // 가맹점명
+    private int franNo;    // 가맹점명
     private String review;      // 리뷰
 
     // 2. 생성자
@@ -14,11 +14,11 @@ public class ReviewPrintDto {
     public ReviewPrintDto() {
     }
     // 2) 전체생성자
-    public ReviewPrintDto(int reviewNo, int orderNo, String proName, String franName, String review) {
+    public ReviewPrintDto(int reviewNo, int orderNo, String proName, int franNo, String review) {
         this.reviewNo = reviewNo;
         this.orderNo = orderNo;
         this.proName = proName;
-        this.franName = franName;
+        this.franNo = franNo;
         this.review = review;
     }
 
@@ -48,13 +48,9 @@ public class ReviewPrintDto {
         this.proName = proName;
     }
 
-    public String getFranName() {
-        return franName;
-    }
+    public int getFranNo() {return franNo;}
 
-    public void setFranName(String franName) {
-        this.franName = franName;
-    }
+    public void setFranNo(int franNo) {this.franNo = franNo;}
 
     public String getReview() {
         return review;
@@ -71,7 +67,7 @@ public class ReviewPrintDto {
                 "reviewNo=" + reviewNo +
                 ", orderNo=" + orderNo +
                 ", proName='" + proName + '\'' +
-                ", franName='" + franName + '\'' +
+                ", franName='" + franNo + '\'' +
                 ", review='" + review + '\'' +
                 '}';
     }

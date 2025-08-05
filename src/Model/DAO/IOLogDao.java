@@ -68,8 +68,9 @@ public class IOLogDao {
                 result = true;
             }
         } catch (Exception e) {
-            System.out.println("IOLogDao.ioLogAdd");
-            System.out.println("[예외발생] " + e);
+//            System.out.println("IOLogDao.ioLogAdd");
+//            System.out.println("[예외발생] " + e);
+            throw new RuntimeException(e);
         }
         return result;
     } // func end
@@ -109,8 +110,9 @@ public class IOLogDao {
                 ioLogDtoList.add(ioLogDto);
             }
         } catch (Exception e) {
-            System.out.println("IOLogDao.IOLogPrint");
-            System.out.println("[예외발생] " + e);
+//            System.out.println("IOLogDao.IOLogPrint");
+//            System.out.println("[예외발생] " + e);
+            throw new RuntimeException(e);
         }
         // [2.3] 결과 반환
         return ioLogDtoList;
@@ -143,10 +145,9 @@ public class IOLogDao {
             ioLogDto.setIoDate(rs.getString("ioDate"));
             ioLogDto.setIoMemo(rs.getString("ioMemo"));
         } catch (Exception e) {
-            System.out.println("IOLogDao.oneIOLogPrint");
-            System.out.println("[예외발생] " + e);
-
-            throw new RuntimeException(e); // ToDo 위랑 아래중 test 후 선택
+//            System.out.println("IOLogDao.oneIOLogPrint");
+//            System.out.println("[예외발생] " + e);
+            throw new RuntimeException(e);
         }
         // [3.6] dto 반환
         return ioLogDto;
@@ -173,12 +174,13 @@ public class IOLogDao {
             // [4.5] SQL 실행 결과 확인
             while (rs.next()) {
                 map.put(rs.getInt("proNo"), rs.getInt("totalQty"));
-                System.out.println(map.toString());
+//                System.out.println(map.toString());
             }
 
         } catch (Exception e) {
-            System.out.println("IOLogDao.IOPrint");
-            System.out.println("[예외발생] " + e);
+//            System.out.println("IOLogDao.IOPrint");
+//            System.out.println("[예외발생] " + e);
+            throw new RuntimeException(e);
         }
         return map;
     } // func end
@@ -210,8 +212,9 @@ public class IOLogDao {
                 result = false;
             }
         } catch (Exception e) {
-            System.out.println("IOLogDao.ioUpdate");
-            System.out.println("[예외발생] " + e);
+//            System.out.println("IOLogDao.ioUpdate");
+//            System.out.println("[예외발생] " + e);
+            throw new RuntimeException(e);
         }
         // [5.6] 결과 반환
         return result;
@@ -240,8 +243,9 @@ public class IOLogDao {
                 }
             }
         } catch (Exception e) {
-            System.out.println("IOLogDao.ioNoCheck");
-            System.out.println("[예외발생] " + e);
+//            System.out.println("IOLogDao.ioNoCheck");
+//            System.out.println("[예외발생] " + e);
+            throw new RuntimeException(e);
         }
         return result;
     } // func end

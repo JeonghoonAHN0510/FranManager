@@ -183,5 +183,33 @@ public class FranDao {
         } // try-catch end
         return franNo;
     } // func end
+
+    // [fran08] 가맹점번호 유효성검사 / franNoCheck()
+    // 매개변수 : int franNo
+    // 반환 : boolean
+    public boolean franNoCheck(int franNo){
+        boolean result = false;
+        try {
+            // [8.1] SQL 작성
+            String sql = "select franNo from fran";
+            // [3.2] SQL 기재
+            PreparedStatement ps = conn.prepareStatement(sql);
+            // [3.3] SQL 매개변수 / 생략
+            // [3.4] SQL 실행
+            ResultSet rs = ps.executeQuery();
+            // [3.5] SQL 실행 결과
+            while (rs.next()){
+                if(rs.getInt("franNo") == franNo){
+                    result = true;
+                    return result;
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("ProductDao.toProNameChange");
+            System.out.println("[예외발생] " + e);
+        }
+        return result;
+    } // func end
+
 } // class
 
