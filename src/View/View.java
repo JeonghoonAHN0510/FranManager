@@ -160,6 +160,7 @@ public class View {
                     int franNo = scan.nextInt();
                     // 입력한 번호에 해당하는 객체 가져오기
                     FranDto dto = franController.oneFranPrint(franNo);
+                    if( dto.getFranNo() != 0 ){
                     System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
                     System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
@@ -167,15 +168,15 @@ public class View {
                     System.out.printf(dto.getFranNo()+"\t"+dto.getFranName()+"\t"+dto.getFranCall()+"\t"+dto.getFranOwner()+"\t"+dto.getFranAddress()+"\n");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     System.out.println("<주의> 삭제를 원하시면, 가맹점명과 가맹주명을 입력하세요.");
-                    System.out.println("가맹점명 : "); String franName = scan.next();
-                    System.out.println("가맹주명 : "); String franOwner = scan.next();
+                    System.out.print("가맹점명 : "); String franName = scan.next();
+                    System.out.print("가맹주명 : "); String franOwner = scan.next();
                     // 수정 정보를 controller에 전달
-                    boolean result = franController.franDelete(franNo, dto.getFranName(), dto.getFranOwner());
+                    boolean result = franController.franDelete(franNo, franName, franOwner);
                     if(result) {
                         System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다");
                     } else {
                         System.out.println("[경고] 가맹점 삭제가 실패했습니다.");
-                    }
+                    }}else {System.out.println("[경고] 올바르지 못한 번호입니다.");}
 
                 } else if (choice == 5) {
                     break;
