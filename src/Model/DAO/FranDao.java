@@ -127,7 +127,7 @@ public class FranDao {
     public boolean franDelete( FranDto frandto) {
         // SQL 작성
         try {
-            String sql = "update fran set franStatus = true where franNo = ? and franName = ? and franOwner = ?";
+            String sql = "update fran set franStatus = true where franStatus = false and franNo = ? and franName = ? and franOwner = ?";
             // SQL 기재
             PreparedStatement ps = conn.prepareStatement(sql);
             // SQL 매개변수 3개 대입
