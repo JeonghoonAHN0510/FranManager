@@ -46,11 +46,12 @@ public class FranDao {
         return false; // 예외 발생 시 저장 실패
     } // func end
 
-    // fran02 가맹점 전체조회기능 구현 // TODO
+    // fran02 가맹점 전체조회기능 구현
     public ArrayList<FranDto> franPrint(){
         ArrayList<FranDto> list = new ArrayList<>();
         try{// SQL 작성
-            String sql = "select f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner, ifnull(SUM(orderQty * orderPrice), 0) AS P from fran f left join OrderLog o on f.franNo=o.franNo group by f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner order by franNo desc";
+            String sql = "select f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner, ifnull(SUM(orderQty * orderPrice), 0) AS P from fran f left join OrderLog o on f.franNo=o.franNo where franStatus=0 group by f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner order by franNo asc;";
+            // select f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner, ifnull(SUM(orderQty * orderPrice), "0원") AS P from fran f left join OrderLog o on f.franNo=o.franNo group by f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner order by franNo asc;
             // SQL 기재
             PreparedStatement ps = conn.prepareStatement(sql);
             // SQL 실행
@@ -69,7 +70,7 @@ public class FranDao {
                 // 생성된 DTO를 리스트에 담아주기
                 list.add( franDto );
             } // while 종료
-        }catch (Exception e){ System.out.println(e);}
+        }catch (Exception e){ System.out.println("[경고] 조회 결과가 없습니다.");}
         return list;
     } // func end
 
@@ -93,43 +94,56 @@ public class FranDao {
                 // 꺼낸 값을 객체에 넣기
                 franDto = new FranDto( franNo , franName ,franAddress , franCall ,franOwner ,false, 0);
             } // while end
-        }catch (Exception e){System.out.println(e);}
+        }catch (Exception e){System.out.println("[경고] 조회 결과가 없습니다.");}
         return franDto;
     } // func end
 
 
 
 
-    // fran04 가맹점 수정기능 구현 // TODO
+    // fran04 가맹점 수정기능 구현
     public boolean franUpdate( FranDto franDto ){
         // SQL 작성
-        try{String sql = "update fran set franNo = ? , franName = ? , franAddress = ? , franCall = ? , franOwner = ? , franStatus = ?; where franNo = ? and franName = ?";
+        try{String sql = "update fran set franName = ? , franAddress = ? , franCall = ? , franOwner = ? , franStatus = ? where franNo = ? ";
         // SQL 기재
             PreparedStatement ps = conn.prepareStatement(sql);
-        // SQL 매개변수 대입 8개
-            ps.setInt(1,franDto.getFranNo());
-            ps.setString(2,franDto.getFranName());
-            ps.setString(3,franDto.getFranAddress());
-            ps.setString(4,franDto.getFranCall());
-            ps.setString(5,franDto.getFranOwner());
-            ps.setBoolean(6,franDto.isFranStatus());
-            ps.setInt(7,franDto.getFranNo());
-            ps.setString(8,franDto.getFranName());
+        // SQL 매개변수 대입 6개
+            ps.setString(1,franDto.getFranName());
+            ps.setString(2,franDto.getFranAddress());
+            ps.setString(3,franDto.getFranCall());
+            ps.setString(4,franDto.getFranOwner());
+            ps.setBoolean(5,franDto.isFranStatus());
+            ps.setInt(6,franDto.getFranNo());
         // SQL 실행
             int count = ps.executeUpdate();
         // SQL 결과에 따른 로직 확인
             if( count == 1 ) return true; // 수정 결과가 1개이면 수정성공
             return false; // 수정 결과가 1이 아니면 수정 실패
-        }catch (Exception e){System.out.println(e);}
+        }catch (Exception e){System.out.println("[경고] 올바르지 못한 입력입니다.");}
         return false; // 예외발생시 수정실패
     }
 
-    // fran05 가맹점 삭제기능 구현 // TODO
-//    public boolean franDelete( FranDto frandto){
-//
-//    }
-
-
+    // fran05 가맹점 삭제기능 구현
+    public boolean franDelete( FranDto frandto) {
+        // SQL 작성
+        try {
+            String sql = "update fran set franStatus = true where franNo = ? and franName = ? and franOwner = ?";
+            // SQL 기재
+            PreparedStatement ps = conn.prepareStatement(sql);
+            // SQL 매개변수 3개 대입
+            ps.setInt(1, frandto.getFranNo());
+            ps.setString(2, frandto.getFranName());
+            ps.setString(3, frandto.getFranOwner());
+            // SQL 실행
+            int count = ps.executeUpdate();
+            // SQL 결과에 따른 로직 확인
+            if (count == 1) return true; // 삭제 결과가 1개이면 수정성공
+            return false; // 삭제 결과가 1이 아니면 수정 실패
+        } catch (Exception e) {
+            System.out.println("[경고] 올바르지 못한 입력입니다.");
+            return false; // 예외 발생시 삭제 실패
+        } // cat end
+    } // func end
 
     // fran06. 가맹점명 반환(번호 > 이름)
     // 기능설명 : [가맹점번호]를 매개변수로 받아, 해당하는 가맹점명을 반환한다.

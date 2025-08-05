@@ -94,11 +94,13 @@ public class View {
             try {
                 if (choice == 1) {
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 매출액");
+                    System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 매출액 \t 상세주소");
                     ArrayList<FranDto> result = franController.franPrint();
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     for (FranDto dto : result) {
-                        System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getP() + "\n");
+                        int totalPrice = dto.getP();
+                        String price = nf.format(totalPrice);
+                        System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + price+"원" +"\t"+dto.getFranAddress()+"\n");
                     }
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
 
@@ -131,7 +133,8 @@ public class View {
                     System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress());
                     // TODO
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // TODO 단일 가맹점정보 조회 func 연결
+                    // 단일 출력
+                    System.out.printf(dto.getFranNo()+"\t"+dto.getFranName()+"\t"+dto.getFranCall()+"\t"+dto.getFranOwner()+"\t"+dto.getFranAddress()+"\n");
 
                     System.out.println("──┤  수정 정보 입력  ├─────────────────────────────────────────────────────");
                     scan.nextLine();
@@ -144,19 +147,34 @@ public class View {
                     System.out.print("가맹점주 : ");
                     String franOwner = scan.nextLine();
 
-                    // TODO 1.3. 가맹점 정보 수정 func 연결
+                    // 수정 정보를 controller에 전달
+                    boolean result = franController.franUpdate(franNo,franName,franAddress,franCall,franOwner);
+                    if(result) {
+                        System.out.println("[안내] 가맹점 정보가 정상적으로 수정되었습니다");
+                    } else {
+                        System.out.println("[경고] 가맹점 수정이 실패했습니다.");
+                    }
 
                 } else if (choice == 4) {
+                    // 사용자로부터 수정할 가맹점 번호 입력 받기
                     System.out.print("가맹점 번호 : ");
                     int franNo = scan.nextInt();
-
+                    // 입력한 번호에 해당하는 객체 가져오기
+                    FranDto dto = franController.oneFranPrint(franNo);
                     System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
                     System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // TODO 단일 가맹점정보 조회 func 연결
+                    // 단일 조회
+                    System.out.printf(dto.getFranNo()+"\t"+dto.getFranName()+"\t"+dto.getFranCall()+"\t"+dto.getFranOwner()+"\t"+dto.getFranAddress()+"\n");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
 
-                    // TODO 1.4. 가맹점 삭제 func 연결
+                    // 수정 정보를 controller에 전달
+                    boolean result = franController.franDelete(franNo, dto.getFranName(), dto.getFranOwner());
+                    if(result) {
+                        System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다");
+                    } else {
+                        System.out.println("[경고] 가맹점 삭제가 실패했습니다.");
+                    }
 
                 } else if (choice == 5) {
                     break;
@@ -568,8 +586,12 @@ public class View {
         System.out.println("═════════════════════════════════════════════════════════════════════════");
         System.out.println("판매번호 \t 가맹점명 \t 제품명 \t 판매수량 \t 날짜·시간");
         System.out.println("─────────────────────────────────────────────────────────────────────────");
+        ArrayList<OrderLogDto> result = OrderLogController.getInstance().saleStatsPrint();
+        for( OrderLogDto dto : result ){
+            System.out.printf(dto.getOrderNo()+"\t"+FranController.getInstance().toFranNameChange(dto.getFranNo())+"\t"+ProductController.getInstance().toProNameChange(dto.getProNo())+"\t"+dto.getOrderQty()+"\t"+dto.getOrderDate()+"\n");
+        }
+        System.out.println("─────────────────────────────────────────────────────────────────────────");
 
-        // TODO 5. 판매현황 보기 func 연결
     } // saleView end
 
     // [6] 통계보기
