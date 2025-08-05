@@ -125,10 +125,14 @@ public class View {
 
                 } else if (choice == 3) {
                     System.out.print("가맹점 번호 : ");
+                    // 사용자로부터 수정할 가맹점 번호 입력 받기
                     int franNo = scan.nextInt();
-
+                    // 입력한 번호에 해당하는 객체 가져오기
+                    FranDto dto = franController.oneFranPrint(franNo);
                     System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
                     System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
+                    System.out.printf(dto.getFranNo()+"\t"+dto.getFranName()+"\t"+dto.getFranCall()+"\t"+dto.getFranOwner()+"\t"+dto.getFranAddress());
+                    // TODO
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // TODO 단일 가맹점정보 조회 func 연결
 
