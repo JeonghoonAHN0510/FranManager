@@ -63,9 +63,7 @@ public class FranController {
 
     // fran04 가맹점 수정기능 구현
     public boolean franUpdate(int franNo, String franName, String franAddress, String franCall, String franOwner){
-        if (franName.length() <=1){ // 가맹점명이 한글자 이하이면 오류
-            System.out.println("[경고] 가맹점 이름이 올바르지 않습니다.");
-            return false;}
+        // 유효성검사
         if (franName.length() <=1){ // 가맹점명이 한글자 이하이면 오류
             System.out.println("[경고] 가맹점 이름이 올바르지 않습니다.");
             return false;}
