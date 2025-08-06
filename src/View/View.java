@@ -27,8 +27,11 @@ public class View {
     private NumberFormat nf = NumberFormat.getInstance();
 
     // 싱글톤
-    private View() { }
+    private View() {
+    }
+
     private static final View instance = new View();
+
     public static View getInstance() {
         return instance;
     }
@@ -100,7 +103,7 @@ public class View {
                     for (FranDto dto : result) {
                         int totalPrice = dto.getP();
                         String price = nf.format(totalPrice);
-                        System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + price+"원" +"\t"+dto.getFranAddress()+"\n");
+                        System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + price + "원" + "\t" + dto.getFranAddress() + "\n");
                     }
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
 
@@ -130,10 +133,10 @@ public class View {
                     FranDto dto = franController.oneFranPrint(franNo);
                     System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
                     System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
-                    System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress()+"\n");
+                    System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // 단일 출력
-                    System.out.printf(dto.getFranNo()+"\t"+dto.getFranName()+"\t"+dto.getFranCall()+"\t"+dto.getFranOwner()+"\t"+dto.getFranAddress()+"\n");
+                    System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
 
                     System.out.println("──┤  수정 정보 입력  ├─────────────────────────────────────────────────────");
                     scan.nextLine();
@@ -147,8 +150,8 @@ public class View {
                     String franOwner = scan.nextLine();
 
                     // 수정 정보를 controller에 전달
-                    boolean result = franController.franUpdate(franNo,franName,franAddress,franCall,franOwner);
-                    if(result) {
+                    boolean result = franController.franUpdate(franNo, franName, franAddress, franCall, franOwner);
+                    if (result) {
                         System.out.println("[안내] 가맹점 정보가 정상적으로 수정되었습니다");
                     } else {
                         System.out.println("[경고] 가맹점 수정이 실패했습니다.");
@@ -164,12 +167,12 @@ public class View {
                     System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // 단일 조회
-                    System.out.printf(dto.getFranNo()+"\t"+dto.getFranName()+"\t"+dto.getFranCall()+"\t"+dto.getFranOwner()+"\t"+dto.getFranAddress()+"\n");
+                    System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
 
                     // 수정 정보를 controller에 전달
                     boolean result = franController.franDelete(franNo, dto.getFranName(), dto.getFranOwner());
-                    if(result) {
+                    if (result) {
                         System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다");
                     } else {
                         System.out.println("[경고] 가맹점 삭제가 실패했습니다.");
@@ -207,7 +210,7 @@ public class View {
                     // Controller로부터 결과 받기
                     ArrayList<ProductDto> productDtos = productController.productAllPrint();
                     // 배열 하나씩 순회하면서 출력하기
-                    for( ProductDto productDto : productDtos ){
+                    for (ProductDto productDto : productDtos) {
                         // 값 하나씩 꺼내기
                         int proNo = productDto.getProNo();
                         String proName = productDto.getProName();
@@ -215,34 +218,38 @@ public class View {
                         int proPrice = productDto.getProPrice();
                         boolean proStatus = productDto.isProStatus();
                         // 판매여부 변환하기
-                        String status = productController.toproStatusChange( proStatus );
+                        String status = productController.toproStatusChange(proStatus);
                         // Price들 천 단위 콤마찍기
                         String SupPrice = nf.format(proSupPrice);
                         String price = nf.format(proPrice);
                         // 하나씩 출력하기
-                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
+                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status);
                     } // for end
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 2) {
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     // 사용자로부터 등록할 제품정보 받기
-                    System.out.print("제품명 : ");    String proName = scan.next();
-                    System.out.print("공급가액 : ");   int proSupPrice = scan.nextInt();
-                    System.out.print("소비자판매가 : ");   int proPrice = scan.nextInt();
+                    System.out.print("제품명 : ");
+                    String proName = scan.next();
+                    System.out.print("공급가액 : ");
+                    int proSupPrice = scan.nextInt();
+                    System.out.print("소비자판매가 : ");
+                    int proPrice = scan.nextInt();
                     // 입력한 정보 등록하고 결과받기
-                    boolean result = productController.productAdd( proName, proSupPrice, proPrice );
+                    boolean result = productController.productAdd(proName, proSupPrice, proPrice);
                     // 결과에 따른 출력하기
-                    if ( result ){
+                    if (result) {
                         System.out.println("[안내] 제품이 정상적으로 등록되었습니다.");
                     } else {
                         System.out.println("[경고] 제품 등록에 실패하였습니다.");
                     } // if end
                 } else if (choice == 3) {
                     // 사용자로부터 수정할 제품번호 받기
-                    System.out.print("제품번호 : ");    int proNoInput = scan.nextInt();
+                    System.out.print("제품번호 : ");
+                    int proNoInput = scan.nextInt();
                     // 입력한 제품번호에 해당하는 제품 꺼내오기
-                    ProductDto productDto = productController.productPrint( proNoInput );
-                    if ( productDto.getProNo() != 0 ){          // 제품번호가 올바르다면
+                    ProductDto productDto = productController.productPrint(proNoInput);
+                    if (productDto.getProNo() != 0) {          // 제품번호가 올바르다면
                         // 값 하나씩 꺼내기
                         int proNo = productDto.getProNo();
                         String proName = productDto.getProName();
@@ -250,23 +257,26 @@ public class View {
                         int proPrice = productDto.getProPrice();
                         boolean proStatus = productDto.isProStatus();
                         // 판매여부 변환하기
-                        String status = productController.toproStatusChange( proStatus );
+                        String status = productController.toproStatusChange(proStatus);
                         // Price들 천 단위 콤마찍기
                         String SupPrice = nf.format(proSupPrice);
                         String price = nf.format(proPrice);
                         System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
                         System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
                         System.out.println("───────────────────────────────────────────────────────────────────────────");
-                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
+                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status);
                         System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────");
                         // 사용자로부터 수정정보 입력받기
-                        System.out.print("제품명 : ");        String proNameInput = scan.next();
-                        System.out.print("공급가액 : ");       int proSupPriceInput = scan.nextInt();
-                        System.out.print("소비자판매가 : ");    int proPriceInput = scan.nextInt();
+                        System.out.print("제품명 : ");
+                        String proNameInput = scan.next();
+                        System.out.print("공급가액 : ");
+                        int proSupPriceInput = scan.nextInt();
+                        System.out.print("소비자판매가 : ");
+                        int proPriceInput = scan.nextInt();
                         // 입력한 값 controller에게 전달 후 결과 받기
-                        boolean result = productController.productUpdate( proNoInput, proNameInput, proSupPriceInput, proPriceInput );
+                        boolean result = productController.productUpdate(proNoInput, proNameInput, proSupPriceInput, proPriceInput);
                         // 결과에 따른 출력하기
-                        if ( result ){
+                        if (result) {
                             System.out.println("[안내] 제품이 정상적으로 수정되었습니다.");
                         } else {
                             System.out.println("[경고] 제품 수정에 실패하였습니다.");
@@ -276,9 +286,10 @@ public class View {
                     } // if end
                 } else if (choice == 4) {
                     // 사용자로부터 삭제할 제품번호 받기
-                    System.out.print("제품번호 : ");    int proNoInput = scan.nextInt();
+                    System.out.print("제품번호 : ");
+                    int proNoInput = scan.nextInt();
                     // 입력한 제품번호에 해당하는 제품 꺼내오기
-                    ProductDto productDto = productController.productPrint( proNoInput );
+                    ProductDto productDto = productController.productPrint(proNoInput);
                     // 값 하나씩 꺼내기
                     int proNo = productDto.getProNo();
                     String proName = productDto.getProName();
@@ -286,21 +297,22 @@ public class View {
                     int proPrice = productDto.getProPrice();
                     boolean proStatus = productDto.isProStatus();
                     // 판매여부 변환하기
-                    String status = productController.toproStatusChange( proStatus );
+                    String status = productController.toproStatusChange(proStatus);
                     // Price들 천 단위 콤마찍기
                     String SupPrice = nf.format(proSupPrice);
                     String price = nf.format(proPrice);
                     System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
                     System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status );
+                    System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status);
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     // 사용자로부터 삭제할 제품명 받기
-                    System.out.print("정말로 판매종료하시겠습니까? 맞으시다면 '제품명'을 입력해주세요 : ");     String proNameInput = scan.next();
+                    System.out.print("정말로 판매종료하시겠습니까? 맞으시다면 '제품명'을 입력해주세요 : ");
+                    String proNameInput = scan.next();
                     // 입력한 값 controller에게 전달 후 결과받기
-                    boolean result = productController.productDelete( proNoInput, proNameInput );
+                    boolean result = productController.productDelete(proNoInput, proNameInput);
                     // 결과에 따른 출력하기
-                    if ( result ){
+                    if (result) {
                         System.out.println("[안내] 해당 제품이 정상적으로 판매종료되었습니다.");
                     } else {
                         System.out.println("[경고] 제품 판매종료에 실패하였습니다.");
@@ -406,19 +418,20 @@ public class View {
                     System.out.print("입·출고번호 : ");
                     int ioNo = scan.nextInt();
 
-                    // [3.4.1] TODO 입·출고번호 유효성검사_옹
-
-                    // [3.4.1] 단일 재고 이력 조회 func / IoController - oneIOLogPrint()
-                    IOLogDto ioLogDto = ioLogController.oneIOLogPrint(ioNo);
-                    if (ioLogDto.getIoNo() == 0) {
-                        System.out.println("[경고] 올바르지 못한 재고번호 입니다.");
+                    // [3.4.1] 입·출고번호 유효성검사
+                    boolean check = ioLogController.ioNoCheck(ioNo);
+                    if (check == false) {
+                        System.out.println("[경고] 존재하지 않는 재고번호 입니다.");
                     } else {
+                        // [3.4.2] 단일 재고 이력 조회 func / IoController - oneIOLogPrint()
+                        IOLogDto ioLogDto = ioLogController.oneIOLogPrint(ioNo);
+
                         System.out.println("──┤ 선택 가맹점 정보 ├───────────────────────────────────────────────────────");
                         System.out.println("입·출고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입·출고일자 \t 메모");
                         System.out.println("───────────────────────────────────────────────────────────────────────────");
 
-                        // [3.4.2] 반복문 출력
-                        // [3.4.2.1] 입고·출고 text로 변환
+                        // [3.4.3] 반복문 출력
+                        // [3.4.3.1] 입고·출고 text로 변환
                         String ioString = "";
                         if (ioLogDto.getIO() == 0) {
                             ioString = "입고";
@@ -429,7 +442,7 @@ public class View {
                         System.out.printf("%d \t %d \t %s \t %s \t %d \t %s \t %s \n",
                                 ioLogDto.getIoNo(), ioLogDto.getProNo(), productController.toProNameChange(ioLogDto.getProNo()), ioString, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
 
-                        // [3.4.3] 수정 정보 받기
+                        // [3.4.4] 수정 정보 받기
                         System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────");
                         System.out.print("제품번호 : ");
                         int proNo = scan.nextInt();
@@ -448,10 +461,10 @@ public class View {
                         System.out.print("메모 : ");
                         String ioMemo = scan.nextLine();
 
-                        // [3.4.4] 수정 정보 IoLogControll에 전달
+                        // [3.4.5] 수정 정보 IoLogControll에 전달
                         boolean result = ioLogController.ioUpdate(ioNo, proNo, io, ioQty, ioMemo);
 
-                        // [3.4.5] 결과 출력
+                        // [3.4.6] 결과 출력
                         if (result) {
                             System.out.println("[안내] 재고를 성공적으로 수정하였습니다.");
                         } else {
@@ -588,8 +601,8 @@ public class View {
         System.out.println("판매번호 \t 가맹점명 \t 제품명 \t 판매수량 \t 날짜·시간");
         System.out.println("─────────────────────────────────────────────────────────────────────────");
         ArrayList<OrderLogDto> result = OrderLogController.getInstance().saleStatsPrint();
-        for( OrderLogDto dto : result ){
-            System.out.printf(dto.getOrderNo()+"\t"+FranController.getInstance().toFranNameChange(dto.getFranNo())+"\t"+ProductController.getInstance().toProNameChange(dto.getProNo())+"\t"+dto.getOrderQty()+"\t"+dto.getOrderDate()+"\n");
+        for (OrderLogDto dto : result) {
+            System.out.printf(dto.getOrderNo() + "\t" + FranController.getInstance().toFranNameChange(dto.getFranNo()) + "\t" + ProductController.getInstance().toProNameChange(dto.getProNo()) + "\t" + dto.getOrderQty() + "\t" + dto.getOrderDate() + "\n");
         }
         System.out.println("─────────────────────────────────────────────────────────────────────────");
 
