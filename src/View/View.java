@@ -99,8 +99,16 @@ public class View {
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     for (FranDto dto : result) {
                         int totalPrice = dto.getP();
+                        // Price들 천 단위 콤마찍기
                         String price = nf.format(totalPrice);
-                        System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + price + "원" + "\t" + dto.getFranAddress() + "\n");
+                        // 값 하나씩 꺼내기
+                        int franNo2 = dto.getFranNo();
+                        String franName = dto.getFranName();
+                        String franCall = dto.getFranCall();
+                        String franOwner = dto.getFranOwner();
+                        String franAddress = dto.getFranAddress();
+
+                        System.out.printf("  %d   \t%s   \t%s\t%s\t%s원\t%s\n", franNo2,franName,franCall,franOwner,price,franAddress);
                     }
                     System.out.println("─────────────────────────────────────────────────────────────────────────────────-──");
 
@@ -128,25 +136,31 @@ public class View {
                     int franNo = scan.nextInt();
                     // 입력한 번호에 해당하는 객체 가져오기
                     FranDto dto = franController.oneFranPrint(franNo);
+                    // 값 하나씩 꺼내기
+                    int franNo2 = dto.getFranNo();
+                    String franName = dto.getFranName();
+                    String franCall = dto.getFranCall();
+                    String franOwner = dto.getFranOwner();
+                    String franAddress = dto.getFranAddress();
                     if( dto.getFranNo() != 0 ){
                     System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
                     System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
-                    System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
+                    System.out.printf("%d\t%s\t%s\t%s\t%s\n", franNo2,franName,franCall,franOwner,franAddress);
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // 단일 출력
                     System.out.println("──┤  수정 정보 입력  ├─────────────────────────────────────────────────────");
                     scan.nextLine();
                     System.out.print("가맹점명 : ");
-                    String franName = scan.nextLine();
+                    String franName2 = scan.nextLine();
                     System.out.print("상세주소 : ");
-                    String franAddress = scan.nextLine();
+                    String franAddress2 = scan.nextLine();
                     System.out.print("전화번호 : ");
-                    String franCall = scan.nextLine();
+                    String franCall2 = scan.nextLine();
                     System.out.print("가맹점주 : ");
-                    String franOwner = scan.nextLine();
+                    String franOwner2 = scan.nextLine();
 
                     // 수정 정보를 controller에 전달
-                    boolean result = franController.franUpdate(franNo, franName, franAddress, franCall, franOwner);
+                    boolean result = franController.franUpdate(franNo2, franName2, franAddress2, franCall2, franOwner2);
                     if (result) {
                         System.out.println("[안내] 가맹점 정보가 정상적으로 수정되었습니다");
                     } else {
@@ -159,18 +173,24 @@ public class View {
                     int franNo = scan.nextInt();
                     // 입력한 번호에 해당하는 객체 가져오기
                     FranDto dto = franController.oneFranPrint(franNo);
-                    if( dto.getFranNo() != 0 ){
+                    // 값 하나씩 꺼내기
+                    int franNo2 = dto.getFranNo();
+                    String franName = dto.getFranName();
+                    String franCall = dto.getFranCall();
+                    String franOwner = dto.getFranOwner();
+                    String franAddress = dto.getFranAddress();
+                    if( franNo2 != 0 ){
                     System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
                     System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // 단일 조회
-                    System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
+                    System.out.printf("%d\t%s\t%s\t%s\t%s\n", franNo2,franName,franCall,franOwner,franAddress);
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     System.out.println("❗❗ 삭제를 원하시면, [ 가맹점명 ]과 [ 가맹주명 ]을 입력하세요.");
-                    System.out.print("가맹점명 : "); String franName = scan.next();
-                    System.out.print("가맹주명 : "); String franOwner = scan.next();
+                    System.out.print("가맹점명 : "); String franName2 = scan.next();
+                    System.out.print("가맹주명 : "); String franOwner2 = scan.next();
                     // 수정 정보를 controller에 전달
-                    boolean result = franController.franDelete(franNo, franName, franOwner);
+                    boolean result = franController.franDelete(franNo2, franName2, franOwner2);
                     if(result) {
                         System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다");
                     } else {
