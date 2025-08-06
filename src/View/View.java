@@ -50,8 +50,8 @@ public class View {
                     "╔══════════════════════════════════════════════════════════════════════════════════╗\n" +
                             "║                                \uD83C\uDF1F FranManager \uD83C\uDF1F                                 ║\n" +
                             "╠══════════════════════════════════════════════════════════════════════════════════╣\n" +
-                            "║  1. \uD83C\uDFEA 가맹점 관리     ▌  2. \uD83C\uDF71 제품 관리  ▌  3. \uD83D\uDCE6 입출고 관리 ▌  4. \uD83D\uDCCB 발주 관리    ║\n" +
-                            "║  5. \uD83D\uDCB0 판매 현황 보기   ▌  6. \uD83D\uDCCA 통계 보기  ▌  7. \uD83D\uDCDD 리뷰 보기                       ║ \n" +
+                            "║  1. \uD83C\uDFEA 가맹점 관리     ▌  2. \uD83C\uDF71 제품 관리  ▌  3. \uD83D\uDCE6 입출고 관리 ▌  4. \uD83D\uDCCB 발주 관리     ║\n" +
+                            "║  5. \uD83D\uDCB0 판매 현황 보기   ▌  6. \uD83D\uDCCA 통계 보기  ▌  7. \uD83D\uDCDD 리뷰 보기                        ║ \n" +
                             "╚══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
@@ -86,23 +86,23 @@ public class View {
         for (; ; ) {
             System.out.println(
                     "╔═══════════════════════════════════╣ 가맹점 관리 ╠══════════════════════════════════╗\n" +
-                            "║           1. 가맹점 리스트 보기  ▌  2. 가맹점 추가                                   ║\n" +
-                            "║           3. 가맹점 정보 수정    ▌  4. 가맹점 삭제  ▌  5. 메인으로 돌아가기            ║\n" +
-                            "╚═══════════════════════════════════════════════════════════════════════════════════╝");
+                    "║           1. 가맹점 리스트 보기  ▌  2. 가맹점 추가                                    ║\n" +
+                    "║           3. 가맹점 정보 수정    ▌  4. 가맹점 삭제  ▌  5. 메인으로 돌아가기             ║\n" +
+                    "╚══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
             try {
                 if (choice == 1) {
-                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                     System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 매출액 \t 상세주소");
                     ArrayList<FranDto> result = franController.franPrint();
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     for (FranDto dto : result) {
                         int totalPrice = dto.getP();
                         String price = nf.format(totalPrice);
                         System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + price + "원" + "\t" + dto.getFranAddress() + "\n");
                     }
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("─────────────────────────────────────────────────────────────────────────────────-──");
 
                 } else if (choice == 2) {
                     scan.nextLine();
@@ -495,16 +495,16 @@ public class View {
         for (; ; ) {
             System.out.println(
                     "╔════════════════════════════════════╣ 발주 관리 ╠═══════════════════════════════════╗\n" +
-                            "║                   1. 가맹점 발주 요청 보기  ▌  2. 출고 처리                          ║\n" +
-                            "║                   3. 발주 요청 취소 처리    ▌  4. 메인으로 돌아가기                   ║\n" +
+                            "║                   1. 가맹점 발주 요청 보기  ▌  2. 출고 처리                           ║\n" +
+                            "║                   3. 발주 요청 취소 처리    ▌  4. 메인으로 돌아가기                     ║\n" +
                             "╚═══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
             try {
                 if (choice == 1) {          // 가맹점 발주 요청 보기를 선택하면
-                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                     System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // controller에게 결과값 받기
                     ArrayList<SupplyLogDto> supplyLogDtos = supplyLogController.supplyPrintAll();
                     for (SupplyLogDto supplyLogDto : supplyLogDtos) {      // 리스트를 하나씩 순회하면서
@@ -520,15 +520,15 @@ public class View {
                         // 값 출력하기
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo);
                     } // for end
-                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                 } else if (choice == 2) {   // 출고 처리를 선택하면
                     System.out.print("발주번호 : ");
                     int supNo = scan.nextInt();
                     SupplyLogDto supplyLogDto = supplyLogController.supplyPrint(supNo);
                     if (supplyLogDto.getFranNo() != 0) {       // 발주번호에 해당하는 발주가 존재한다면
-                        System.out.println("──┤ 발주번호 정보 조회 ├─────────────────────────────────────────────────────");
+                        System.out.println("──┤ 발주번호 정보 조회 ├───────────────────────────────────────────────────────────────");
                         System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
-                        System.out.println("─────────────────────────────────────────────────────────────────────────");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // 원하는 값 꺼내오기
                         int franNo = supplyLogDto.getFranNo();
                         int proNo = supplyLogDto.getProNo();
@@ -539,7 +539,7 @@ public class View {
                         String proName = productController.toProNameChange(proNo);
                         // 값 출력하기
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo);
-                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // 사용자로부터 '가맹점명' 입력받기
                         System.out.print("❗❗ 출고처리를 원하시면, [ 가맹점명 ]을 입력하세요. ");
                         String franNameInput = scan.next();
@@ -569,9 +569,9 @@ public class View {
                     int supNo = scan.nextInt();
                     SupplyLogDto supplyLogDto = supplyLogController.supplyPrint(supNo);
                     if (supplyLogDto.getFranNo() != 0) {       // 발주번호에 해당하는 발주가 존재한다면
-                        System.out.println("──┤ 발주번호 정보 조회 ├─────────────────────────────────────────────────────");
+                        System.out.println("──┤ 발주번호 정보 조회 ├───────────────────────────────────────────────────────────────");
                         System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
-                        System.out.println("─────────────────────────────────────────────────────────────────────────");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // 원하는 값 꺼내오기
                         int franNo = supplyLogDto.getFranNo();
                         int proNo = supplyLogDto.getProNo();
@@ -582,7 +582,7 @@ public class View {
                         String proName = productController.toProNameChange(proNo);
                         // 값 출력하기
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo);
-                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // 사용자로부터 '가맹점명' 입력받기
                         System.out.print("❗❗ 발주취소를 원하시면, [ 가맹점명 ]을 입력하세요. ");
                         String franNameInput = scan.next();
@@ -623,9 +623,9 @@ public class View {
                 System.out.println("[경고] 유효하지않은 페이지입니다. 다시 입력해주세요.");
                 continue;
             } // if end
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println("════════════════════════════════════════════════════════════════════════════════════");
             System.out.println("판매번호 \t 가맹점명 \t 제품명 \t 판매수량 \t 날짜·시간");
-            System.out.println("─────────────────────────────────────────────────────────────────────────");
+            System.out.println("────────────────────────────────────────────────────────────────────────────────────");
             // controller에게 page 전달 후 결과 받기
             ArrayList<OrderLogDto> orderLogDtos = orderLogController.orderLogPage( page );
             // 페이지 유효성 검사
@@ -643,7 +643,7 @@ public class View {
                 // 하나씩 출력하기
                 System.out.printf("%d \t %s \t %s \t %d \t %s\n", orderNo, franName, proName, orderQty, orderDate );
             } // for end
-            System.out.println("─────────────────────────────────────────────────────────────────────────");
+            System.out.println("────────────────────────────────────────────────────────────────────────────────────");
         } // 무한루프 end
     } // saleView end
 
@@ -653,7 +653,7 @@ public class View {
             System.out.println(
                     "╔════════════════════════════════════╣ 통계 보기 ╠═══════════════════════════════════╗\n" +
                             "║                       1. 제품별 통계      ▌  2. 지역별 통계                          ║\n" +
-                            "║                       3. 시간대별 통계    ▌  4. 메인으로 돌아가기                     ║\n" +
+                            "║                       3. 시간대별 통계    ▌  4. 메인으로 돌아가기                      ║\n" +
                             "╚═══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
@@ -661,9 +661,9 @@ public class View {
                 if (choice == 1) {
                     System.out.println("※ 통계는 판매 금액 기준 상위 10건만 조회가능합니다. " +
                             "   통계 집계기간은 최근 30일입니다.");
-                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                     System.out.println("통계번호 \t 제품명 \t 판매금액 ");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // controller로부터 통계자료 받기
                     ArrayList<StatsDto> statsDtos = statsController.proStatsPrint();
                     for (int i = 0; i < statsDtos.size(); i++) {   // 통계자료 하나씩 순회하기
@@ -678,13 +678,13 @@ public class View {
                         // 하나씩 출력하기
                         System.out.printf("  %d \t %s \t %s원\n", i + 1, proName, price);
                     } // for end
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 2) {
                     System.out.println("※ 통계는 판매 금액 기준 상위 10건만 조회가능합니다. " +
                             "   통계 집계기간은 최근 30일입니다.");
-                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                     System.out.println("통계번호 \t 지역 \t 매출액 ");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // controoler로부터 통계자료 받기
                     ArrayList<StatsDto> statsDtos = statsController.regionStatsPrint();
                     for (int i = 0; i < statsDtos.size(); i++) {   // 통계자료 하나씩 순회하기
@@ -697,12 +697,12 @@ public class View {
                         // 하나씩 출력하기
                         System.out.printf("  %d \t %s \t %s원\n", i + 1, region, price);
                     } // for end
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 3) {
                     System.out.println("※ 통계 집계기간은 최근 30일입니다.");
-                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                     System.out.println("\t   시간대 \t\t  매출액 ");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // controller로부터 통계자료 받기
                     ArrayList<StatsDto> statsDtos = statsController.hourStatsPrint();
                     for (int i = 0; i < statsDtos.size(); i++) {   // 통계자료 하나씩 순회하기
@@ -720,7 +720,7 @@ public class View {
                             System.out.printf("%d : 00 ~ %d : 00 \t %s원\n", i, i + 1, price);
                         } // if end
                     } // for end
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 4) {
                     break;
                 } else {
@@ -739,8 +739,8 @@ public class View {
         for (; ; ) {
             System.out.println(
                     "╔════════════════════════════════════╣ 리뷰 보기 ╠═══════════════════════════════════╗\n" +
-                            "║                       1. 리뷰 전체 조회    ▌  2. 가맹점별 리뷰 조회                   ║\n" +
-                            "║                       3. 제품별 리뷰 조회  ▌  4. 메인으로 돌아가기                    ║\n" +
+                            "║                       1. 리뷰 전체 조회    ▌  2. 가맹점별 리뷰 조회                    ║\n" +
+                            "║                       3. 제품별 리뷰 조회  ▌  4. 메인으로 돌아가기                     ║\n" +
                             "╚═══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
@@ -749,9 +749,9 @@ public class View {
                     // [7.1.1] reviewController func 실행
                     ArrayList<ReviewPrintDto> reviewPrintList = reviewController.reviewPrint();
 
-                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                     System.out.println("리뷰번호 \t 판매번호 \t 제품명 \t 가맹점명 \t 리뷰");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                     // [7.1.2] 반복문
                     for (ReviewPrintDto reviewPrintDto : reviewPrintList) {
@@ -765,7 +765,7 @@ public class View {
                                 franName,
                                 reviewPrintDto.getReview());
                     }
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                 } else if (choice == 2) { // 7.2. 가맹점별 리뷰 조회
                     System.out.print("가맹점명 : ");
@@ -783,9 +783,9 @@ public class View {
                     } else {
                         // [7.2.2] reviewController func 실행
                         ArrayList<ReviewPrintDto> reviewPrintList = reviewController.franReviewPrint(franNo);
-                        System.out.println("──┤ 선택 가맹점 리뷰 ├───────────────────────────────────────────────────────");
+                        System.out.println("──┤ 선택 가맹점 리뷰 ├────────────────────────────────────────────────────────────────");
                         System.out.println("리뷰번호 \t 판매번호 \t 제품명 \t 가맹점명 \t 리뷰");
-                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // [7.1.2] 반복문
                         for (ReviewPrintDto reviewPrintDto : reviewPrintList) {
                             System.out.printf("%d \t %d \t %s \t %s \t %s \n",
@@ -795,7 +795,7 @@ public class View {
                                     franName,
                                     reviewPrintDto.getReview());
                         }
-                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     }
                 } else if (choice == 3) { // 7.3. 제품별 리뷰 조회
                     System.out.print("제품명 : ");
@@ -812,9 +812,9 @@ public class View {
                     } else {
                         // [7.3.2] reviewController func 실행
                         ArrayList<ReviewPrintDto> reviewPrintList = reviewController.proReviewPrint(proName);
-                        System.out.println("──┤ 선택 제품 리뷰 ├─────────────────────────────────────────────────────────");
+                        System.out.println("──┤ 선택 제품 리뷰 ├──────────────────────────────────────────────────────────────────");
                         System.out.println("리뷰번호 \t 판매번호 \t 제품명 \t 가맹점명 \t 리뷰");
-                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // [7.3.3] 반복문
                         for (ReviewPrintDto reviewPrintDto : reviewPrintList) {
                             // [7.1.3] franNO > franName 변환
@@ -827,7 +827,7 @@ public class View {
                                     franName,
                                     reviewPrintDto.getReview());
                         }
-                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     }
                 } else if (choice == 4) {
                     break;
