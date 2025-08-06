@@ -98,9 +98,8 @@ public class SupplyLogDao {
     // 기능설명 : [발주번호와 가맹점명]을 입력받아, view에서 [가맹점명 -> 가맹점번호] 변환 후, 해당하는 발주요청의 발주상태를 1로 변경한다. 재고로그에 해당 { 제품번호, 발주번호, 수량, 입출고일자 }를 추가한다.
     // 메소드명 : supplyApp()
     // 매개변수 : int supNo, int franNo
-    // 반환타입 : boolean -> true(성공) / false(실패)
-    public boolean supplyApp( int supNo, int franNo ){
-        boolean result = false;     // 반환할 기본 boolean 생성
+    // 반환타입 : int -> 0 : 출고 성공, 1 : 가맹점명 일치 X, 2 : 재고 부족
+    public int supplyApp( int supNo, int franNo ){
         try {
             // 1. SQL 작성
             // 발주상태 변경 SQL
@@ -135,14 +134,14 @@ public class SupplyLogDao {
                     int count2 = ps3.executeUpdate();
                     // 5. SQL 결과 반환
                     if ( count2 == 1 ){
-                        return true;
+                        return 0;
                     } // if end
                 } // while end
             } // if end
         } catch ( SQLException e ){
             System.out.println("[supply03] SQL 기재 실패");
         } // try-catch end
-        return result;
+        return 1;
     } // func end
 
     // supply04. 발주요청 취소
@@ -201,5 +200,31 @@ public class SupplyLogDao {
             System.out.println("[supply05] SQL 기재 실패");
         } // try-catch end
         return result;
+    } // func end
+
+    // supply06. 총재고 반환(발주번호 > 총재고)
+    // 기능설명 : [발주번호]를 받아, 해당하는 제품의 총 재고량을 반환한다.
+    // 메소드명 : toTotalQtyChange()
+    // 매개변수 : int supNo
+    // 반환타입 : int
+    public int toTotalQtyChange( int supNo ){
+        int totalQty = 0;   // 반환할 int 생성
+        try {
+            // 1. SQL 작성 : 입고면 +, 출고면 -
+            String SQL = "select S.supNo, totalQty from SupplyLog S, (select proNo, sum(case when io = 0 then ioQty else -ioQty end) totalQty from IOLog group by proNo) I where S.proNo = I.proNo and supNo = ?";
+            // 2. SQL 기재
+            PreparedStatement ps = conn.prepareStatement( SQL );
+            // 3. SQL 매개변수 대입
+            ps.setInt( 1, supNo );
+            // 4. SQL 실행
+            ResultSet rs = ps.executeQuery();
+            // 5. SQL 결과 반환
+            while( rs.next() ){
+                totalQty = rs.getInt("totalQty");
+            } // while end
+        } catch ( SQLException e ){
+            System.out.println("[supply06] SQL 기재 실패");
+        } // try-catch end
+        return totalQty;
     } // func end
 } // class end

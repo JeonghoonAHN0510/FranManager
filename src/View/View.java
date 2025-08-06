@@ -547,12 +547,22 @@ public class View {
                         System.out.print("❗❗ 출고처리를 원하시면, [ 가맹점명 ]을 입력하세요. ");
                         String franNameInput = scan.next();
                         int franNoInput = franController.toIntNameFranChange(franNameInput);
-                        // 입력값 controller에게 전달 후 결과 받기
-                        boolean result = supplyLogController.supplyApp(supNo, franNoInput);
-                        if (result) {      // 출고처리에 성공했다면
+                        // 결과를 받을 int 생성
+                        int result;
+                        // 입력받은 발주번호를 통해 해당 제품의 총 재고량 반환
+                        int totalQty = supplyLogController.toTotalQtyChange( supNo );
+                        if ( totalQty < supQty ){       // 총 재고량보다 주문수량이 많다면
+                            result = 2;
+                        } else {                        // 총 재고량이 주문수량보다 많다면
+                            // 입력값 controller에게 전달 후 결과 받기
+                            result = supplyLogController.supplyApp(supNo, franNoInput);
+                        } // if end
+                        if ( result == 0 ) {        // 출고처리에 성공했다면
                             System.out.println("[안내] 정상적으로 출고처리 되었습니다.");
-                        } else {             // 출고처리에 실패했다면
+                        } else if ( result == 1 ){  // 출고처리에 실패했다면
                             System.out.println("[경고] 가맹점명이 일치하지 않습니다.");
+                        } else if ( result == 2 ){  // 재고가 부족하다면
+                            System.out.println("[경고] 본사 재고가 부족합니다.");
                         } // if end
                     } else { // 발주번호에 해당하는 발주가 존재하지 않는다면
                         System.out.println("[경고] 출고처리할 수 없는 발주번호입니다.");

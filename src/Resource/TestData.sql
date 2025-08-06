@@ -57,6 +57,9 @@ create table IOLog(
     constraint primary key(ioNo),
     constraint foreign key(proNo) references Product(proNo)
 );
+select S.supNo, totalQty from SupplyLog S, (select proNo, sum(case when io = 0 then ioQty else -ioQty end) totalQty from IOLog group by proNo) I where S.proNo = I.proNo and supNo = 30005;
+
+select proNo, sum(ioQty) from IOLog group by proNo;
 
 create table Review(
     reviewNo int auto_increment,

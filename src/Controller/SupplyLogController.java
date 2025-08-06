@@ -38,7 +38,7 @@ public class SupplyLogController {
         // 반환할 객체 생성
         SupplyLogDto supplyLogDto = new SupplyLogDto();
         // 1. (필요 시) 유효성 검사
-        boolean check = supplyLogDao.supNoCheck( supNo );
+        boolean check = supNoCheck( supNo );
         if ( !check ){  // 유효성 검사에 걸린다면
             supplyLogDto.setSupNo(0);
             return supplyLogDto;
@@ -53,11 +53,11 @@ public class SupplyLogController {
     // 기능설명 : [발주번호와 가맹점명]을 입력받아, view에서 [가맹점명 -> 가맹점번호] 변환 후, 해당하는 발주요청의 발주상태를 1로 변경한다. 재고로그에 해당 { 제품번호, 발주번호, 수량, 입출고일자 }를 추가한다.
     // 메소드명 : supplyApp()
     // 매개변수 : int supNo, int franNo
-    // 반환타입 : boolean -> true(성공) / false(실패)
-    public boolean supplyApp( int supNo, int franNo ){
+    // 반환타입 : int -> 0 : 출고 성공, 1 : 가맹점명 일치 X, 2 : 재고 부족
+    public int supplyApp( int supNo, int franNo ){
         // 1. (필요 시) 유효성 검사
         // 2. dao에게 전달 후 결과 받기
-        boolean result = supplyLogDao.supplyApp( supNo, franNo );
+        int result = supplyLogDao.supplyApp( supNo, franNo );
         // 3. view에게 결과 전달하기
         return result;
     } // func end
@@ -73,5 +73,29 @@ public class SupplyLogController {
         boolean result = supplyLogDao.supplyCancel( supNo, franNo );
         // 3. view에게 결과 전달하기
         return result;
+    } // func end
+
+    // supply05. 발주번호 유효성 검사
+    // 기능설명 : [발주번호]를 받아 발주리스트에 해당 발주이력이 있는지를 확인한다.
+    // 메소드명 : supNoCheck()
+    // 매개변수 : int supNo
+    // 반환타입 : boolean -> true : 발주 존재 / false : 발주 없음
+    public boolean supNoCheck( int supNo ){
+        // 1. dao에게 전달 후 결과받기
+        boolean result = supplyLogDao.supNoCheck( supNo );
+        // 2. 결과 전달하기
+        return result;
+    } // func end
+
+    // supply06. 총재고 반환(발주번호 > 총재고)
+    // 기능설명 : [발주번호]를 받아, 해당하는 제품의 총 재고량을 반환한다.
+    // 메소드명 : toTotalQtyChange()
+    // 매개변수 : int supNo
+    // 반환타입 : int
+    public int toTotalQtyChange( int supNo ){
+        // 1. dao에게 전달 후 결과받기
+        int totalQty = supplyLogDao.toTotalQtyChange( supNo );
+        // 2. view에게 결과 전달하기
+        return totalQty;
     } // func end
 } // class end
