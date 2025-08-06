@@ -94,7 +94,7 @@ public class View {
             try {
                 if (choice == 1) {
                     System.out.println("════════════════════════════════════════════════════════════════════════════════════");
-                    System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 매출액 \t 상세주소");
+                    System.out.println("가맹점번호 \t 가맹점명 \t\t전화번호 \t\t가맹주명 \t 매출액 \t\t 상세주소");
                     ArrayList<FranDto> result = franController.franPrint();
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     for (FranDto dto : result) {
