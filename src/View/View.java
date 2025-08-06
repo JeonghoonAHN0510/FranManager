@@ -48,10 +48,10 @@ public class View {
         for (; ; ) {
             System.out.println(
                     "╔══════════════════════════════════════════════════════════════════════════════════╗\n" +
-                            "║                                \uD83C\uDF1F FranManager \uD83C\uDF1F                                 ║\n" +
+                            "║                                \uD83C\uDF1F FranManager \uD83C\uDF1F                                ║\n" +
                             "╠══════════════════════════════════════════════════════════════════════════════════╣\n" +
-                            "║  1. \uD83C\uDFEA 가맹점 관리     ▌  2. \uD83C\uDF71 제품 관리  ▌  3. \uD83D\uDCE6 입출고 관리 ▌  4. \uD83D\uDCCB 발주 관리    ║\n" +
-                            "║  5. \uD83D\uDCB0 판매 현황 보기   ▌  6. \uD83D\uDCCA 통계 보기  ▌  7. \uD83D\uDCDD 리뷰 보기                       ║ \n" +
+                            "║   1. \uD83C\uDFEA 가맹점 관리     ▌  2. \uD83C\uDF71 제품 관리  ▌  3. \uD83D\uDCE6 입출고 관리 ▌  4. \uD83D\uDCCB 발주 관리    ║\n" +
+                            "║   5. \uD83D\uDCB0 판매 현황 보기   ▌  6. \uD83D\uDCCA 통계 보기  ▌  7. \uD83D\uDCDD 리뷰 보기                       ║ \n" +
                             "╚══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
@@ -203,9 +203,9 @@ public class View {
             int choice = scan.nextInt();
             try {
                 if (choice == 1) {
-                    System.out.println("═════════════════════════════════════════════════════════════════════════");
-                    System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("════════════════════════════════════════════════════════════════════════════════════");
+                    System.out.println("제품번호 \t 제품명 \t\t\t공급가액 \t   소비자판매가 \t 판매여부");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // Controller로부터 결과 받기
                     ArrayList<ProductDto> productDtos = productController.productAllPrint();
                     // 배열 하나씩 순회하면서 출력하기
@@ -221,21 +221,33 @@ public class View {
                         // Price들 천 단위 콤마찍기
                         String SupPrice = nf.format(proSupPrice);
                         String price = nf.format(proPrice);
+                        // 글자수 맞추기 // todo 가능하면 나중에 함수화
+                        if ( proName.length() == 4 || proName.length() == 3 ){
+                            proName += "\t";
+                        } // if end
+                        if ( proName.length() == 2 ){
+                            proName += "\t\t";
+                        } // if end
+                        if ( price.length() <= 5 ){
+                            price = " " + price;
+                        } // if end
                         // 하나씩 출력하기
-                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status);
+                        System.out.printf("%d\t%s\t\t%s원 \t%s원\t %s\n", proNo, proName, SupPrice, price, status);
                     } // for end
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 2) {
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // 사용자로부터 등록할 제품정보 받기
                     System.out.print("제품명 : ");          String proName = scan.next();
                     System.out.print("공급가액 : ");        int proSupPrice = scan.nextInt();
                     System.out.print("소비자판매가 : ");     int proPrice = scan.nextInt();
                     // 입력한 정보 등록하고 결과받기
-                    int result = productController.productAdd(proName, proSupPrice, proPrice);
+                    int result;
                     // 제품명 유효성 검사
                     if ( productController.proNameCheck( proName ) ){  // 이미 제품이 존재하면
                         result = 2;
+                    } else {
+                        result = productController.productAdd(proName, proSupPrice, proPrice);
                     } // if end
                     // 결과에 따른 출력하기
                     if ( result == 0 ) {
@@ -265,11 +277,21 @@ public class View {
                         // Price들 천 단위 콤마찍기
                         String SupPrice = nf.format(proSupPrice);
                         String price = nf.format(proPrice);
-                        System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
-                        System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
-                        System.out.println("───────────────────────────────────────────────────────────────────────────");
-                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status);
-                        System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────");
+                        // 글자수 맞추기 // todo 가능하면 나중에 함수화
+                        if ( proName.length() == 4 || proName.length() == 3 ){
+                            proName += "\t";
+                        } // if end
+                        if ( proName.length() == 2 ){
+                            proName += "\t\t";
+                        } // if end
+                        if ( price.length() <= 5 ){
+                            price = " " + price;
+                        } // if end
+                        System.out.println("──┤ 선택 제품 정보 ├──────────────────────────────────────────────────────────────────");
+                        System.out.println("제품번호 \t 제품명 \t\t\t공급가액 \t   소비자판매가 \t 판매여부");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
+                        System.out.printf("%d\t%s\t\t%s원 \t%s원\t %s\n", proNo, proName, SupPrice, price, status);
+                        System.out.println("──┤  수정 정보 입력  ├────────────────────────────────────────────────────────────────");
                         // 사용자로부터 수정정보 입력받기
                         System.out.print("제품명 : ");
                         String proNameInput = scan.next();
@@ -306,11 +328,21 @@ public class View {
                         // Price들 천 단위 콤마찍기
                         String SupPrice = nf.format(proSupPrice);
                         String price = nf.format(proPrice);
-                        System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
-                        System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
-                        System.out.println("───────────────────────────────────────────────────────────────────────────");
-                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status);
-                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        // 글자수 맞추기 // todo 가능하면 나중에 함수화
+                        if ( proName.length() == 4 || proName.length() == 3 ){
+                            proName += "\t";
+                        } // if end
+                        if ( proName.length() == 2 ){
+                            proName += "\t\t";
+                        } // if end
+                        if ( price.length() <= 5 ){
+                            price = " " + price;
+                        } // if end
+                        System.out.println("──┤ 선택 제품 정보 ├──────────────────────────────────────────────────────────────────");
+                        System.out.println("제품번호 \t 제품명 \t\t\t공급가액 \t   소비자판매가 \t 판매여부");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
+                        System.out.printf("%d\t%s\t\t%s원 \t%s원\t %s\n", proNo, proName, SupPrice, price, status);
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // 사용자로부터 삭제할 제품명 받기
                         System.out.print("❗❗ 판매상태변경을 원하시면, [ 제품명 ]을 입력하세요. ");
                         String proNameInput = scan.next();
@@ -337,14 +369,14 @@ public class View {
     } // func end
 
 
-    // [3] 재고관리
+    // [3] 입출고관리
     public void ioManage() {
         for (; ; ) {
             System.out.println(
                     "╔═══════════════════════════════════╣ 입출고 관리 ╠══════════════════════════════════╗\n" +
                             "║             1. 제품별 재고 현황  ▌  2. 입고 등록                                     ║\n" +
-                            "║             3. 입출고 로그      ▌  4. 입출고 수정  ▌  5. 메인으로 돌아가기             ║\n" +
-                            "╚═══════════════════════════════════════════════════════════════════════════════════╝");
+                            "║             3. 입출고 로그      ▌  4. 입출고 수정  ▌  5. 메인으로 돌아가기              ║\n" +
+                            "╚══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
             try {
@@ -352,9 +384,9 @@ public class View {
                     // [3.1.1] ioLogController의 ioPrint 메소드 실행
                     Map<Integer, Integer> ioMap = ioLogController.IOPrint();
 
-                    System.out.println("═══════════════════════════════════════════════════════════════════════");
-                    System.out.println("제품번호 \t 제품명 \t 재고수량 \t 비고");
-                    System.out.println("───────────────────────────────────────────────────────────────────────");
+                    System.out.println("════════════════════════════════════════════════════════════════════════════════════");
+                    System.out.println("제품번호 \t  제품명 \t   재고수량 \t\t\t 비고");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                     // [3.1.2] ioMap에 대한 반복문
                     for (int proNo : ioMap.keySet()) {
@@ -363,14 +395,19 @@ public class View {
                         if (ioMap.get(proNo) <= 10) {
                             memo = "[재고부족] 제품 주문이 필요합니다.";
                         }
-
+                        // 글자수 맞추기 todo 가능하면 함수화
+                        String proName = productController.toProNameChange(proNo);
+                        if ( proName.length() <= 5 ){
+                            proName += "\t";
+                        } // if end
+                        if ( proName.length() <= 4 ){
+                            proName += "\t";
+                        } // if end
                         // [3.1.4] 각 열마다 출력
-                        System.out.printf("%d \t %s \t %d \t %s \n", proNo, productController.toProNameChange(proNo), ioMap.get(proNo), memo);
+                        System.out.printf("%d \t  %s\t%d \t\t%s \n", proNo, proName, ioMap.get(proNo), memo);
                     }
-
-                    System.out.println("───────────────────────────────────────────────────────────────────────");
-
-                } else if (choice == 2) { // 2.2. 재고 로그 등록 func 연결
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
+                } else if (choice == 2) { // 2.2. 입출고 로그 등록 func 연결
                     // [3.2.1] console에서 정보 받기
                     scan.nextLine();
                     System.out.print("제품명 : ");
@@ -398,9 +435,9 @@ public class View {
                         }
                     }
                 } else if (choice == 3) { // 2.3. 재고 로그 func 연결
-                    System.out.println("═════════════════════════════════════════════════════════════════════════");
+                    System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                     System.out.println("입·출고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입·출고일자 \t 메모");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                     // [3.3.1] IOLogController, IOLogPrint() 실행
                     ArrayList<IOLogDto> ioLogDtoList = ioLogController.IOLogPrint();
@@ -418,7 +455,7 @@ public class View {
                         System.out.printf("%d \t %d \t %s \t %s \t %d \t %s \t %s \n",
                                 ioLogDto.getIoNo(), ioLogDto.getProNo(), productController.toProNameChange(ioLogDto.getProNo()), io, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
                     }
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                 } else if (choice == 4) { //3.4. 재고 수정 func 연결
                     System.out.print("입·출고번호 : ");
@@ -432,9 +469,9 @@ public class View {
                         // [3.4.2] 단일 재고 이력 조회 func / IoController - oneIOLogPrint()
                         IOLogDto ioLogDto = ioLogController.oneIOLogPrint(ioNo);
 
-                        System.out.println("──┤ 선택 가맹점 정보 ├───────────────────────────────────────────────────────");
+                        System.out.println("──┤ 선택 가맹점 정보 ├────────────────────────────────────────────────────────────────");
                         System.out.println("입·출고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입·출고일자 \t 메모");
-                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                         // [3.4.3] 반복문 출력
                         // [3.4.3.1] 입고·출고 text로 변환
@@ -449,7 +486,7 @@ public class View {
                                 ioLogDto.getIoNo(), ioLogDto.getProNo(), productController.toProNameChange(ioLogDto.getProNo()), ioString, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
 
                         // [3.4.4] 수정 정보 받기
-                        System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────");
+                        System.out.println("──┤  수정 정보 입력  ├──────────────────────────────────────────────────────────────");
                         System.out.print("제품번호 : ");
                         int proNo = scan.nextInt();
                         System.out.print("입·출고 : ");
