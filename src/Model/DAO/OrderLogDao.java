@@ -28,7 +28,7 @@ public class OrderLogDao {
     public ArrayList<OrderLogDto> saleStatsPrint(){
         ArrayList<OrderLogDto> list = new ArrayList<>();
         try{// SQL 작성
-            String sql = "select * from orderlog";
+                String sql = "select * from orderlog;";
             // SQL 기재
             PreparedStatement ps = conn.prepareStatement(sql);
             // SQL 실행
