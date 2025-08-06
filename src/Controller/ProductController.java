@@ -144,4 +144,30 @@ public class ProductController {
         // 2. view에게 결과 전달하기
         return result;
     } // func end
+
+    // product11. 제품명 정렬
+    // 기능설명 : [제품명 / 글자수]를 매개변수로 받아, 글자수를 정렬한다.
+    // 메소드명 : proNameArray()
+    // 매개변수 : String proName, int length
+    // 반환타입 : String
+    public String proNameArray( String proName, int length ){
+        if ( length == 4 || length == 3 ){
+            return proName + "\t";
+        } else if ( length == 2 ){
+            return proName + "\t\t";
+        } // if end
+        return proName;
+    } // func end
+
+    // product12. 제품가격 정렬
+    // 기능설명 : [제품가격 / 글자수]를 매개변수로 받아, 글자수를 정렬한다.
+    // 메소드명 : priceArray()
+    // 매개변수 : String price, int length
+    // 반환타입 : String
+    public String priceArray( String price, int length ){
+        if ( length <= 5 ){
+            return " " + price;
+        } // if end
+        return price;
+    } // func end
 } // class end

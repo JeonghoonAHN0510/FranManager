@@ -221,16 +221,9 @@ public class View {
                         // Price들 천 단위 콤마찍기
                         String SupPrice = nf.format(proSupPrice);
                         String price = nf.format(proPrice);
-                        // 글자수 맞추기 // todo 가능하면 나중에 함수화
-                        if ( proName.length() == 4 || proName.length() == 3 ){
-                            proName += "\t";
-                        } // if end
-                        if ( proName.length() == 2 ){
-                            proName += "\t\t";
-                        } // if end
-                        if ( price.length() <= 5 ){
-                            price = " " + price;
-                        } // if end
+                        // 글자수 정렬 함수
+                        proName = productController.proNameArray( proName, proName.length() );
+                        price = productController.priceArray( price, price.length() );
                         // 하나씩 출력하기
                         System.out.printf("%d\t%s\t\t%s원 \t%s원\t %s\n", proNo, proName, SupPrice, price, status);
                     } // for end
@@ -277,16 +270,10 @@ public class View {
                         // Price들 천 단위 콤마찍기
                         String SupPrice = nf.format(proSupPrice);
                         String price = nf.format(proPrice);
-                        // 글자수 맞추기 // todo 가능하면 나중에 함수화
-                        if ( proName.length() == 4 || proName.length() == 3 ){
-                            proName += "\t";
-                        } // if end
-                        if ( proName.length() == 2 ){
-                            proName += "\t\t";
-                        } // if end
-                        if ( price.length() <= 5 ){
-                            price = " " + price;
-                        } // if end
+                        // 글자수 정렬 함수
+                        proName = productController.proNameArray( proName, proName.length() );
+                        price = productController.priceArray( price, price.length() );
+                        // 제품정보 출력하기
                         System.out.println("──┤ 선택 제품 정보 ├──────────────────────────────────────────────────────────────────");
                         System.out.println("제품번호 \t 제품명 \t\t\t공급가액 \t   소비자판매가 \t 판매여부");
                         System.out.println("────────────────────────────────────────────────────────────────────────────────────");
@@ -328,16 +315,10 @@ public class View {
                         // Price들 천 단위 콤마찍기
                         String SupPrice = nf.format(proSupPrice);
                         String price = nf.format(proPrice);
-                        // 글자수 맞추기 // todo 가능하면 나중에 함수화
-                        if ( proName.length() == 4 || proName.length() == 3 ){
-                            proName += "\t";
-                        } // if end
-                        if ( proName.length() == 2 ){
-                            proName += "\t\t";
-                        } // if end
-                        if ( price.length() <= 5 ){
-                            price = " " + price;
-                        } // if end
+                        // 글자수 정렬 함수
+                        proName = productController.proNameArray( proName, proName.length() );
+                        price = productController.priceArray( price, price.length() );
+                        // 제품정보 출력하기
                         System.out.println("──┤ 선택 제품 정보 ├──────────────────────────────────────────────────────────────────");
                         System.out.println("제품번호 \t 제품명 \t\t\t공급가액 \t   소비자판매가 \t 판매여부");
                         System.out.println("────────────────────────────────────────────────────────────────────────────────────");
@@ -397,14 +378,9 @@ public class View {
                         }
                         // 글자수 맞추기 todo 가능하면 함수화
                         String proName = productController.toProNameChange(proNo);
-                        if ( proName.length() <= 5 ){
-                            proName += "\t";
-                        } // if end
-                        if ( proName.length() <= 4 ){
-                            proName += "\t";
-                        } // if end
+                        proName = productController.proNameArray( proName, proName.length() );
                         // [3.1.4] 각 열마다 출력
-                        System.out.printf("%d \t  %s\t%d \t\t%s \n", proNo, proName, ioMap.get(proNo), memo);
+                        System.out.printf("%d\t%s\t\t%d \t\t%s \n", proNo, proName, ioMap.get(proNo), memo);
                     }
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 2) { // 2.2. 입출고 로그 등록 func 연결
