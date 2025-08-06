@@ -145,7 +145,7 @@ public class ProductController {
         return result;
     } // func end
 
-    // product11. 제품명 정렬
+    // product11. 제품명 간격조정
     // 기능설명 : [제품명 / 글자수]를 매개변수로 받아, 글자수를 정렬한다.
     // 메소드명 : proNameArray()
     // 매개변수 : String proName, int length
@@ -159,7 +159,7 @@ public class ProductController {
         return proName;
     } // func end
 
-    // product12. 제품가격 정렬
+    // product12. 제품가격 간격조정
     // 기능설명 : [제품가격 / 글자수]를 매개변수로 받아, 글자수를 정렬한다.
     // 메소드명 : priceArray()
     // 매개변수 : String price, int length
