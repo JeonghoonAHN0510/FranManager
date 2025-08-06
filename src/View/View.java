@@ -107,7 +107,8 @@ public class View {
                         String franCall = dto.getFranCall();
                         String franOwner = dto.getFranOwner();
                         String franAddress = dto.getFranAddress();
-
+                        franName = franController.franNameArray( franName, franName.length() );
+                        franCall = franController.franCallArray( franCall, franCall.length() );
                         System.out.printf("  %d   \t%s   \t%s\t%s\t%s원\t%s\n", franNo2,franName,franCall,franOwner,price,franAddress);
                     }
                     System.out.println("─────────────────────────────────────────────────────────────────────────────────-──");
