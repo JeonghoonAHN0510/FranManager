@@ -119,7 +119,7 @@ public class View {
                     if (result) {
                         System.out.println("[안내] 가맹점이 정상적으로 추가되었습니다.");
                     } else {
-                        System.out.println("[경고] 가맹점 추가가 실패했습니다.");
+                        System.out.println("[경고] 가맹점 추가에 실패했습니다.");
                     }
 
                 } else if (choice == 3) {
@@ -128,13 +128,12 @@ public class View {
                     int franNo = scan.nextInt();
                     // 입력한 번호에 해당하는 객체 가져오기
                     FranDto dto = franController.oneFranPrint(franNo);
+                    if( dto.getFranNo() != 0 ){
                     System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
                     System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // 단일 출력
-                    System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
-
                     System.out.println("──┤  수정 정보 입력  ├─────────────────────────────────────────────────────");
                     scan.nextLine();
                     System.out.print("가맹점명 : ");
@@ -151,8 +150,8 @@ public class View {
                     if (result) {
                         System.out.println("[안내] 가맹점 정보가 정상적으로 수정되었습니다");
                     } else {
-                        System.out.println("[경고] 가맹점 수정이 실패했습니다.");
-                    }
+                        System.out.println("[경고] 가맹점 수정에 실패했습니다.");
+                    }}else {System.out.println("[경고] 존재하지 않는 가맹점 번호입니다.");}
 
                 } else if (choice == 4) {
                     // 사용자로부터 수정할 가맹점 번호 입력 받기
@@ -175,8 +174,8 @@ public class View {
                     if(result) {
                         System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다");
                     } else {
-                        System.out.println("[경고] 가맹점 삭제가 실패했습니다.");
-                    }}else {System.out.println("[경고] 올바르지 못한 번호입니다.");}
+                        System.out.println("[경고] 가맹점 삭제에 실패했습니다.");
+                    }}else {System.out.println("[경고] 존재하지 않는 가맹점 번호입니다.");}
 
                 } else if (choice == 5) {
                     break;
@@ -597,12 +596,12 @@ public class View {
 
     // [5] 판매현황보기
     public void saleView() {
+
         System.out.println("═════════════════════════════════════════════════════════════════════════");
         System.out.println("판매번호 \t 가맹점명 \t 제품명 \t 판매수량 \t 날짜·시간");
         System.out.println("─────────────────────────────────────────────────────────────────────────");
         ArrayList<OrderLogDto> result = OrderLogController.getInstance().saleStatsPrint();
-        for (OrderLogDto dto : result) {
-            System.out.printf(dto.getOrderNo() + "\t" + FranController.getInstance().toFranNameChange(dto.getFranNo()) + "\t" + ProductController.getInstance().toProNameChange(dto.getProNo()) + "\t" + dto.getOrderQty() + "\t" + dto.getOrderDate() + "\n");
+        for (OrderLogDto dto : result) {System.out.printf(dto.getOrderNo() + "\t" + FranController.getInstance().toFranNameChange(dto.getFranNo()) + "\t" + ProductController.getInstance().toProNameChange(dto.getProNo()) + "\t" + dto.getOrderQty() + "\t" + dto.getOrderDate() + "\n");
         }
         System.out.println("─────────────────────────────────────────────────────────────────────────");
 
