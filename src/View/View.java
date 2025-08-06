@@ -614,15 +614,38 @@ public class View {
 
     // [5] 판매현황보기
     public void saleView() {
-        System.out.println("═════════════════════════════════════════════════════════════════════════");
-        System.out.println("판매번호 \t 가맹점명 \t 제품명 \t 판매수량 \t 날짜·시간");
-        System.out.println("─────────────────────────────────────────────────────────────────────────");
-        ArrayList<OrderLogDto> result = OrderLogController.getInstance().saleStatsPrint();
-        for (OrderLogDto dto : result) {
-            System.out.printf(dto.getOrderNo() + "\t" + FranController.getInstance().toFranNameChange(dto.getFranNo()) + "\t" + ProductController.getInstance().toProNameChange(dto.getProNo()) + "\t" + dto.getOrderQty() + "\t" + dto.getOrderDate() + "\n");
-        }
-        System.out.println("─────────────────────────────────────────────────────────────────────────");
-
+        for ( ; ; ){
+            int orderNumber = orderLogController.orderNumber();
+            int maxPage = orderNumber / 50 + 1;
+            System.out.println("※ 0. 메인으로 돌아가기");
+            System.out.print("▷ 페이지 입력 [ 1 ~ " + maxPage + " ] : ");         int page = scan.nextInt();
+            if ( page == 0 ) break;
+            if ( page > maxPage ){
+                System.out.println("[경고] 유효하지않은 페이지입니다. 다시 입력해주세요.");
+                continue;
+            } // if end
+            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println("판매번호 \t 가맹점명 \t 제품명 \t 판매수량 \t 날짜·시간");
+            System.out.println("─────────────────────────────────────────────────────────────────────────");
+            // controller에게 page 전달 후 결과 받기
+            ArrayList<OrderLogDto> orderLogDtos = orderLogController.orderLogPage( page );
+            // 페이지 유효성 검사
+            // 배열 하나씩 순회하기
+            for ( OrderLogDto orderLogDto : orderLogDtos ){
+                // 배열에서 값 하나씩 꺼내기
+                int orderNo = orderLogDto.getOrderNo();
+                int franNo = orderLogDto.getFranNo();
+                int proNo = orderLogDto.getProNo();
+                int orderQty = orderLogDto.getOrderQty();
+                String orderDate = orderLogDto.getOrderDate();
+                // 가맹점번호, 제품번호 -> 가맹점명, 제품명으로 변환하기
+                String franName = franController.toFranNameChange( franNo );
+                String proName = productController.toProNameChange( proNo );
+                // 하나씩 출력하기
+                System.out.printf("%d \t %s \t %s \t %d \t %s\n", orderNo, franName, proName, orderQty, orderDate );
+            } // for end
+            System.out.println("─────────────────────────────────────────────────────────────────────────");
+        } // 무한루프 end
     } // saleView end
 
     // [6] 통계보기
