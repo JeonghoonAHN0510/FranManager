@@ -182,8 +182,8 @@ public class ProductDao {
     // 기능설명 : [제품명, 공급가액, 소비자판매가]를 입력받아, 제품을 추가한다.
     // 메소드명 : productAdd()
     // 매개변수 : ProductDto -> String proName, int proSupPrice, int proPrice
-    // 반환타입 : boolean -> true : 등록 성공 / false : 등록 실패
-    public boolean productAdd( ProductDto productDto ){
+    // 반환타입 : int -> 0 : 등록 성공, 1 : 등록 실패, 2 : 제품명 오류, 3 : 가격 오류
+    public int productAdd( ProductDto productDto ){
         try {
             // 1. SQL 작성
             String SQL = "insert into Product ( proName, proSupPrice, proPrice ) values ( ?, ?, ? )";
@@ -197,12 +197,12 @@ public class ProductDao {
             int count = ps.executeUpdate();
             // 5. SQL 결과 반환
             if ( count == 1 ){
-                return true;
+                return 0;
             } // if end
         } catch ( SQLException e ){
             System.out.println("[product06] SQL 기재 실패");
         } // try-catch end
-        return false;
+        return 1;
     } // func end
 
     // product07. 제품 수정
@@ -270,5 +270,32 @@ public class ProductDao {
         } else {
             return "판매종료";
         } // if end
+    } // func end
+
+    // product10. 제품명 유효성 검사
+    // 기능설명 : [제품명]를 매개변수로 받아, 해당하는 제품의 존재 여부를 확인한다.
+    // 메소드명 : proNameCheck()
+    // 매개변수 : String proName
+    // 반환타입 : boolean -> true : 제품 존재 / false : 제품 없음
+    public boolean proNameCheck( String proName ){
+        try {
+            // 1. SQL 작성
+            String SQL = "select count(*) count from Product where proName = ?";
+            // 2. SQL 기재
+            PreparedStatement ps = conn.prepareStatement( SQL );
+            // 3. SQL 매개변수 대입
+            ps.setString( 1, proName );
+            // 4. SQL 실행
+            ResultSet rs = ps.executeQuery();
+            // 5. SQL 결과 반환
+            while( rs.next() ){
+                if ( rs.getInt("count") != 0 ){         // 제품이 존재하면
+                    return true;                        // true 반환
+                } // if end
+            } // while end
+        } catch ( SQLException e ){
+            System.out.println("[product10] SQL 기재 실패");
+        } // try-catch end
+        return false;
     } // func end
 } // class end

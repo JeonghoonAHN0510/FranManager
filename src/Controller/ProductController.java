@@ -79,12 +79,16 @@ public class ProductController {
     // 기능설명 : [제품명, 공급가액, 소비자판매가]를 입력받아, 제품을 추가한다.
     // 메소드명 : productAdd()
     // 매개변수 : String proName, int proSupPrice, int proPrice
-    // 반환타입 : boolean -> true : 등록 성공 / false : 등록 실패
-    public boolean productAdd( String proName, int proSupPrice, int proPrice ){
+    // 반환타입 : int -> 0 : 등록 성공, 1 : 등록 실패, 2 : 제품명 오류, 3 : 가격 오류
+    public int productAdd( String proName, int proSupPrice, int proPrice ){
+        // 0. 유효성 검사
+        if ( proSupPrice > proPrice ){  // 공급가액이 소비자판매가보다 높다면
+            return 3;
+        } // if end
         // 1. dao에게 전달할 객체 생성하기
         ProductDto productDto = new ProductDto( 0, proName, proSupPrice, proPrice, true );
         // 2. dao에게 전달 후 결과 받기
-        boolean result = productDao.productAdd( productDto );
+        int result = productDao.productAdd( productDto );
         // 3. view에게 결과 전달하기
         return result;
     } // func end
@@ -127,5 +131,17 @@ public class ProductController {
         String status = productDao.toproStatusChange( proStatus );
         // 2. view에게 결과 전달하기
         return status;
+    } // func end
+
+    // product10. 제품명 유효성 검사
+    // 기능설명 : [제품명]를 매개변수로 받아, 해당하는 제품의 존재 여부를 확인한다.
+    // 메소드명 : proNameCheck()
+    // 매개변수 : String proName
+    // 반환타입 : boolean -> true : 제품 존재 / false : 제품 없음
+    public boolean proNameCheck( String proName ){
+        // 1. dao에게 매개변수 전달 후 결과 받기
+        boolean result = productDao.proNameCheck( proName );
+        // 2. view에게 결과 전달하기
+        return result;
     } // func end
 } // class end

@@ -123,13 +123,13 @@ public class View {
                     }
 
                 } else if (choice == 3) {
-                    System.out.print("가맹점 번호 : ");
+                    System.out.print("가맹점번호 : ");
                     // 사용자로부터 수정할 가맹점 번호 입력 받기
                     int franNo = scan.nextInt();
                     // 입력한 번호에 해당하는 객체 가져오기
                     FranDto dto = franController.oneFranPrint(franNo);
                     System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
-                    System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
+                    System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // 단일 출력
@@ -162,12 +162,12 @@ public class View {
                     FranDto dto = franController.oneFranPrint(franNo);
                     if( dto.getFranNo() != 0 ){
                     System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
-                    System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
+                    System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
                     // 단일 조회
                     System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
                     System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    System.out.println("<주의> 삭제를 원하시면, 가맹점명과 가맹주명을 입력하세요.");
+                    System.out.println("❗❗ 삭제를 원하시면, [ 가맹점명 ]과 [ 가맹주명 ]을 입력하세요.");
                     System.out.print("가맹점명 : "); String franName = scan.next();
                     System.out.print("가맹주명 : "); String franOwner = scan.next();
                     // 수정 정보를 controller에 전달
@@ -229,19 +229,24 @@ public class View {
                 } else if (choice == 2) {
                     System.out.println("───────────────────────────────────────────────────────────────────────────");
                     // 사용자로부터 등록할 제품정보 받기
-                    System.out.print("제품명 : ");
-                    String proName = scan.next();
-                    System.out.print("공급가액 : ");
-                    int proSupPrice = scan.nextInt();
-                    System.out.print("소비자판매가 : ");
-                    int proPrice = scan.nextInt();
+                    System.out.print("제품명 : ");          String proName = scan.next();
+                    System.out.print("공급가액 : ");        int proSupPrice = scan.nextInt();
+                    System.out.print("소비자판매가 : ");     int proPrice = scan.nextInt();
                     // 입력한 정보 등록하고 결과받기
-                    boolean result = productController.productAdd(proName, proSupPrice, proPrice);
+                    int result = productController.productAdd(proName, proSupPrice, proPrice);
+                    // 제품명 유효성 검사
+                    if ( productController.proNameCheck( proName ) ){  // 이미 제품이 존재하면
+                        result = 2;
+                    } // if end
                     // 결과에 따른 출력하기
-                    if (result) {
+                    if ( result == 0 ) {
                         System.out.println("[안내] 제품이 정상적으로 등록되었습니다.");
-                    } else {
+                    } else if ( result == 1 ) {
                         System.out.println("[경고] 제품 등록에 실패하였습니다.");
+                    } else if ( result == 2 ) {
+                        System.out.println("[경고] 이미 존재하는 제품명입니다.");
+                    } else {
+                        System.out.println("[경고] 공급가액은 소비자판매가보다 높을 수 없습니다.");
                     } // if end
                 } else if (choice == 3) {
                     // 사용자로부터 수정할 제품번호 받기
@@ -290,32 +295,36 @@ public class View {
                     int proNoInput = scan.nextInt();
                     // 입력한 제품번호에 해당하는 제품 꺼내오기
                     ProductDto productDto = productController.productPrint(proNoInput);
-                    // 값 하나씩 꺼내기
-                    int proNo = productDto.getProNo();
-                    String proName = productDto.getProName();
-                    int proSupPrice = productDto.getProSupPrice();
-                    int proPrice = productDto.getProPrice();
-                    boolean proStatus = productDto.isProStatus();
-                    // 판매여부 변환하기
-                    String status = productController.toproStatusChange(proStatus);
-                    // Price들 천 단위 콤마찍기
-                    String SupPrice = nf.format(proSupPrice);
-                    String price = nf.format(proPrice);
-                    System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
-                    System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status);
-                    System.out.println("───────────────────────────────────────────────────────────────────────────");
-                    // 사용자로부터 삭제할 제품명 받기
-                    System.out.print("정말로 판매종료하시겠습니까? 맞으시다면 '제품명'을 입력해주세요 : ");
-                    String proNameInput = scan.next();
-                    // 입력한 값 controller에게 전달 후 결과받기
-                    boolean result = productController.productDelete(proNoInput, proNameInput);
-                    // 결과에 따른 출력하기
-                    if (result) {
-                        System.out.println("[안내] 해당 제품이 정상적으로 판매종료되었습니다.");
+                    if ( productDto.getProNo() != 0 ){
+                        // 값 하나씩 꺼내기
+                        int proNo = productDto.getProNo();
+                        String proName = productDto.getProName();
+                        int proSupPrice = productDto.getProSupPrice();
+                        int proPrice = productDto.getProPrice();
+                        boolean proStatus = productDto.isProStatus();
+                        // 판매여부 변환하기
+                        String status = productController.toproStatusChange(proStatus);
+                        // Price들 천 단위 콤마찍기
+                        String SupPrice = nf.format(proSupPrice);
+                        String price = nf.format(proPrice);
+                        System.out.println("──┤ 선택 제품 정보 ├─────────────────────────────────────────────────────────");
+                        System.out.println("제품번호 \t 제품명 \t 공급가액 \t 소비자판매가 \t 판매여부");
+                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status);
+                        System.out.println("───────────────────────────────────────────────────────────────────────────");
+                        // 사용자로부터 삭제할 제품명 받기
+                        System.out.print("❗❗ 판매종료를 원하시면, [ 제품명 ]을 입력하세요. ");
+                        String proNameInput = scan.next();
+                        // 입력한 값 controller에게 전달 후 결과받기
+                        boolean result = productController.productDelete(proNoInput, proNameInput);
+                        // 결과에 따른 출력하기
+                        if (result) {
+                            System.out.println("[안내] 해당 제품이 정상적으로 판매종료되었습니다.");
+                        } else {
+                            System.out.println("[경고] 제품 판매종료에 실패하였습니다.");
+                        } // if end
                     } else {
-                        System.out.println("[경고] 제품 판매종료에 실패하였습니다.");
+                        System.out.println("[경고] 존재하지 않는 제품번호입니다.");
                     } // if end
                 } else if (choice == 5) {
                     break;
@@ -535,7 +544,7 @@ public class View {
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo);
                         System.out.println("───────────────────────────────────────────────────────────────────────────");
                         // 사용자로부터 '가맹점명' 입력받기
-                        System.out.print("정말로 출고처리 하시겠습니까?\n 맞으시다면 가맹점명을 입력해주세요. : ");
+                        System.out.print("❗❗ 출고처리를 원하시면, [ 가맹점명 ]을 입력하세요. ");
                         String franNameInput = scan.next();
                         int franNoInput = franController.toIntNameFranChange(franNameInput);
                         // 입력값 controller에게 전달 후 결과 받기
@@ -568,7 +577,7 @@ public class View {
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo);
                         System.out.println("───────────────────────────────────────────────────────────────────────────");
                         // 사용자로부터 '가맹점명' 입력받기
-                        System.out.print("정말로 발주취소하시겠습니까?\n 맞으시다면 가맹점명을 입력해주세요. : ");
+                        System.out.print("❗❗ 발주취소를 원하시면, [ 가맹점명 ]을 입력하세요. ");
                         String franNameInput = scan.next();
                         int franNoInput = franController.toIntNameFranChange(franNameInput);
                         // 입력값 controller에게 전달 후 결과 받기
