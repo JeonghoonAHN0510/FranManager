@@ -53,7 +53,7 @@ public class ProductDao {
             proNo = rs.getInt("proNo");
 
         } catch (Exception e) {
-            System.out.println("[경고] 입력하신 제품명으로 조회되는 상품이 없습니다.");
+            System.out.println("[경고] 입력하신 제품명으로 조회되는 제품이 없습니다.");
         }
         return proNo;
     } // func end

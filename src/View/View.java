@@ -27,8 +27,11 @@ public class View {
     private NumberFormat nf = NumberFormat.getInstance();
 
     // 싱글톤
-    private View() { }
+    private View() {
+    }
+
     private static final View instance = new View();
+
     public static View getInstance() {
         return instance;
     }
@@ -160,23 +163,28 @@ public class View {
                     int franNo = scan.nextInt();
                     // 입력한 번호에 해당하는 객체 가져오기
                     FranDto dto = franController.oneFranPrint(franNo);
-                    if( dto.getFranNo() != 0 ){
-                    System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
-                    System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    // 단일 조회
-                    System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
-                    System.out.println("<주의> 삭제를 원하시면, 가맹점명과 가맹주명을 입력하세요.");
-                    System.out.print("가맹점명 : "); String franName = scan.next();
-                    System.out.print("가맹주명 : "); String franOwner = scan.next();
-                    // 수정 정보를 controller에 전달
-                    boolean result = franController.franDelete(franNo, franName, franOwner);
-                    if(result) {
-                        System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다");
+                    if (dto.getFranNo() != 0) {
+                        System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
+                        System.out.println("가맹점 번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
+                        System.out.println("─────────────────────────────────────────────────────────────────────────");
+                        // 단일 조회
+                        System.out.printf(dto.getFranNo() + "\t" + dto.getFranName() + "\t" + dto.getFranCall() + "\t" + dto.getFranOwner() + "\t" + dto.getFranAddress() + "\n");
+                        System.out.println("─────────────────────────────────────────────────────────────────────────");
+                        System.out.println("<주의> 삭제를 원하시면, 가맹점명과 가맹주명을 입력하세요.");
+                        System.out.print("가맹점명 : ");
+                        String franName = scan.next();
+                        System.out.print("가맹주명 : ");
+                        String franOwner = scan.next();
+                        // 수정 정보를 controller에 전달
+                        boolean result = franController.franDelete(franNo, franName, franOwner);
+                        if (result) {
+                            System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다");
+                        } else {
+                            System.out.println("[경고] 가맹점 삭제가 실패했습니다.");
+                        }
                     } else {
-                        System.out.println("[경고] 가맹점 삭제가 실패했습니다.");
-                    }}else {System.out.println("[경고] 올바르지 못한 번호입니다.");}
+                        System.out.println("[경고] 올바르지 못한 번호입니다.");
+                    }
 
                 } else if (choice == 5) {
                     break;
@@ -336,7 +344,7 @@ public class View {
         for (; ; ) {
             System.out.println(
                     "╔═══════════════════════════════════╣ 입출고 관리 ╠══════════════════════════════════╗\n" +
-                            "║             1. 입출고 현황 보기  ▌  2. 입고 등록                                     ║\n" +
+                            "║             1. 상품별 재고 현황  ▌  2. 입고 등록                                     ║\n" +
                             "║             3. 입출고 로그      ▌  4. 입출고 수정  ▌  5. 메인으로 돌아가기             ║\n" +
                             "╚═══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
@@ -355,7 +363,7 @@ public class View {
                         // [2.1.3] memo 출력 관련
                         String memo = "";
                         if (ioMap.get(proNo) <= 10) {
-                            memo = "[주의] 재고가 부족합니다.";
+                            memo = "[재고부족] 제품 주문이 필요합니다.";
                         }
 
                         // [3.1.4] 각 열마다 출력
@@ -377,20 +385,20 @@ public class View {
 
                     // [3.2.2] proName > proNo 변환 메소드
                     int proNo = productController.toIntproNoChange(proName);
-                    if (proNo == 0) {
-                        System.out.println("[경고] 올바르지 못한 상품명 입니다.");
-                        return;
-                    }
-                    // [3.2.3] 재고 등록 메소드 실행
-                    boolean result = ioLogController.ioLogAdd(proNo, ioQty, ioMemo);
-
-                    // [3.2.4] 결과에 따른 출력
-                    if (result == true) {
-                        System.out.println("[안내] 제품 재고를 정상적으로 등록되었습니다. \n");
+                    // [3.2.3] proNo 유효성 검사
+                    boolean check = productController.proNoCheck(proNo);
+                    if (check == false) {
                     } else {
-                        System.out.println("[경고] 제품 재고 등록을 실패하였습니다.");
-                    }
+                        // [3.2.3] 재고 등록 메소드 실행
+                        boolean result = ioLogController.ioLogAdd(proNo, ioQty, ioMemo);
 
+                        // [3.2.4] 결과에 따른 출력
+                        if (result == true) {
+                            System.out.println("[안내] 제품 재고가 정상적으로 등록되었습니다.");
+                        } else {
+                            System.out.println("[경고] 제품 재고 등록을 실패하였습니다.");
+                        }
+                    }
                 } else if (choice == 3) { // 2.3. 재고 로그 func 연결
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
                     System.out.println("입·출고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입·출고일자 \t 메모");
@@ -421,7 +429,7 @@ public class View {
                     // [3.4.1] 입·출고번호 유효성검사
                     boolean check = ioLogController.ioNoCheck(ioNo);
                     if (check == false) {
-                        System.out.println("[경고] 존재하지 않는 재고번호 입니다.");
+                        System.out.println("[경고] 존재하지 않는 입출고번호 입니다.");
                     } else {
                         // [3.4.2] 단일 재고 이력 조회 func / IoController - oneIOLogPrint()
                         IOLogDto ioLogDto = ioLogController.oneIOLogPrint(ioNo);
@@ -740,7 +748,7 @@ public class View {
 
                     // [7.2.1.3] 유효성 검사에 따라 진행
                     if (check == false) {
-                        System.out.println("[경고] 존재하지 않는 가맹점명입니다.");
+                        System.out.println("[경고] 존재하지 않는 가맹점입니다.");
                     } else {
                         // [7.2.2] reviewController func 실행
                         ArrayList<ReviewPrintDto> reviewPrintList = reviewController.franReviewPrint(franNo);
@@ -770,7 +778,6 @@ public class View {
 
                     // [7.3.1.3] 유효성 검사에 따라 진행
                     if (check == false) {
-                        System.out.println("[경고] 존재하지 않는 제품입니다.");
                     } else {
                         // [7.3.2] reviewController func 실행
                         ArrayList<ReviewPrintDto> reviewPrintList = reviewController.proReviewPrint(proName);
