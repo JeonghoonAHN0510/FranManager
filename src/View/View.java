@@ -198,7 +198,7 @@ public class View {
             System.out.println(
                     "╔════════════════════════════════════╣ 제품 관리 ╠═══════════════════════════════════╗\n" +
                             "║               1. 제품 전체 조회  ▌  2. 제품 등록                                     ║\n" +
-                            "║               3. 제품 수정      ▌  4. 제품 판매종료  ▌  5. 메인으로 돌아가기             ║\n" +
+                            "║               3. 제품 수정      ▌  4. 판매상태변경   ▌  5. 메인으로 돌아가기             ║\n" +
                             "╚═══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
@@ -290,7 +290,7 @@ public class View {
                         System.out.println("[경고] 올바르지 못한 제품번호입니다.");
                     } // if end
                 } else if (choice == 4) {
-                    // 사용자로부터 삭제할 제품번호 받기
+                    // 사용자로부터 상태변경할 제품번호 받기
                     System.out.print("제품번호 : ");
                     int proNoInput = scan.nextInt();
                     // 입력한 제품번호에 해당하는 제품 꺼내오기
@@ -313,15 +313,13 @@ public class View {
                         System.out.printf("%d \t %s \t %s원 \t %s원 \t %s\n", proNo, proName, SupPrice, price, status);
                         System.out.println("───────────────────────────────────────────────────────────────────────────");
                         // 사용자로부터 삭제할 제품명 받기
-                        System.out.print("❗❗ 판매종료를 원하시면, [ 제품명 ]을 입력하세요. ");
+                        System.out.print("❗❗ 판매상태변경을 원하시면, [ 제품명 ]을 입력하세요. ");
                         String proNameInput = scan.next();
-                        // 입력한 값 controller에게 전달 후 결과받기
-                        boolean result = productController.productDelete(proNoInput, proNameInput);
-                        // 결과에 따른 출력하기
-                        if (result) {
-                            System.out.println("[안내] 해당 제품이 정상적으로 판매종료되었습니다.");
+                        boolean result = productController.productStatusChange( proNo, proNameInput );
+                        if ( result ){
+                            System.out.println("[안내] 해당 제품의 판매상태가 정상적으로 변경되었습니다.");
                         } else {
-                            System.out.println("[경고] 제품 판매종료에 실패하였습니다.");
+                            System.out.println("[경고] 해당 제품의 판매상태 변경에 실패하였습니다.");
                         } // if end
                     } else {
                         System.out.println("[경고] 존재하지 않는 제품번호입니다.");

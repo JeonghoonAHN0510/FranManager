@@ -233,15 +233,15 @@ public class ProductDao {
         return false;
     } // func end
 
-    // product08. 제품 삭제
-    // 기능설명 : [제품번호, 제품명]을 입력받아, 해당하는 제품을 삭제처리한다.
-    // 메소드명 : productDelete()
+    // product08. 제품 상태변경
+    // 기능설명 : [제품번호, 제품명]을 입력받아, 해당하는 제품의 상태를 변경한다.
+    // 메소드명 : productStatusChange()
     // 매개변수 : ProductDto -> int proNo, String proName
     // 반환타입 : boolean -> true : 삭제 성공 / false : 삭제 실패
-    public boolean productDelete( ProductDto productDto ){
+    public boolean productStatusChange( ProductDto productDto ){
         try {
-            // 1. SQL 작성
-            String SQL = "update Product set proStatus = false where proNo = ? and proName = ?";
+            // 1. SQL 작성 : proStatus가 true면 false로 / false면 true로 변경하도록 작성
+            String SQL = "update Product set proStatus = (case proStatus when true then false else true end) where proNo = ? and proName = ?";
             // 2. SQL 기재
             PreparedStatement ps = conn.prepareStatement( SQL );
             // 3. SQL 매개변수 대입

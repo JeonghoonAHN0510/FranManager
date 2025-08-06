@@ -107,16 +107,16 @@ public class ProductController {
         return result;
     } // func end
 
-    // product08. 제품 삭제
-    // 기능설명 : [제품번호, 제품명]을 입력받아, 해당하는 제품을 삭제처리한다.
-    // 메소드명 : productDelete()
+    // product08. 제품 상태변경
+    // 기능설명 : [제품번호, 제품명]을 입력받아, 해당하는 제품의 상태를 변경한다.
+    // 메소드명 : productStatusChange()
     // 매개변수 : int proNo, String proName
     // 반환타입 : boolean -> true : 삭제 성공 / false : 삭제 실패
-    public boolean productDelete( int proNo, String proName ){
+    public boolean productStatusChange( int proNo, String proName ){
         // 1. dao에게 전달할 객체 생성
         ProductDto productDto = new ProductDto( proNo, proName, 0, 0, true );
         // 2. dao에게 객체 전달 후 결과받기
-        boolean result = productDao.productDelete( productDto );
+        boolean result = productDao.productStatusChange( productDto );
         // 3. view에게 결과 전달하기
         return result;
     } // func end
