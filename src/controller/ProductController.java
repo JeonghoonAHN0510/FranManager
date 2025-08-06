@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
 
-import Model.DAO.ProductDao;
-import Model.DTO.ProductDto;
+import model.dao.ProductDao;
+import model.dto.ProductDto;
 
 import java.util.ArrayList;
 

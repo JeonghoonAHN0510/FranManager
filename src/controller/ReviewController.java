@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Model.DAO.ReviewDao;
-import Model.DTO.ReviewPrintDto;
+import model.dao.ReviewDao;
+import model.dto.ReviewPrintDto;
 
 import java.util.ArrayList;
 

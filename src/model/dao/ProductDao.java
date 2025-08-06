@@ -1,6 +1,6 @@
-package Model.DAO;
+package model.dao;
 
-import Model.DTO.ProductDto;
+import model.dto.ProductDto;
 
 import java.sql.*;
 import java.util.ArrayList;

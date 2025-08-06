@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Model.DAO.SupplyLogDao;
-import Model.DTO.SupplyLogDto;
+import model.dao.SupplyLogDao;
+import model.dto.SupplyLogDto;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Model.DAO.FranDao;
-import Model.DTO.FranDto;
+import model.dao.FranDao;
+import model.dto.FranDto;
 
 import java.util.ArrayList;
 

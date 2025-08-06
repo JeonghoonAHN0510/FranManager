@@ -1,11 +1,11 @@
-package View;
+package view;
 
-import Controller.FranController;
-import Controller.*;
-import Model.DTO.*;
-import Controller.IOLogController;
-import Controller.ProductController;
-import Controller.SupplyLogController;
+import controller.FranController;
+import controller.*;
+import model.dto.*;
+import controller.IOLogController;
+import controller.ProductController;
+import controller.SupplyLogController;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;

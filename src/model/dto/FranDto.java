@@ -1,4 +1,4 @@
-package Model.DTO;
+package model.dto;
 
 public class FranDto {
     // 1. 멤버변수

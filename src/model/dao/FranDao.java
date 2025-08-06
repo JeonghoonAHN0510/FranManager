@@ -1,6 +1,6 @@
-package Model.DAO;
+package model.dao;
 
-import Model.DTO.FranDto;
+import model.dto.FranDto;
 
 import java.sql.*;
 import java.util.ArrayList;

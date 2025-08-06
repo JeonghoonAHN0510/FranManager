@@ -1,6 +1,6 @@
-package Model.DAO;
+package model.dao;
 
-import Model.DTO.StatsDto;
+import model.dto.StatsDto;
 
 import java.sql.*;
 import java.util.ArrayList;

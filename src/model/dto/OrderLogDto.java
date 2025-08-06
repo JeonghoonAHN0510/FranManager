@@ -1,4 +1,4 @@
-package Model.DTO;
+package model.dto;
 
 public class OrderLogDto {
     // 1. 멤버변수

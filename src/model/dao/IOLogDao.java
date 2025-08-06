@@ -1,14 +1,12 @@
-package Model.DAO;
+package model.dao;
 
-import Model.DTO.IOLogDto;
-import com.sun.source.tree.Tree;
+import model.dto.IOLogDto;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
