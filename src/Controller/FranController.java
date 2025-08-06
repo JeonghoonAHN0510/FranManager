@@ -140,5 +140,18 @@ public class FranController {
         return result;
     } // func end
 
-
+    // fran09. 가맹점명 정렬
+    // 기능설명 : [가맹점명 / 글자수]를 매개변수로 받아, 글자수를 정렬한다.
+    // 메소드명 : franNameArray()
+    // 매개변수 : String franName, int length
+    // 반환타입 : String
+    public String franNameArray( String franName, int length ){
+        if ( length <= 4 ){
+            franName += "\t\t";
+        }
+        if ( length == 5 || length == 6 ){
+            franName += "\t";
+        }
+        return franName;
+    } // func end
 } // class end

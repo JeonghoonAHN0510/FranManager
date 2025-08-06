@@ -412,7 +412,7 @@ public class View {
                     }
                 } else if (choice == 3) { // 2.3. 재고 로그 func 연결
                     System.out.println("════════════════════════════════════════════════════════════════════════════════════");
-                    System.out.println("입·출고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입·출고일자 \t 메모");
+                    System.out.println("입·출고번호 \t 제품번호 \t 제품명    입고·출고    수량 \t    입·출고일자 \t\t     메모");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                     // [3.3.1] IOLogController, IOLogPrint() 실행
@@ -427,9 +427,12 @@ public class View {
                         } else {
                             io = "출고";
                         }
+                        String proName = productController.toProNameChange(ioLogDto.getProNo());
+                        // 글자수 정렬 함수
+                        proName = productController.proNameArray( proName, proName.length() );
                         // [3.3.4] 출력
-                        System.out.printf("%d \t %d \t %s \t %s \t %d \t %s \t %s \n",
-                                ioLogDto.getIoNo(), ioLogDto.getProNo(), productController.toProNameChange(ioLogDto.getProNo()), io, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
+                        System.out.printf("  %d \t %d \t\t%s \t%s \t  %d \t%s    %s \n",
+                                ioLogDto.getIoNo(), ioLogDto.getProNo(), proName, io, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
                     }
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
@@ -445,8 +448,8 @@ public class View {
                         // [3.4.2] 단일 재고 이력 조회 func / IoController - oneIOLogPrint()
                         IOLogDto ioLogDto = ioLogController.oneIOLogPrint(ioNo);
 
-                        System.out.println("──┤ 선택 가맹점 정보 ├────────────────────────────────────────────────────────────────");
-                        System.out.println("입·출고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입·출고일자 \t 메모");
+                        System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────────────────");
+                        System.out.println("입·출고번호 \t 제품번호 \t 제품명    입고·출고   수량 \t    입·출고일자 \t\t     메모");
                         System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                         // [3.4.3] 반복문 출력
@@ -457,12 +460,14 @@ public class View {
                         } else {
                             ioString = "출고";
                         }
-
-                        System.out.printf("%d \t %d \t %s \t %s \t %d \t %s \t %s \n",
-                                ioLogDto.getIoNo(), ioLogDto.getProNo(), productController.toProNameChange(ioLogDto.getProNo()), ioString, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
+                        String proName = productController.toProNameChange(ioLogDto.getProNo());
+                        // 글자수 정렬 함수
+                        proName = productController.proNameArray( proName, proName.length() );
+                        System.out.printf("  %d \t %d \t\t%s \t%s \t %d \t%s    %s \n",
+                                ioLogDto.getIoNo(), ioLogDto.getProNo(), proName, ioString, ioLogDto.getIoQty(), ioLogDto.getIoDate(), ioLogDto.getIoMemo());
 
                         // [3.4.4] 수정 정보 받기
-                        System.out.println("──┤  수정 정보 입력  ├──────────────────────────────────────────────────────────────");
+                        System.out.println("──┤  수정 정보 입력  ├────────────────────────────────────────────────────────────────");
                         System.out.print("제품번호 : ");
                         int proNo = scan.nextInt();
                         System.out.print("입·출고 : ");
@@ -516,7 +521,7 @@ public class View {
             try {
                 if (choice == 1) {          // 가맹점 발주 요청 보기를 선택하면
                     System.out.println("════════════════════════════════════════════════════════════════════════════════════");
-                    System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
+                    System.out.println("발주번호 \t  가맹점명 \t\t 제품명 \t    주문수량 \t\t 메모");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // controller에게 결과값 받기
                     ArrayList<SupplyLogDto> supplyLogDtos = supplyLogController.supplyPrintAll();
@@ -530,8 +535,11 @@ public class View {
                         // 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
                         String franName = franController.toFranNameChange(franNo);
                         String proName = productController.toProNameChange(proNo);
+                        // 글자수 정렬 함수
+                        franName = franController.franNameArray( franName, franName.length() );
+                        proName = productController.proNameArray( proName, proName.length() );
                         // 값 출력하기
-                        System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo);
+                        System.out.printf("%d \t %s\t%s \t  %d \t %s\n", supNo, franName, proName, supQty, supMemo);
                     } // for end
                     System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                 } else if (choice == 2) {   // 출고 처리를 선택하면
@@ -540,7 +548,7 @@ public class View {
                     SupplyLogDto supplyLogDto = supplyLogController.supplyPrint(supNo);
                     if (supplyLogDto.getFranNo() != 0) {       // 발주번호에 해당하는 발주가 존재한다면
                         System.out.println("──┤ 발주번호 정보 조회 ├───────────────────────────────────────────────────────────────");
-                        System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
+                        System.out.println("발주번호 \t  가맹점명 \t\t  제품명 \t    주문수량 \t\t 메모");
                         System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // 원하는 값 꺼내오기
                         int franNo = supplyLogDto.getFranNo();
@@ -550,8 +558,11 @@ public class View {
                         // 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
                         String franName = franController.toFranNameChange(franNo);
                         String proName = productController.toProNameChange(proNo);
+                        // 글자수 정렬 함수
+                        franName = franController.franNameArray( franName, franName.length() );
+                        proName = productController.proNameArray( proName, proName.length() );
                         // 값 출력하기
-                        System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo);
+                        System.out.printf("%d \t %s \t %s \t\t%d \t %s\n", supNo, franName, proName, supQty, supMemo);
                         System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // 사용자로부터 '가맹점명' 입력받기
                         System.out.print("❗❗ 출고처리를 원하시면, [ 가맹점명 ]을 입력하세요. ");
@@ -583,7 +594,7 @@ public class View {
                     SupplyLogDto supplyLogDto = supplyLogController.supplyPrint(supNo);
                     if (supplyLogDto.getFranNo() != 0) {       // 발주번호에 해당하는 발주가 존재한다면
                         System.out.println("──┤ 발주번호 정보 조회 ├───────────────────────────────────────────────────────────────");
-                        System.out.println("발주번호 \t 가맹점명 \t 제품 \t 주문수량 \t 메모");
+                        System.out.println("발주번호 \t  가맹점명 \t\t  제품명 \t    주문수량 \t\t 메모");
                         System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // 원하는 값 꺼내오기
                         int franNo = supplyLogDto.getFranNo();
@@ -593,6 +604,9 @@ public class View {
                         // 가맹점번호, 제품번호를 가맹점명, 제품명으로 변환
                         String franName = franController.toFranNameChange(franNo);
                         String proName = productController.toProNameChange(proNo);
+                        // 글자수 정렬 함수
+                        franName = franController.franNameArray( franName, franName.length() );
+                        proName = productController.proNameArray( proName, proName.length() );
                         // 값 출력하기
                         System.out.printf("%d \t %s \t %s \t %d \t %s\n", supNo, franName, proName, supQty, supMemo);
                         System.out.println("────────────────────────────────────────────────────────────────────────────────────");
