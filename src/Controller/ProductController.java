@@ -41,7 +41,7 @@ public class ProductController {
         return proName;
     } // func end
 
-    // [product03] 상품번호 유효성 검사 / proNoCheck()
+    // [product03] 제품번호 유효성 검사 / proNoCheck()
     // 매개변수 : int proNo
     // 반환타입 : boolean
     public boolean proNoCheck(int proNo){

@@ -204,7 +204,6 @@ public class IOLogDao {
                 result = false;
             }
         } catch (Exception e) {
-            System.out.println("[경고] 재고로그수정을 실패하였습니다.");
         }
         // [5.6] 결과 반환
         return result;

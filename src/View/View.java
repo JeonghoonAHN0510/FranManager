@@ -50,8 +50,8 @@ public class View {
                     "╔══════════════════════════════════════════════════════════════════════════════════╗\n" +
                             "║                                \uD83C\uDF1F FranManager \uD83C\uDF1F                                 ║\n" +
                             "╠══════════════════════════════════════════════════════════════════════════════════╣\n" +
-                            "║   1. \uD83C\uDFEA 가맹점 관리     ▌  2. \uD83C\uDF71 제품 관리  ▌  3. \uD83D\uDCE6 재고 관리  ▌  4. \uD83D\uDCCB 발주 관리   ║\n" +
-                            "║   5. \uD83D\uDCB0 판매 현황 보기  ▌  6. \uD83D\uDCCA 통계 보기  ▌  7. \uD83D\uDCDD 리뷰 보기                       ║ \n" +
+                            "║  1. \uD83C\uDFEA 가맹점 관리     ▌  2. \uD83C\uDF71 제품 관리  ▌  3. \uD83D\uDCE6 입출고 관리 ▌  4. \uD83D\uDCCB 발주 관리    ║\n" +
+                            "║  5. \uD83D\uDCB0 판매 현황 보기   ▌  6. \uD83D\uDCCA 통계 보기  ▌  7. \uD83D\uDCDD 리뷰 보기                       ║ \n" +
                             "╚══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
@@ -341,9 +341,9 @@ public class View {
     public void ioManage() {
         for (; ; ) {
             System.out.println(
-                    "╔════════════════════════════════════╣ 재고 관리 ╠═══════════════════════════════════╗\n" +
-                            "║               1. 재고 현황 보기  ▌  2. 재고 등록                                     ║\n" +
-                            "║               3. 재고 로그      ▌  4. 재고 수정  ▌  5. 메인으로 돌아가기              ║\n" +
+                    "╔═══════════════════════════════════╣ 입출고 관리 ╠══════════════════════════════════╗\n" +
+                            "║             1. 제품별 재고 현황  ▌  2. 입고 등록                                     ║\n" +
+                            "║             3. 입출고 로그      ▌  4. 입출고 수정  ▌  5. 메인으로 돌아가기             ║\n" +
                             "╚═══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
             int choice = scan.nextInt();
@@ -361,7 +361,7 @@ public class View {
                         // [2.1.3] memo 출력 관련
                         String memo = "";
                         if (ioMap.get(proNo) <= 10) {
-                            memo = "[주의] 재고가 부족합니다.";
+                            memo = "[재고부족] 제품 주문이 필요합니다.";
                         }
 
                         // [3.1.4] 각 열마다 출력
@@ -383,20 +383,20 @@ public class View {
 
                     // [3.2.2] proName > proNo 변환 메소드
                     int proNo = productController.toIntproNoChange(proName);
-                    if (proNo == 0) {
-                        System.out.println("[경고] 올바르지 못한 상품명 입니다.");
-                        return;
-                    }
-                    // [3.2.3] 재고 등록 메소드 실행
-                    boolean result = ioLogController.ioLogAdd(proNo, ioQty, ioMemo);
-
-                    // [3.2.4] 결과에 따른 출력
-                    if (result == true) {
-                        System.out.println("[안내] 제품 재고를 정상적으로 등록되었습니다. \n");
+                    // [3.2.3] proNo 유효성 검사
+                    boolean check = productController.proNoCheck(proNo);
+                    if (check == false) {
                     } else {
-                        System.out.println("[경고] 제품 재고 등록을 실패하였습니다.");
-                    }
+                        // [3.2.3] 재고 등록 메소드 실행
+                        boolean result = ioLogController.ioLogAdd(proNo, ioQty, ioMemo);
 
+                        // [3.2.4] 결과에 따른 출력
+                        if (result == true) {
+                            System.out.println("[안내] 제품 재고가 정상적으로 등록되었습니다.");
+                        } else {
+                            System.out.println("[경고] 제품 재고 등록을 실패하였습니다.");
+                        }
+                    }
                 } else if (choice == 3) { // 2.3. 재고 로그 func 연결
                     System.out.println("═════════════════════════════════════════════════════════════════════════");
                     System.out.println("입·출고번호 \t 제품번호 \t 제품명 \t 입고·출고 \t 수량 \t 입·출고일자 \t 메모");
@@ -427,7 +427,7 @@ public class View {
                     // [3.4.1] 입·출고번호 유효성검사
                     boolean check = ioLogController.ioNoCheck(ioNo);
                     if (check == false) {
-                        System.out.println("[경고] 존재하지 않는 재고번호 입니다.");
+                        System.out.println("[경고] 존재하지 않는 입출고번호 입니다.");
                     } else {
                         // [3.4.2] 단일 재고 이력 조회 func / IoController - oneIOLogPrint()
                         IOLogDto ioLogDto = ioLogController.oneIOLogPrint(ioNo);
@@ -779,7 +779,7 @@ public class View {
 
                     // [7.2.1.3] 유효성 검사에 따라 진행
                     if (check == false) {
-                        System.out.println("[경고] 존재하지 않는 가맹점명입니다.");
+                        System.out.println("[경고] 존재하지 않는 가맹점입니다.");
                     } else {
                         // [7.2.2] reviewController func 실행
                         ArrayList<ReviewPrintDto> reviewPrintList = reviewController.franReviewPrint(franNo);
@@ -809,7 +809,6 @@ public class View {
 
                     // [7.3.1.3] 유효성 검사에 따라 진행
                     if (check == false) {
-                        System.out.println("[경고] 존재하지 않는 제품입니다.");
                     } else {
                         // [7.3.2] reviewController func 실행
                         ArrayList<ReviewPrintDto> reviewPrintList = reviewController.proReviewPrint(proName);
