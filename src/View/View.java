@@ -94,7 +94,7 @@ public class View {
             try {
                 if (choice == 1) {
                     System.out.println("════════════════════════════════════════════════════════════════════════════════════");
-                    System.out.println("가맹점번호 \t 가맹점명 \t\t전화번호 \t\t가맹주명 \t 매출액 \t\t 상세주소");
+                    System.out.println("가맹점번호 \t 가맹점명 \t\t전화번호 \t\t가맹주명  \t매출액 \t 상세주소");
                     ArrayList<FranDto> result = franController.franPrint();
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     for (FranDto dto : result) {
@@ -111,7 +111,7 @@ public class View {
                         franCall = franController.franCallArray( franCall, franCall.length() );
                         System.out.printf("  %d   \t%s   \t%s\t%s\t%s원\t%s\n", franNo2,franName,franCall,franOwner,price,franAddress);
                     }
-                    System.out.println("─────────────────────────────────────────────────────────────────────────────────-──");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                 } else if (choice == 2) {
                     scan.nextLine();
@@ -144,12 +144,12 @@ public class View {
                     String franOwner = dto.getFranOwner();
                     String franAddress = dto.getFranAddress();
                     if( dto.getFranNo() != 0 ){
-                    System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
+                    System.out.println("──┤ 선택 가맹점 정보 ├────────────────────────────────────────────────────────────────");
                     System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.printf("  %d\t    %s\t  %s\t  %s\t  %s\n", franNo2,franName,franCall,franOwner,franAddress);
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("───────────────────────────────────────────────────────────────────────────────────");
                     // 단일 출력
-                    System.out.println("──┤  수정 정보 입력  ├─────────────────────────────────────────────────────");
+                    System.out.println("──┤  수정 정보 입력  ├───────────────────────────────────────────────────────────────");
                     scan.nextLine();
                     System.out.print("가맹점명 : ");
                     String franName2 = scan.nextLine();
@@ -171,6 +171,7 @@ public class View {
                 } else if (choice == 4) {
                     // 사용자로부터 수정할 가맹점 번호 입력 받기
                     System.out.print("가맹점 번호 : ");
+
                     int franNo = scan.nextInt();
                     // 입력한 번호에 해당하는 객체 가져오기
                     FranDto dto = franController.oneFranPrint(franNo);
@@ -181,12 +182,12 @@ public class View {
                     String franOwner = dto.getFranOwner();
                     String franAddress = dto.getFranAddress();
                     if( franNo2 != 0 ){
-                    System.out.println("──┤ 선택 가맹점 정보 ├─────────────────────────────────────────────────────");
+                    System.out.println("──┤ 선택 가맹점 정보 ├────────────────────────────────────────────────────────────────");
                     System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // 단일 조회
                     System.out.printf("  %d\t    %s\t  %s\t  %s\t  %s\n", franNo2,franName,franCall,franOwner,franAddress);
-                    System.out.println("─────────────────────────────────────────────────────────────────────────");
+                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     System.out.println("❗❗ 삭제를 원하시면, [ 가맹점명 ]과 [ 가맹주명 ]을 입력하세요.");
                     System.out.print("가맹점명 : "); String franName2 = scan.next();
                     System.out.print("가맹주명 : "); String franOwner2 = scan.next();
