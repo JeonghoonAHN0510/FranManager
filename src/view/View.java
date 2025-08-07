@@ -589,7 +589,7 @@ public class View {
                         // 사용자로부터 '가맹점명' 입력받기
                         System.out.print("❗❗ 출고처리를 원하시면, [ 가맹점명 ]을 입력하세요. ");
                         String franNameInput = scan.next();
-                        int franNoInput = franController.toIntNameFranChange(franNameInput);
+                        int franNoInput = franController.toFranNoChange(franNameInput);
                         // 결과를 받을 int 생성
                         int result;
                         // 입력받은 발주번호를 통해 해당 제품의 총 재고량 반환
@@ -635,7 +635,7 @@ public class View {
                         // 사용자로부터 '가맹점명' 입력받기
                         System.out.print("❗❗ 발주취소를 원하시면, [ 가맹점명 ]을 입력하세요. ");
                         String franNameInput = scan.next();
-                        int franNoInput = franController.toIntNameFranChange(franNameInput);
+                        int franNoInput = franController.toFranNoChange(franNameInput);
                         // 입력값 controller에게 전달 후 결과 받기
                         boolean result = supplyLogController.supplyCancel(supNo, franNoInput);
                         // 결과에 따른 출력하기
@@ -822,7 +822,7 @@ public class View {
 
                     // [7.2.1] franName 유효성 검사
                     // [7.2.1.1] franName > franNo로 변환
-                    int franNo = franController.toIntNameFranChange(franName);
+                    int franNo = franController.toFranNoChange(franName);
                     // [7.2.1.2] franNo 존재여부 확인
                     boolean check = franController.franNoCheck(franNo);
 

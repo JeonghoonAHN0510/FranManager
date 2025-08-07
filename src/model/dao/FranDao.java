@@ -174,10 +174,10 @@ public class FranDao {
 
     // fran07. 가맹점번호 반환(번호 > 이름)
     // 기능설명 : [가맹점명]를 매개변수로 받아, 해당하는 가맹점번호를 반환한다.
-    // 메소드명 : toIntNameFranChange()
+    // 메소드명 : toFranNoChange()
     // 매개변수 : String franName
     // 반환타입 : int
-    public int toIntNameFranChange( String franName ){
+    public int toFranNoChange( String franName ){
         int franNo = 0;         // 반환할 빈 int 생성
         try {
             // 1. SQL 작성
