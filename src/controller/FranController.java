@@ -154,4 +154,18 @@ public class FranController {
         }
         return franName;
     } // func end
+
+    // fran10. 전화번호 정렬
+    // 기능설명 : [전화번호 / 글자수]를 매개변수로 받아, 전화번호를 정렬한다.
+    // 메소드명 : franCallArray()
+    // 매개변수 : String franCall , int length
+    // 반환타입 : String
+    public String franCallArray( String franCall , int length ){
+        if( length == 10 ) {
+            franCall += "\t\t";
+        }
+        if( length == 11){
+            franCall += "\t";
+        } return franCall;
+    }
 } // class end
