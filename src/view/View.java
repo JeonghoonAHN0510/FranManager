@@ -145,7 +145,7 @@ public class View {
                     String franAddress = dto.getFranAddress();
                     if( dto.getFranNo() != 0 ){
                     System.out.println("──┤ 선택 가맹점 정보 ├────────────────────────────────────────────────────────────────");
-                    System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
+                    System.out.println("가맹점번호 \t 가맹점명 \t\t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.printf("  %d\t    %s\t  %s\t  %s\t  %s\n", franNo2,franName,franCall,franOwner,franAddress);
                     System.out.println("───────────────────────────────────────────────────────────────────────────────────");
                     // 단일 출력
@@ -183,7 +183,7 @@ public class View {
                     String franAddress = dto.getFranAddress();
                     if( franNo2 != 0 ){
                     System.out.println("──┤ 선택 가맹점 정보 ├────────────────────────────────────────────────────────────────");
-                    System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
+                    System.out.println("가맹점번호 \t 가맹점명 \t\t 전화번호 \t 가맹주명 \t 상세주소");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // 단일 조회
                     System.out.printf("  %d\t    %s\t  %s\t  %s\t  %s\n", franNo2,franName,franCall,franOwner,franAddress);
