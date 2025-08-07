@@ -251,7 +251,6 @@ public class View {
                     } // for end
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 2) {
-                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // 사용자로부터 등록할 제품정보 받기
                     System.out.print("제품명 : ");          String proName = scan.next();
                     System.out.print("공급가액 : ");        int proSupPrice = scan.nextInt();
