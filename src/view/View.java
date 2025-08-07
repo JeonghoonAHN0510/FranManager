@@ -166,11 +166,11 @@ public class View {
                         System.out.println("[안내] 가맹점 정보가 정상적으로 수정되었습니다");
                     } else {
                         System.out.println("[경고] 가맹점 수정에 실패했습니다.");
-                    }}else {System.out.println("[경고] 존재하지 않는 가맹점 번호입니다.");}
+                    }}else {System.out.println("[경고] 존재하지 않는 가맹점번호입니다.");}
 
                 } else if (choice == 4) {
                     // 사용자로부터 수정할 가맹점 번호 입력 받기
-                    System.out.print("가맹점 번호 : ");
+                    System.out.print("가맹점번호 : ");
 
                     int franNo = scan.nextInt();
                     // 입력한 번호에 해당하는 객체 가져오기
@@ -197,7 +197,7 @@ public class View {
                         System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다");
                     } else {
                         System.out.println("[경고] 가맹점 삭제에 실패했습니다.");
-                    }}else {System.out.println("[경고] 존재하지 않는 가맹점 번호입니다.");}
+                    }}else {System.out.println("[경고] 존재하지 않는 가맹점번호입니다.");}
 
                 } else if (choice == 5) {
                     break;
