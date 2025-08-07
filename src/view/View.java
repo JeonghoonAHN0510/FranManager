@@ -309,12 +309,14 @@ public class View {
                         System.out.print("소비자판매가 : ");
                         int proPriceInput = scan.nextInt();
                         // 입력한 값 controller에게 전달 후 결과 받기
-                        boolean result = productController.productUpdate(proNoInput, proNameInput, proSupPriceInput, proPriceInput);
+                        int result = productController.productUpdate(proNoInput, proNameInput, proSupPriceInput, proPriceInput);
                         // 결과에 따른 출력하기
-                        if (result) {
+                        if ( result == 0 ) {
                             System.out.println("[안내] 제품이 정상적으로 수정되었습니다.");
-                        } else {
+                        } else if ( result == 1) {
                             System.out.println("[경고] 제품 수정에 실패하였습니다.");
+                        } else if ( result == 2) {
+                            System.out.println("[경고] 공급가액은 소비자판매가보다 높을 수 없습니다.");
                         } // if end
                     } else {
                         System.out.println("[경고] 올바르지 못한 제품번호입니다.");

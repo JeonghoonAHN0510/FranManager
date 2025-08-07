@@ -209,8 +209,8 @@ public class ProductDao {
     // 기능설명 : [제품번호, 제품명, 공급가액, 소비자판매가]를 입력받아, 해당하는 제품정보를 수정한다.
     // 메소드명 : productUpdate()
     // 매개변수 : ProductDto -> int proNo, String proName, int proSupPrice, int proPrice
-    // 반환타입 : boolean -> true : 수정 성공 / false : 수정 실패
-    public boolean productUpdate( ProductDto productDto ){
+    // 반환타입 : int -> 0 : 수정 성공, 1 : 수정 실패, 2 : 가격 오류
+    public int productUpdate( ProductDto productDto ){
         try {
             // 1. SQL 작성
             String SQL = "update Product set proName = ?, proSupPrice = ?, proPrice = ? where proNo = ?";
@@ -225,12 +225,12 @@ public class ProductDao {
             int count = ps.executeUpdate();
             // 5. SQL 결과 반환
             if ( count == 1 ){
-                return true;
+                return 0;
             } // if end
         } catch ( SQLException e ){
             System.out.println("[product07] SQL 기재 실패");
         } // try-catch end
-        return false;
+        return 1;
     } // func end
 
     // product08. 제품 상태변경

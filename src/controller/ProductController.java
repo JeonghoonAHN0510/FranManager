@@ -97,12 +97,16 @@ public class ProductController {
     // 기능설명 : [제품번호, 제품명, 공급가액, 소비자판매가]를 입력받아, 해당하는 제품정보를 수정한다.
     // 메소드명 : productUpdate()
     // 매개변수 : int proNo, String proName, int proSupPrice, int proPrice
-    // 반환타입 : boolean -> true : 수정 성공 / false : 등록 실패
-    public boolean productUpdate( int proNo, String proName, int proSupPrice, int proPrice ){
+    // 반환타입 : int -> 0 : 수정 성공, 1 : 수정 실패, 2 : 가격 오류
+    public int productUpdate( int proNo, String proName, int proSupPrice, int proPrice ){
+        // 0. 유효성 검사
+        if ( proSupPrice > proPrice ){  // 공급가액이 소비자판매가보다 높다면
+            return 3;
+        } // if end
         // 1. dao에게 전달할 객체 생성하기
         ProductDto productDto = new ProductDto( proNo, proName, proSupPrice, proPrice, true );
         // 2. dao에게 전달 후 결과 받기
-        boolean result = productDao.productUpdate( productDto );
+        int result = productDao.productUpdate( productDto );
         // 3. view에게 결과 전달하기
         return result;
     } // func end
