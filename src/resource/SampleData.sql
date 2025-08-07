@@ -14,7 +14,7 @@ create table Fran(
 
 create table Product(
 	proNo int auto_increment,
-	proName varchar(60) not null, 
+	proName varchar(60) not null,
 	proSupPrice int not null,
 	proPrice int not null,
     proStatus bool not null default true,
@@ -818,7 +818,7 @@ insert into IOLog (proNo, IO, ioQty, ioDate, ioMemo) values
 (20017, 30111, 20, '2025-07-31 15:45:00', '출고 20개'),
 (20018, 0, 48, '2025-07-31 16:50:00', ''),
 -- 8월 1일
-(20001, 0, 50, '2025-08-01 09:10:00', '입고 50개'),
+(20001, 30122, 90, '2025-08-01 09:10:00', '출고 90개'),
 (20001, 30112, 20, '2025-08-01 11:30:00', '출고 20개'),
 (20002, 0, 40, '2025-08-01 10:45:00', ''),
 (20002, 30113, 15, '2025-08-01 13:40:00', '출고 15개'),

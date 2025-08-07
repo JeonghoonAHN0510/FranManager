@@ -145,7 +145,7 @@ public class View {
                     String franAddress = dto.getFranAddress();
                     if( dto.getFranNo() != 0 ){
                     System.out.println("──┤ 선택 가맹점 정보 ├────────────────────────────────────────────────────────────────");
-                    System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
+                    System.out.println("가맹점번호 \t 가맹점명 \t  전화번호 \t   가맹주명 \t 상세주소");
                     System.out.printf("  %d\t    %s\t  %s\t  %s\t  %s\n", franNo2,franName,franCall,franOwner,franAddress);
                     System.out.println("───────────────────────────────────────────────────────────────────────────────────");
                     // 단일 출력
@@ -163,7 +163,7 @@ public class View {
                     // 수정 정보를 controller에 전달
                     boolean result = franController.franUpdate(franNo2, franName2, franAddress2, franCall2, franOwner2);
                     if (result) {
-                        System.out.println("[안내] 가맹점 정보가 정상적으로 수정되었습니다");
+                        System.out.println("[안내] 가맹점 정보가 정상적으로 수정되었습니다.");
                     } else {
                         System.out.println("[경고] 가맹점 수정에 실패했습니다.");
                     }}else {System.out.println("[경고] 존재하지 않는 가맹점번호입니다.");}
@@ -183,7 +183,7 @@ public class View {
                     String franAddress = dto.getFranAddress();
                     if( franNo2 != 0 ){
                     System.out.println("──┤ 선택 가맹점 정보 ├────────────────────────────────────────────────────────────────");
-                    System.out.println("가맹점번호 \t 가맹점명 \t 전화번호 \t 가맹주명 \t 상세주소");
+                    System.out.println("가맹점번호 \t 가맹점명 \t  전화번호 \t   가맹주명 \t 상세주소");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // 단일 조회
                     System.out.printf("  %d\t    %s\t  %s\t  %s\t  %s\n", franNo2,franName,franCall,franOwner,franAddress);
@@ -194,7 +194,7 @@ public class View {
                     // 수정 정보를 controller에 전달
                     boolean result = franController.franDelete(franNo2, franName2, franOwner2);
                     if(result) {
-                        System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다");
+                        System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다.");
                     } else {
                         System.out.println("[경고] 가맹점 삭제에 실패했습니다.");
                     }}else {System.out.println("[경고] 존재하지 않는 가맹점번호입니다.");}
@@ -251,7 +251,6 @@ public class View {
                     } // for end
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                 } else if (choice == 2) {
-                    System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // 사용자로부터 등록할 제품정보 받기
                     System.out.print("제품명 : ");          String proName = scan.next();
                     System.out.print("공급가액 : ");        int proSupPrice = scan.nextInt();
@@ -379,7 +378,7 @@ public class View {
         for (; ; ) {
             System.out.println(
                     "╔═══════════════════════════════════╣ 입출고 관리 ╠══════════════════════════════════╗\n" +
-                            "║             1. 제품별 재고 현황  ▌  2. 입고 등록                                     ║\n" +
+                            "║             1. 입출고 현황 보기  ▌  2. 입고 등록                                     ║\n" +
                             "║             3. 입출고 로그      ▌  4. 입출고 수정  ▌  5. 메인으로 돌아가기              ║\n" +
                             "╚══════════════════════════════════════════════════════════════════════════════════╝");
             System.out.print("\uD83D\uDC49 메뉴 선택 : ");
@@ -390,7 +389,7 @@ public class View {
                     Map<Integer, Integer> ioMap = ioLogController.IOPrint();
 
                     System.out.println("════════════════════════════════════════════════════════════════════════════════════");
-                    System.out.println("제품번호 \t  제품명 \t   재고수량 \t\t\t 비고");
+                    System.out.println("제품번호 \t  제품명 \t   입출고수량 \t\t\t 비고");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                     // [3.1.2] ioMap에 대한 반복문
