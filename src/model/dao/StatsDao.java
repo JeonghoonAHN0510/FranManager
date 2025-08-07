@@ -33,7 +33,7 @@ public class StatsDao {
         ArrayList<StatsDto> statsDtos = new ArrayList<>();  // 반환할 빈 배열 생성
         try {
             // 1. SQL 작성
-            String SQL = "select proNo, sum(orderPrice * orderQty) totalPrice from OrderLog group by proNo order by totalPrice desc limit 10";
+            String SQL = "select proNo, sum(orderPrice * orderQty) totalPrice from OrderLog where orderDate >= now() - interval 30 day group by proNo order by totalPrice desc limit 10;";
             // 2. SQL 기재
             PreparedStatement ps = conn.prepareStatement( SQL );
             // 3. SQL 매개변수 대입
@@ -65,7 +65,8 @@ public class StatsDao {
         ArrayList<StatsDto> statsDtos = new ArrayList<>();  // 반환할 빈 배열 생성
         try {
             // 1. SQL 작성
-            String SQL = "select substring_index(F.franAddress, ' ', 2) region, sum(O.orderPrice * O.orderQty) totalPrice from Fran F inner join OrderLog O on F.franNo = O.franNo group by region order by totalPrice desc limit 10";
+            // where orderDate >= now() - interval 30 day -> 현재 시간으로부터 30일까지 데이터뽑기
+            String SQL = "select substring_index(F.franAddress, ' ', 2) region, sum(O.orderPrice * O.orderQty) totalPrice from Fran F inner join OrderLog O on F.franNo = O.franNo where orderDate >= now() - interval 30 day group by region order by totalPrice desc limit 10";
             // 2. SQL 기재
             PreparedStatement ps = conn.prepareStatement( SQL );
             // 3. SQL 매개변수 대입
