@@ -163,7 +163,7 @@ public class View {
                     // 수정 정보를 controller에 전달
                     boolean result = franController.franUpdate(franNo2, franName2, franAddress2, franCall2, franOwner2);
                     if (result) {
-                        System.out.println("[안내] 가맹점 정보가 정상적으로 수정되었습니다");
+                        System.out.println("[안내] 가맹점 정보가 정상적으로 수정되었습니다.");
                     } else {
                         System.out.println("[경고] 가맹점 수정에 실패했습니다.");
                     }}else {System.out.println("[경고] 존재하지 않는 가맹점번호입니다.");}
@@ -194,7 +194,7 @@ public class View {
                     // 수정 정보를 controller에 전달
                     boolean result = franController.franDelete(franNo2, franName2, franOwner2);
                     if(result) {
-                        System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다");
+                        System.out.println("[안내] 가맹점이 정상적으로 삭제되었습니다.");
                     } else {
                         System.out.println("[경고] 가맹점 삭제에 실패했습니다.");
                     }}else {System.out.println("[경고] 존재하지 않는 가맹점번호입니다.");}
