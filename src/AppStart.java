@@ -1,8 +1,4 @@
-import Controller.FranController;
-import Model.DTO.FranDto;
-import View.View;
-
-import java.util.ArrayList;
+import view.View;
 
 public class AppStart {
     public static void main(String[] args) {

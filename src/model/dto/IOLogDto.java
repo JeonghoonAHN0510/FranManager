@@ -1,4 +1,4 @@
-package Model.DTO;
+package model.dto;
 
 public class IOLogDto {
     // 1. 멤버변수

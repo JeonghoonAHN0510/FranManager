@@ -1,6 +1,6 @@
-package Model.DAO;
+package model.dao;
 
-import Model.DTO.ReviewPrintDto;
+import model.dto.ReviewPrintDto;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

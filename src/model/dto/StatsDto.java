@@ -1,4 +1,4 @@
-package Model.DTO;
+package model.dto;
 
 public class StatsDto {
     // 1. 멤버변수

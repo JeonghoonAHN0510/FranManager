@@ -1,4 +1,4 @@
-package Resource;
+package resource;
 
 public class AsciiArt {
     public static void main(String[] args) {

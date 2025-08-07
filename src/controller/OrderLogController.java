@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Model.DAO.OrderLogDao;
-import Model.DTO.OrderLogDto;
+import model.dao.OrderLogDao;
+import model.dto.OrderLogDto;
 
 import java.util.ArrayList;
 

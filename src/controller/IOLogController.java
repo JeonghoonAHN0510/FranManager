@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Model.DAO.IOLogDao;
-import Model.DTO.IOLogDto;
+import model.dao.IOLogDao;
+import model.dto.IOLogDto;
 
 import java.util.ArrayList;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package Model.DTO;
+package model.dto;
 
 public class ReviewPrintDto {
     // 1. 멤버변수

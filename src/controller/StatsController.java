@@ -1,7 +1,7 @@
-package Controller;
+package controller;
 
-import Model.DAO.StatsDao;
-import Model.DTO.StatsDto;
+import model.dao.StatsDao;
+import model.dto.StatsDto;
 
 import java.util.ArrayList;
 
