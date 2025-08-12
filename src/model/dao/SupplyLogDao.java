@@ -5,26 +5,13 @@ import model.dto.SupplyLogDto;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class SupplyLogDao {
+public class SupplyLogDao extends SuperDao {
     // 싱글톤
-    private SupplyLogDao(){connect();}
+    private SupplyLogDao(){ }
     private static final SupplyLogDao instance = new SupplyLogDao();
     public static SupplyLogDao getInstance(){
         return instance;
     }
-    // (*) DB 연동
-    private String db_url = "jdbc:mysql://localhost:3306/FranManager";
-    private String db_user = "root";
-    private String db_password = "1234";
-    private Connection conn;
-    private void connect(){
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection( db_url , db_user , db_password );
-        }catch ( Exception e ){
-            System.out.println( e );
-        } // try-catch end
-    } // func end
 
     // supply01. 발주요청 전체조회
     // 기능설명 : DB에 저장된 요청대기 중인 발주기록울 조회한다. { 발주번호, 가맹점명, 상품명, 주문수량, 메모 }

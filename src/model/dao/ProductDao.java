@@ -5,11 +5,9 @@ import model.dto.ProductDto;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ProductDao {
+public class ProductDao extends SuperDao implements Change_Interface<ProductDto>, Check_Interface<ProductDto> {
     // 싱글톤
-    private ProductDao() {
-        connect();
-    }
+    private ProductDao() { }
 
     private static final ProductDao instance = new ProductDao();
 
@@ -17,26 +15,12 @@ public class ProductDao {
         return instance;
     }
 
-    // (*) DB 연동
-    private String db_url = "jdbc:mysql://localhost:3306/FranManager";
-    private String db_user = "root";
-    private String db_password = "1234";
-    private Connection conn;
-
-    private void connect() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(db_url, db_user, db_password);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    } // func end
-
     // [product01] 제품번호 반환 / toIntproNoChange()
     // 매개변수 : String proName
     // 반환타입 : int
     // 반환 : proNo
-    public int toIntproNoChange(String proName) {
+    @Override
+    public int ChangeToNo(String proName) {
         int proNo = 0;
         try {
             // [1.1] SQL 작성
@@ -63,7 +47,8 @@ public class ProductDao {
     // 메소드명 : toProNameChange()
     // 매개변수 : int proNo
     // 반환타입 : String
-    public String toProNameChange(int proNo) {
+    @Override
+    public String ChangeToName(int proNo) {
         String proName = "";        // 반환할 빈 String 생성
         try {
             // 1. SQL 작성 : 매개변수로 받은 proNo가 제품번호인 제품명을 select
@@ -88,7 +73,8 @@ public class ProductDao {
     // [product03] 제품번호 유효성 검사 / proNoCheck()
     // 매개변수 : int proNo
     // 반환타입 : boolean
-    public boolean proNoCheck(int proNo) {
+    @Override
+    public boolean CheckNo(int proNo) {
         boolean result = false;
         try {
             // [3.1] SQL 작성

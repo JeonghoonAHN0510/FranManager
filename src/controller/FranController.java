@@ -40,7 +40,7 @@ public class FranController {
             // 데이터 객체로 만들기
             FranDto franDto = new FranDto(0, franName, franAddress, franCall, franOwner, false);
             // 객체화 된 dto를 dao 에게 전달 후 결과를 받는다.
-            boolean result = franDao.franAdd(franDto);
+            boolean result = franDao.post(franDto);
             // 결과를 view에게 리턴
             return result;
 
@@ -49,7 +49,7 @@ public class FranController {
     // fran02 가맹점 전체조회기능 구현 //
     public ArrayList<FranDto> franPrint(){
         // DAO 에게 전달후 결과를 받는다.
-        ArrayList<FranDto> result = franDao.franPrint();
+        ArrayList<FranDto> result = franDao.getAll();
         // 결과를 view에게 리턴
         return result;
     } // func end
@@ -57,7 +57,7 @@ public class FranController {
     // fran03 가맹점 단일조회기능 구현
     public FranDto oneFranPrint( int franNo ){
         // DAO 에게 전달후 결과를 받는다.
-        FranDto franDto = franDao.oneFranPrint(franNo);
+        FranDto franDto = franDao.getOne(franNo);
         return franDto;
     } // func end
 
@@ -87,7 +87,7 @@ public class FranController {
         // DTO 객체 생성
         FranDto franDto = new FranDto( franNo , franName , franAddress , franCall , franOwner , false );
         // DAO 에 전달
-        result = franDao.franUpdate(franDto);
+        result = franDao.update(franDto);
         // 결과 반환
         return result;
     }
@@ -98,7 +98,7 @@ public class FranController {
         // DTO 객체 생성
            FranDto franDto = new FranDto( franNo, franName , "", "",franOwer,true );
         // DAO 에 전달
-        result = franDao.franDelete(franDto);
+        result = franDao.delete(franDto);
         // 결과 반환
         return result;
 
@@ -112,7 +112,7 @@ public class FranController {
     public String toFranNameChange( int franNo ){
         // 1. (필요 시) 유효성 검사
         // 2. dao에게 전달 후 결과 받기
-        String franName = franDao.toFranNameChange( franNo );
+        String franName = franDao.ChangeToName( franNo );
         // 3. view에게 결과 전달하기
         return franName;
     } // func end
@@ -125,7 +125,7 @@ public class FranController {
     public int toFranNoChange( String franName ){
         // 1. (필요 시) 유효성 검사
         // 2. dao에게 전달 후 결과 받기
-        int franNo = franDao.toFranNoChange( franName );
+        int franNo = franDao.ChangeToNo( franName );
         // 3. view에게 결과 전달하기
         return franNo;
     } // func end
@@ -135,7 +135,7 @@ public class FranController {
     // 반환 : boolean
     public boolean franNoCheck(int franNo){
         // [8.1] dao 메소드 실행
-        boolean result = FranDao.getInstance().franNoCheck(franNo);
+        boolean result = franDao.CheckNo(franNo);
         // [8.2] 결과 반환
         return result;
     } // func end

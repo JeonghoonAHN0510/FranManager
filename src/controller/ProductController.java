@@ -23,7 +23,7 @@ public class ProductController {
     // 반환 : proNo
     public int toIntproNoChange(String proName) {
         // [1.1] dao의 함수 실행
-        int result = productDao.toIntproNoChange(proName);
+        int result = productDao.ChangeToNo(proName);
         // [1.2] 결과를 view로 반환
         return result;
     } // func end
@@ -36,7 +36,7 @@ public class ProductController {
     public String toProNameChange( int proNo ){
         // 1. (필요 시) 유효성 검사
         // 2. dao에게 전달 후 결과 받기
-        String proName = productDao.toProNameChange( proNo );
+        String proName = productDao.ChangeToName( proNo );
         // 3. view에게 결과 전달하기
         return proName;
     } // func end
@@ -46,7 +46,7 @@ public class ProductController {
     // 반환타입 : boolean
     public boolean proNoCheck(int proNo){
         // [3.1] dao에 전달
-        boolean result = productDao.proNoCheck(proNo);
+        boolean result = productDao.CheckNo(proNo);
         // [3.2] 결과 반환
         return result;
     }// func end

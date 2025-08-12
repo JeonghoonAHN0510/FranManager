@@ -5,28 +5,19 @@ import model.dto.FranDto;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class FranDao {
+public class FranDao extends SuperDao implements CRUD_Interface<FranDto>, Change_Interface<FranDto>, Check_Interface<FranDto> {
     // 싱글톤
-    private FranDao(){connect();}
+    private FranDao(){}
     private static final FranDao instance = new FranDao();
     public static FranDao getInstance(){
         return instance;
     }
-    // (*) DB 연동
-    private String db_url = "jdbc:mysql://localhost:3306/FranManager";
-    private String db_user = "root";
-    private String db_password = "1234";
-    private Connection conn;
-    private void connect(){
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection( db_url , db_user , db_password );
-        }catch (Exception e ){ System.out.println(e);   }
-    }
 
     // fran01 가맹점 추가기능 구현
-    public boolean franAdd( FranDto franDto){
-        try{// SQl 작성
+    @Override
+    public boolean post( FranDto franDto ) {
+        try{
+            // SQl 작성
             String sql = "Insert into Fran ( franNo, franName , franAddress , franCall , franOwner , franStatus ) " +
                     "values ( null , ? , ? , ? , ? , ? )";
             // SQL 기재
@@ -40,14 +31,16 @@ public class FranDao {
             // SQL 실행
             int count = ps.executeUpdate();
             // SQL 결과에 따른 로직 확인
-            if( count >=1 ) return true; // 1개 이상이면 저장 성공
-            return false; // 1개 이상이 아니면 저장 실패
-        }catch (Exception e){System.out.println(e);}
+            if ( count ==1 ) return true;
+        }catch (Exception e){
+            System.out.println(e);
+        }
         return false; // 예외 발생 시 저장 실패
     } // func end
 
     // fran02 가맹점 전체조회기능 구현
-    public ArrayList<FranDto> franPrint(){
+    @Override
+    public ArrayList<FranDto> getAll() {
         ArrayList<FranDto> list = new ArrayList<>();
         try{// SQL 작성
             String sql = "select f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner, ifnull(SUM(orderQty * orderPrice), 0) AS P from fran f left join OrderLog o on f.franNo=o.franNo where franStatus=0 group by f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner order by franNo asc;";
@@ -75,7 +68,8 @@ public class FranDao {
     } // func end
 
     // fran03 가맹점 단일조회기능 구현
-    public FranDto oneFranPrint( int franNo ){
+    @Override
+    public FranDto getOne( int franNo ) {
         FranDto franDto = new FranDto();
             // SQL 작성
         try { String sql = "select franNo, franName, franAddress, franCall, franOwner from Fran where franStatus = false and franNo = ?";
@@ -98,33 +92,33 @@ public class FranDao {
         return franDto;
     } // func end
 
-
-
-
     // fran04 가맹점 수정기능 구현
-    public boolean franUpdate( FranDto franDto ){
-        // SQL 작성
-        try{String sql = "update fran set franName = ? , franAddress = ? , franCall = ? , franOwner = ? , franStatus = ? where franNo = ? ";
-        // SQL 기재
+    @Override
+    public boolean update( FranDto franDto ){
+        try{
+            // SQL 작성
+            String sql = "update fran set franName = ? , franAddress = ? , franCall = ? , franOwner = ? , franStatus = ? where franNo = ? ";
+            // SQL 기재
             PreparedStatement ps = conn.prepareStatement(sql);
-        // SQL 매개변수 대입 6개
+            // SQL 매개변수 대입 6개
             ps.setString(1,franDto.getFranName());
             ps.setString(2,franDto.getFranAddress());
             ps.setString(3,franDto.getFranCall());
             ps.setString(4,franDto.getFranOwner());
             ps.setBoolean(5,franDto.isFranStatus());
             ps.setInt(6,franDto.getFranNo());
-        // SQL 실행
+            // SQL 실행
             int count = ps.executeUpdate();
-        // SQL 결과에 따른 로직 확인
+            // SQL 결과에 따른 로직 확인
             if( count == 1 ) return true; // 수정 결과가 1개이면 수정성공
             return false; // 수정 결과가 1이 아니면 수정 실패
         }catch (Exception e){System.out.println("[경고] 올바르지 못한 입력입니다.");}
         return false; // 예외발생시 수정실패
-    }
+    } // func end
 
     // fran05 가맹점 삭제기능 구현
-    public boolean franDelete( FranDto frandto) {
+    @Override
+    public boolean delete( FranDto frandto ) {
         // SQL 작성
         try {
             String sql = "update fran set franStatus = true where franStatus = false and franNo = ? and franName = ? and franOwner = ?";
@@ -143,14 +137,15 @@ public class FranDao {
             System.out.println("[경고] 올바르지 못한 입력입니다.");
             return false; // 예외 발생시 삭제 실패
         } // cat end
-    } // func end
+    }
 
     // fran06. 가맹점명 반환(번호 > 이름)
     // 기능설명 : [가맹점번호]를 매개변수로 받아, 해당하는 가맹점명을 반환한다.
     // 메소드명 : toFranNameChange()
     // 매개변수 : int franNo
     // 반환타입 : String
-    public String toFranNameChange( int franNo ){
+    @Override
+    public String ChangeToName( int franNo ){
         String franName = "";       // 반환할 빈 String 생성
         try {
             // 1. SQL 작성 : 매개변수로 받은 franNo가 가맹점번호인 가맹점명을 select
@@ -177,7 +172,8 @@ public class FranDao {
     // 메소드명 : toFranNoChange()
     // 매개변수 : String franName
     // 반환타입 : int
-    public int toFranNoChange( String franName ){
+    @Override
+    public int ChangeToNo( String franName ){
         int franNo = 0;         // 반환할 빈 int 생성
         try {
             // 1. SQL 작성
@@ -201,7 +197,8 @@ public class FranDao {
     // [fran08] 가맹점번호 유효성검사 / franNoCheck()
     // 매개변수 : int franNo
     // 반환 : boolean
-    public boolean franNoCheck(int franNo){
+    @Override
+    public boolean CheckNo(int franNo){
         boolean result = false;
         try {
             // [8.1] SQL 작성

@@ -5,24 +5,14 @@ import model.dto.StatsDto;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class StatsDao {
+public class StatsDao extends SuperDao {
     // 싱글톤
-    private StatsDao(){connect();}
+    private StatsDao(){ }
     private static final StatsDao instance = new StatsDao();
     public static StatsDao getInstance(){
         return instance;
     }
-    // (*) DB 연동
-    private String db_url = "jdbc:mysql://localhost:3306/FranManager";
-    private String db_user = "root";
-    private String db_password = "1234";
-    private Connection conn;
-    private void connect(){
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection( db_url , db_user , db_password );
-        }catch (Exception e ){ System.out.println(e); }
-    } // func end
+
 
     // stats01. 상품별 통계 조회
     // 기능설명 : DB에 저장된 상품별 최근30일 판매금액의 상위 10개를 판매금액 기준 내림차순으로 출력한다.
