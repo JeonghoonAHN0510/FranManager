@@ -1,9 +1,9 @@
 package model.dao;
 
 import model.dto.OrderLogDto;
+import util.CustomList;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class OrderLogDao extends SuperDao {
     // 싱글톤
@@ -14,8 +14,8 @@ public class OrderLogDao extends SuperDao {
     }
 
     // order01 판매현황 조회기능 구현
-    public ArrayList<OrderLogDto> saleStatsPrint(){
-        ArrayList<OrderLogDto> list = new ArrayList<>();
+    public CustomList<OrderLogDto> saleStatsPrint(){
+        CustomList<OrderLogDto> list = new CustomList<>();
         try{// SQL 작성
                 String sql = "select * from orderlog;";
             // SQL 기재
@@ -42,9 +42,9 @@ public class OrderLogDao extends SuperDao {
     // 기능설명 : DB에 저장된 판매 현황을 페이지네이션하여 [페이지 번호]를 입력받아 해당 페이지를 조회하여 출력한다.
     // 메소드명 : orderLogPage()
     // 매개변수 : int page
-    // 반환타입 : ArrayList<OrderLogDto>
-    public ArrayList<OrderLogDto> orderLogPage( int page ){
-        ArrayList<OrderLogDto> orderLogDtos = new ArrayList<>();        // 반환할 빈 배열 선언
+    // 반환타입 : CustomList<OrderLogDto>
+    public CustomList<OrderLogDto> orderLogPage( int page ){
+        CustomList<OrderLogDto> orderLogDtos = new CustomList<>();        // 반환할 빈 배열 선언
         try {
             // 1. SQL 작성
             String SQL = "select * from OrderLog limit 50 offset ?";

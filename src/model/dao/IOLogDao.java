@@ -1,12 +1,10 @@
 package model.dao;
 
 import model.dto.IOLogDto;
+import util.CustomList;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -54,11 +52,11 @@ public class IOLogDao extends SuperDao {
 
     // [IOLog02] 재고로그조회 / IOLogPrint()
     // 매개변수 : -
-    // 반환타입 : ArrayList<IOLogDto>
-    // 반환 : ArrayList<IOLogDto> 출력
-    public ArrayList<IOLogDto> IOLogPrint() {
-        // [2.1] ArrayList 선언
-        ArrayList<IOLogDto> ioLogDtoList = new ArrayList<>();
+    // 반환타입 : CustomList<IOLogDto>
+    // 반환 : CustomList<IOLogDto> 출력
+    public CustomList<IOLogDto> IOLogPrint() {
+        // [2.1] CustomList 선언
+        CustomList<IOLogDto> ioLogDtoList = new CustomList<>();
         try {
             // [2.2] SQL 작업
             // [2.2.1] SQL 작성

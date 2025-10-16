@@ -2,8 +2,8 @@ package controller;
 
 import model.dao.IOLogDao;
 import model.dto.IOLogDto;
+import util.CustomList;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class IOLogController {
@@ -37,11 +37,11 @@ public class IOLogController {
 
     // [IOLog02] 재고로그조회 / IOLogPrint()
     // 매개변수 : -
-    // 반환타입 : ArrayList<IOLogDto>
-    // 반환 : ArrayList<IOLogDto> 출력
-    public ArrayList<IOLogDto> IOLogPrint() {
+    // 반환타입 : CustomList<IOLogDto>
+    // 반환 : CustomList<IOLogDto> 출력
+    public CustomList<IOLogDto> IOLogPrint() {
         // [2.1] dao 실행
-        ArrayList<IOLogDto> ioLogDtoList = ioLogDao.IOLogPrint();
+        CustomList<IOLogDto> ioLogDtoList = ioLogDao.IOLogPrint();
 
         // [2.2] 결과 반환
         return ioLogDtoList;

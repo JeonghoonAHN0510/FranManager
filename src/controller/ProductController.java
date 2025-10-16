@@ -3,8 +3,8 @@ package controller;
 
 import model.dao.ProductDao;
 import model.dto.ProductDto;
+import util.CustomList;
 
-import java.util.ArrayList;
 
 public class ProductController {
     // 싱글톤
@@ -55,10 +55,10 @@ public class ProductController {
     // 기능설명 : DB에 저장된 모든 제품을 조회하여 출력한다.
     // 메소드명 : productAllPrint()
     // 매개변수 : X
-    // 반환타입 : ArrayList<ProductDto>
-    public ArrayList<ProductDto> productAllPrint(){
+    // 반환타입 : CustomList<ProductDto>
+    public CustomList<ProductDto> productAllPrint(){
         // 1. dao에게 결과 받기
-        ArrayList<ProductDto> productDtos = productDao.productAllPrint();
+        CustomList<ProductDto> productDtos = productDao.productAllPrint();
         // 2. view에게 결과 전달하기
         return productDtos;
     } // func end

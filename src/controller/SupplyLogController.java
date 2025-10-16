@@ -2,8 +2,8 @@ package controller;
 
 import model.dao.SupplyLogDao;
 import model.dto.SupplyLogDto;
+import util.CustomList;
 
-import java.util.ArrayList;
 
 public class SupplyLogController {
     // 싱글톤
@@ -20,11 +20,11 @@ public class SupplyLogController {
     // 기능설명 : DB에 저장된 요청대기 중인 발주기록울 조회한다. { 발주번호, 가맹점명, 상품명, 주문수량, 메모 }
     // 메소드명 : supplyPrintAll()
     // 매개변수 : X
-    // 반환타입 : ArrayList<SupplyLogDto>
-    public ArrayList<SupplyLogDto> supplyPrintAll(){
+    // 반환타입 : CustomList<SupplyLogDto>
+    public CustomList<SupplyLogDto> supplyPrintAll(){
         // 1. (필요 시) 유효성 검사
         // 2. dao로부터 반환받기
-        ArrayList<SupplyLogDto> supplyLogDtos = supplyLogDao.supplyPrintAll();
+        CustomList<SupplyLogDto> supplyLogDtos = supplyLogDao.supplyPrintAll();
         // 3. view에게 전달하기
         return supplyLogDtos;
     } // func end

@@ -1,9 +1,9 @@
 package model.dao;
 
 import model.dto.ProductDto;
+import util.CustomList;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class ProductDao extends SuperDao implements Change_Interface<ProductDto>, Check_Interface<ProductDto> {
     // 싱글톤
@@ -101,9 +101,9 @@ public class ProductDao extends SuperDao implements Change_Interface<ProductDto>
     // 기능설명 : DB에 저장된 모든 제품을 조회하여 출력한다.
     // 메소드명 : productAllPrint()
     // 매개변수 : X
-    // 반환타입 : ArrayList<ProductDto>
-    public ArrayList<ProductDto> productAllPrint(){
-        ArrayList<ProductDto> productDtos = new ArrayList<>();  // 반환할 빈 배열 생성
+    // 반환타입 : CustomList<ProductDto>
+    public CustomList<ProductDto> productAllPrint(){
+        CustomList<ProductDto> productDtos = new CustomList<>();  // 반환할 빈 배열 생성
         try {
             // 1. SQL 작성
             String SQL = "select * from Product";

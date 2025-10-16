@@ -6,9 +6,9 @@ import model.dto.*;
 import controller.IOLogController;
 import controller.ProductController;
 import controller.SupplyLogController;
+import util.CustomList;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
@@ -95,9 +95,10 @@ public class View {
                 if (choice == 1) {
                     System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                     System.out.println("가맹점번호 \t 가맹점명 \t\t전화번호 \t\t가맹주명  \t매출액 \t 상세주소");
-                    ArrayList<FranDto> result = franController.franPrint();
+                    CustomList<FranDto> result = franController.franPrint();
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
-                    for (FranDto dto : result) {
+                    for (int i = 0; i < result.size(); i++) {
+                        FranDto dto = result.get(i);
                         int totalPrice = dto.getP();
                         // Price들 천 단위 콤마찍기
                         String price = nf.format(totalPrice);
@@ -229,9 +230,10 @@ public class View {
                     System.out.println("제품번호 \t 제품명 \t\t\t공급가액 \t   소비자판매가 \t 판매여부");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // Controller로부터 결과 받기
-                    ArrayList<ProductDto> productDtos = productController.productAllPrint();
+                    CustomList<ProductDto> productDtos = productController.productAllPrint();
                     // 배열 하나씩 순회하면서 출력하기
-                    for (ProductDto productDto : productDtos) {
+                    for (int i = 0; i < productDtos.size(); i++) {
+                        ProductDto productDto = productDtos.get(i);
                         // 값 하나씩 꺼내기
                         int proNo = productDto.getProNo();
                         String proName = productDto.getProName();
@@ -439,10 +441,11 @@ public class View {
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                     // [3.3.1] IOLogController, IOLogPrint() 실행
-                    ArrayList<IOLogDto> ioLogDtoList = ioLogController.IOLogPrint();
+                    CustomList<IOLogDto> ioLogDtoList = ioLogController.IOLogPrint();
 
                     // [3.3.2] 반복문
-                    for (IOLogDto ioLogDto : ioLogDtoList) {
+                    for (int i = 0; i < ioLogDtoList.size(); i++) {
+                        IOLogDto ioLogDto = ioLogDtoList.get(i);
                         // [3.3.3] 입고·출고 text로 변환
                         String io = "";
                         if (ioLogDto.getIO() == 0) {
@@ -547,8 +550,9 @@ public class View {
                     System.out.println("발주번호 \t  가맹점명 \t\t 제품명 \t    주문수량 \t\t 메모");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // controller에게 결과값 받기
-                    ArrayList<SupplyLogDto> supplyLogDtos = supplyLogController.supplyPrintAll();
-                    for (SupplyLogDto supplyLogDto : supplyLogDtos) {      // 리스트를 하나씩 순회하면서
+                    CustomList<SupplyLogDto> supplyLogDtos = supplyLogController.supplyPrintAll();
+                    for (int i = 0; i < supplyLogDtos.size(); i++) {      // 리스트를 하나씩 순회하면서
+                        SupplyLogDto supplyLogDto = supplyLogDtos.get(i);
                         // 원하는 값 꺼내오기
                         int supNo = supplyLogDto.getSupNo();
                         int franNo = supplyLogDto.getFranNo();
@@ -677,10 +681,11 @@ public class View {
             System.out.println("판매번호 \t 가맹점명 \t 제품명 \t 판매수량 \t 날짜·시간");
             System.out.println("────────────────────────────────────────────────────────────────────────────────────");
             // controller에게 page 전달 후 결과 받기
-            ArrayList<OrderLogDto> orderLogDtos = orderLogController.orderLogPage( page );
+            CustomList<OrderLogDto> orderLogDtos = orderLogController.orderLogPage( page );
             // 페이지 유효성 검사
             // 배열 하나씩 순회하기
-            for ( OrderLogDto orderLogDto : orderLogDtos ){
+            for (int i = 0; i < orderLogDtos.size(); i++) {
+                OrderLogDto orderLogDto = orderLogDtos.get(i);
                 // 배열에서 값 하나씩 꺼내기
                 int orderNo = orderLogDto.getOrderNo();
                 int franNo = orderLogDto.getFranNo();
@@ -715,7 +720,7 @@ public class View {
                     System.out.println("통계번호 \t 제품명 \t 판매금액 ");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // controller로부터 통계자료 받기
-                    ArrayList<StatsDto> statsDtos = statsController.proStatsPrint();
+                    CustomList<StatsDto> statsDtos = statsController.proStatsPrint();
                     for (int i = 0; i < statsDtos.size(); i++) {   // 통계자료 하나씩 순회하기
                         StatsDto statsDto = statsDtos.get(i);
                         // 통계자료에서 하나씩 값 꺼내기
@@ -736,7 +741,7 @@ public class View {
                     System.out.println("통계번호 \t 지역 \t 매출액 ");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // controoler로부터 통계자료 받기
-                    ArrayList<StatsDto> statsDtos = statsController.regionStatsPrint();
+                    CustomList<StatsDto> statsDtos = statsController.regionStatsPrint();
                     for (int i = 0; i < statsDtos.size(); i++) {   // 통계자료 하나씩 순회하기
                         StatsDto statsDto = statsDtos.get(i);
                         // 통계자료에서 하나씩 값 꺼내기
@@ -754,7 +759,7 @@ public class View {
                     System.out.println("\t   시간대 \t\t  매출액 ");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                     // controller로부터 통계자료 받기
-                    ArrayList<StatsDto> statsDtos = statsController.hourStatsPrint();
+                    CustomList<StatsDto> statsDtos = statsController.hourStatsPrint();
                     for (int i = 0; i < statsDtos.size(); i++) {   // 통계자료 하나씩 순회하기
                         StatsDto statsDto = statsDtos.get(i);
                         // 통계자료에서 값 꺼내기
@@ -797,14 +802,15 @@ public class View {
             try {
                 if (choice == 1) { // 7.1. 리뷰 전체 조회
                     // [7.1.1] reviewController func 실행
-                    ArrayList<ReviewPrintDto> reviewPrintList = reviewController.reviewPrint();
+                    CustomList<ReviewPrintDto> reviewPrintList = reviewController.reviewPrint();
 
                     System.out.println("════════════════════════════════════════════════════════════════════════════════════");
                     System.out.println("리뷰번호 \t 판매번호 \t 제품명 \t 가맹점명 \t 리뷰");
                     System.out.println("────────────────────────────────────────────────────────────────────────────────────");
 
                     // [7.1.2] 반복문
-                    for (ReviewPrintDto reviewPrintDto : reviewPrintList) {
+                    for (int i = 0; i < reviewPrintList.size(); i++) {
+                        ReviewPrintDto reviewPrintDto = reviewPrintList.get(i);
                         // [7.1.3] franNO > franName 변환
                         String franName = franController.toFranNameChange(reviewPrintDto.getFranNo());
 
@@ -832,12 +838,13 @@ public class View {
                         System.out.println("[경고] 존재하지 않는 가맹점입니다.");
                     } else {
                         // [7.2.2] reviewController func 실행
-                        ArrayList<ReviewPrintDto> reviewPrintList = reviewController.franReviewPrint(franNo);
+                        CustomList<ReviewPrintDto> reviewPrintList = reviewController.franReviewPrint(franNo);
                         System.out.println("──┤ 선택 가맹점 리뷰 ├────────────────────────────────────────────────────────────────");
                         System.out.println("리뷰번호 \t 판매번호 \t 제품명 \t 가맹점명 \t 리뷰");
                         System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // [7.1.2] 반복문
-                        for (ReviewPrintDto reviewPrintDto : reviewPrintList) {
+                        for (int i = 0; i < reviewPrintList.size(); i++) {
+                            ReviewPrintDto reviewPrintDto = reviewPrintList.get(i);
                             System.out.printf("%d \t %d \t %s \t %s \t %s \n",
                                     reviewPrintDto.getReviewNo(),
                                     reviewPrintDto.getOrderNo(),
@@ -861,12 +868,13 @@ public class View {
                     if (check == false) {
                     } else {
                         // [7.3.2] reviewController func 실행
-                        ArrayList<ReviewPrintDto> reviewPrintList = reviewController.proReviewPrint(proName);
+                        CustomList<ReviewPrintDto> reviewPrintList = reviewController.proReviewPrint(proName);
                         System.out.println("──┤ 선택 제품 리뷰 ├──────────────────────────────────────────────────────────────────");
                         System.out.println("리뷰번호 \t 판매번호 \t 제품명 \t 가맹점명 \t 리뷰");
                         System.out.println("────────────────────────────────────────────────────────────────────────────────────");
                         // [7.3.3] 반복문
-                        for (ReviewPrintDto reviewPrintDto : reviewPrintList) {
+                        for (int i = 0; i < reviewPrintList.size(); i++) {
+                            ReviewPrintDto reviewPrintDto = reviewPrintList.get(i);
                             // [7.1.3] franNO > franName 변환
                             String franName = franController.toFranNameChange(reviewPrintDto.getFranNo());
 

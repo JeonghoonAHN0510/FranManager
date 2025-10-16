@@ -1,12 +1,10 @@
 package model.dao;
 
 import model.dto.ReviewPrintDto;
+import util.CustomList;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 public class ReviewDao extends SuperDao {
     // 싱글톤
@@ -22,10 +20,10 @@ public class ReviewDao extends SuperDao {
 
     // [review01] 리뷰전체조회 / reviewPrint()
     // 매개변수 : -
-    // 반환타입 : ArrayList<reviewPrintDto>
-    // 반환 : ArrayList<reviewPrintDto> 전체 출력
-    public ArrayList<ReviewPrintDto> reviewPrint() {
-        ArrayList<ReviewPrintDto> reviewPrintList = new ArrayList<>();
+    // 반환타입 : CustomList<reviewPrintDto>
+    // 반환 : CustomList<reviewPrintDto> 전체 출력
+    public CustomList<ReviewPrintDto> reviewPrint() {
+        CustomList<ReviewPrintDto> reviewPrintList = new CustomList<>();
         try {
             // [1.1] SQL 작성
             String sql = "select review.reviewNo, review.orderNo, product.proName, orderlog.franNo, review.review from review join orderlog on (review.orderNo = orderlog.orderNo) inner join product on (product.proNo = orderlog.proNo) order by reviewNo desc;";
@@ -58,10 +56,10 @@ public class ReviewDao extends SuperDao {
 
     // [review02] 가맹점리뷰조회 / franReviewPrint()
     // 매개변수 : int franNo
-    // 반환타입 : ArrayList<reviewPrintDto>
-    // 반환 : ArrayList<reviewPrintDto> 출력
-    public ArrayList<ReviewPrintDto> franReviewPrint(int franNo) {
-        ArrayList<ReviewPrintDto> reviewPrintList = new ArrayList<>();
+    // 반환타입 : CustomList<reviewPrintDto>
+    // 반환 : CustomList<reviewPrintDto> 출력
+    public CustomList<ReviewPrintDto> franReviewPrint(int franNo) {
+        CustomList<ReviewPrintDto> reviewPrintList = new CustomList<>();
         try {
             // [2.1] SQL 작성
             String sql = "select review.reviewNo, review.orderNo, product.proName, orderlog.franNo, review.review from review join orderlog on (review.orderNo = orderlog.orderNo) inner join product on (product.proNo = orderlog.proNo) where franNo = ? order by reviewNo desc;";
@@ -95,10 +93,10 @@ public class ReviewDao extends SuperDao {
 
     // [review03] 상품별리뷰 / proReviewPrint()
     // 매개변수 : String proName
-    // 반환타입 : ArrayList<reviewPrintDto>
-    // 반환 : ArrayList<reviewPrintDto> 출력
-    public ArrayList<ReviewPrintDto> proReviewPrint(String proName) {
-        ArrayList<ReviewPrintDto> reviewPrintList = new ArrayList<>();
+    // 반환타입 : CustomList<reviewPrintDto>
+    // 반환 : CustomList<reviewPrintDto> 출력
+    public CustomList<ReviewPrintDto> proReviewPrint(String proName) {
+        CustomList<ReviewPrintDto> reviewPrintList = new CustomList<>();
         try {
             // [3.1] SQL 작성
             String sql = "select review.reviewNo, review.orderNo, product.proName, orderlog.franNo, review.review from review join orderlog on (review.orderNo = orderlog.orderNo) inner join product on (product.proNo = orderlog.proNo) where proName = ? order by reviewNo desc;";

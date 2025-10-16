@@ -1,6 +1,6 @@
 package model.dao;
 
-import java.util.ArrayList;
+import util.CustomList;
 
 public interface CRUD_Interface<T> {
 
@@ -8,7 +8,7 @@ public interface CRUD_Interface<T> {
     boolean post( T dto );
 
     // 전체조회 추상메소드
-    ArrayList<T> getAll();
+    CustomList<T> getAll();
 
     // 단일조회 추상메소드
     T getOne( int No );

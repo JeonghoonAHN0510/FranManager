@@ -1,9 +1,9 @@
 package model.dao;
 
 import model.dto.FranDto;
+import util.CustomList;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class FranDao extends SuperDao implements CRUD_Interface<FranDto>, Change_Interface<FranDto>, Check_Interface<FranDto> {
     // 싱글톤
@@ -40,8 +40,8 @@ public class FranDao extends SuperDao implements CRUD_Interface<FranDto>, Change
 
     // fran02 가맹점 전체조회기능 구현
     @Override
-    public ArrayList<FranDto> getAll() {
-        ArrayList<FranDto> list = new ArrayList<>();
+    public CustomList<FranDto> getAll() {
+        CustomList<FranDto> list = new CustomList<>();
         try{// SQL 작성
             String sql = "select f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner, ifnull(SUM(orderQty * orderPrice), 0) AS P from fran f left join OrderLog o on f.franNo=o.franNo where franStatus=0 group by f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner order by franNo asc;";
             // select f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner, ifnull(SUM(orderQty * orderPrice), "0원") AS P from fran f left join OrderLog o on f.franNo=o.franNo group by f.franNo,f.franName,f.franAddress,f.franCall,f.franOwner order by franNo asc;

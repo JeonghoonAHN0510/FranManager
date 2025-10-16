@@ -1,9 +1,9 @@
 package model.dao;
 
 import model.dto.SupplyLogDto;
+import util.CustomList;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class SupplyLogDao extends SuperDao {
     // 싱글톤
@@ -17,9 +17,9 @@ public class SupplyLogDao extends SuperDao {
     // 기능설명 : DB에 저장된 요청대기 중인 발주기록울 조회한다. { 발주번호, 가맹점명, 상품명, 주문수량, 메모 }
     // 메소드명 : supplyPrintAll()
     // 매개변수 : X
-    // 반환타입 : ArrayList<SupplyLogDto>
-    public ArrayList<SupplyLogDto> supplyPrintAll(){
-        ArrayList<SupplyLogDto> supplyLogDtos = new ArrayList<>();  // 반환할 빈 ArrayList 생성
+    // 반환타입 : CustomList<SupplyLogDto>
+    public CustomList<SupplyLogDto> supplyPrintAll(){
+        CustomList<SupplyLogDto> supplyLogDtos = new CustomList<>();  // 반환할 빈 CustomList 생성
         try {
             // 1. SQL 작성 : 요청대기 중인 발주기록 조회
             String SQL = "select supNo, franNo, proNo, supQty, supMemo from SupplyLog where supStatus = 0";
@@ -38,13 +38,13 @@ public class SupplyLogDao extends SuperDao {
                 String supMemo = rs.getString("supMemo");
                 // 꺼낸 값을 넣을 SupplyLogDto 객체 생성 후 값 대입
                 SupplyLogDto supplyLogDto = new SupplyLogDto( supNo, franNo, proNo, supQty, "", 0, supMemo );
-                // 생성한 객체 ArrayList에 추가
+                // 생성한 객체 CustomList에 추가
                 supplyLogDtos.add( supplyLogDto );
             } // while end
         } catch ( SQLException e ) {
             System.out.println("[supply01] SQL 기재 실패");
         } // try-catch end
-        // 최종적으로 ArrayList 반환
+        // 최종적으로 CustomList 반환
         return supplyLogDtos;
     } // func end
 

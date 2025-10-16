@@ -1,9 +1,9 @@
 package model.dao;
 
 import model.dto.StatsDto;
+import util.CustomList;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class StatsDao extends SuperDao {
     // 싱글톤
@@ -18,9 +18,9 @@ public class StatsDao extends SuperDao {
     // 기능설명 : DB에 저장된 상품별 최근30일 판매금액의 상위 10개를 판매금액 기준 내림차순으로 출력한다.
     // 메소드명 : proStatsPrint()
     // 매개변수 : X
-    // 반환타입 : ArrayList<StatsDto>
-    public ArrayList<StatsDto> proStatsPrint(){
-        ArrayList<StatsDto> statsDtos = new ArrayList<>();  // 반환할 빈 배열 생성
+    // 반환타입 : CustomList<StatsDto>
+    public CustomList<StatsDto> proStatsPrint(){
+        CustomList<StatsDto> statsDtos = new CustomList<>();  // 반환할 빈 배열 생성
         try {
             // 1. SQL 작성
             String SQL = "select proNo, sum(orderPrice * orderQty) totalPrice from OrderLog where orderDate >= now() - interval 30 day group by proNo order by totalPrice desc limit 10;";
@@ -50,9 +50,9 @@ public class StatsDao extends SuperDao {
     // 기능설명 : DB에 저장된 지역별(서울/인천:구, 경기:시) 최근 30일 매출액의 상위 10개를 매출액 기준 내림차순으로 출력한다."
     // 메소드명 : regionStatsPrint()
     // 매개변수 : X
-    // 반환타입 : ArrayList<StatsDto>
-    public ArrayList<StatsDto> regionStatsPrint(){
-        ArrayList<StatsDto> statsDtos = new ArrayList<>();  // 반환할 빈 배열 생성
+    // 반환타입 : CustomList<StatsDto>
+    public CustomList<StatsDto> regionStatsPrint(){
+        CustomList<StatsDto> statsDtos = new CustomList<>();  // 반환할 빈 배열 생성
         try {
             // 1. SQL 작성
             // where orderDate >= now() - interval 30 day -> 현재 시간으로부터 30일까지 데이터뽑기
@@ -83,9 +83,9 @@ public class StatsDao extends SuperDao {
     // 기능설명 : DB에 저장된 매출액을 시간대별로 출력한다.
     // 메소드명 : hourStatsPrint()
     // 매개변수 : X
-    // 반환타입 : ArrayList<StatsDto>
-    public ArrayList<StatsDto> hourStatsPrint(){
-        ArrayList<StatsDto> statsDtos = new ArrayList<>();      // 반환할 빈 배열 생성
+    // 반환타입 : CustomList<StatsDto>
+    public CustomList<StatsDto> hourStatsPrint(){
+        CustomList<StatsDto> statsDtos = new CustomList<>();      // 반환할 빈 배열 생성
         try {
             // 1. SQL 작성
             String SQL = "select hour(orderDate) hour, sum(orderPrice * orderQty) totalPrice from OrderLog group by hour order by hour";

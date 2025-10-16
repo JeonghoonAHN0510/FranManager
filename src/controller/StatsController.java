@@ -2,8 +2,7 @@ package controller;
 
 import model.dao.StatsDao;
 import model.dto.StatsDto;
-
-import java.util.ArrayList;
+import util.CustomList;
 
 public class StatsController {
     // 싱글톤
@@ -20,11 +19,11 @@ public class StatsController {
     // 기능설명 : DB에 저장된 상품별 최근30일 판매금액의 상위 10개를 판매금액 기준 내림차순으로 출력한다.
     // 메소드명 : proStatsPrint()
     // 매개변수 : X
-    // 반환타입 : ArrayList<StatsDto>
-    public ArrayList<StatsDto> proStatsPrint(){
+    // 반환타입 : CustomList<StatsDto>
+    public CustomList<StatsDto> proStatsPrint(){
         // 1. (필요 시) 유효성 검사
         // 2. dao에게 전달 후 결과받기
-        ArrayList<StatsDto> statsDtos = statsDao.proStatsPrint();
+        CustomList<StatsDto> statsDtos = statsDao.proStatsPrint();
         // 3. view에게 결과 전달하기
         return statsDtos;
     } // func end
@@ -33,11 +32,11 @@ public class StatsController {
     // 기능설명 : DB에 저장된 지역별(서울/인천:구, 경기:시) 최근 30일 매출액의 상위 10개를 매출액 기준 내림차순으로 출력한다."
     // 메소드명 : regionStatsPrint()
     // 매개변수 : X
-    // 반환타입 : ArrayList<StatsDto>
-    public ArrayList<StatsDto> regionStatsPrint(){
+    // 반환타입 : CustomList<StatsDto>
+    public CustomList<StatsDto> regionStatsPrint(){
         // 1. (필요 시) 유효성 검사
         // 2. dao에게 전달 후 결과 받기
-        ArrayList<StatsDto> statsDtos = statsDao.regionStatsPrint();
+        CustomList<StatsDto> statsDtos = statsDao.regionStatsPrint();
         // 3. view에게 결과 전달하기
         return statsDtos;
     } // func end
@@ -46,11 +45,11 @@ public class StatsController {
     // 기능설명 : DB에 저장된 매출액을 시간대별로 출력한다.
     // 메소드명 : hourStatsPrint()
     // 매개변수 : X
-    // 반환타입 : ArrayList<StatsDto>
-    public ArrayList<StatsDto> hourStatsPrint(){
+    // 반환타입 : CustomList<StatsDto>
+    public CustomList<StatsDto> hourStatsPrint(){
         // 1. (필요 시) 유효성 검사
         // 2. dao에게 전달 후 결과 받기
-        ArrayList<StatsDto> statsDtos = statsDao.hourStatsPrint();
+        CustomList<StatsDto> statsDtos = statsDao.hourStatsPrint();
         // 3. view에게 결과 전달하기
         return statsDtos;
     } // func end
